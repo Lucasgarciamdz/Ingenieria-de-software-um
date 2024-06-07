@@ -10,6 +10,7 @@ from backend.config.database import Database
 from backend.models.base_model import BaseModel
 from backend.repositories.base_repository import BaseRepository
 from backend.schemas.base_schema import BaseSchema
+from backend.metaclases.singleton_meta import SingletonMeta
 
 
 class InstanceNotFoundError(Exception):
@@ -18,7 +19,7 @@ class InstanceNotFoundError(Exception):
     """
 
 
-class BaseRepositoryImpl(BaseRepository):
+class BaseRepositoryImpl(BaseRepository, metaclass=SingletonMeta):
     """
     Class BaseRepositoryImpl implements BaseRepository
     """

@@ -6,9 +6,10 @@ from backend.models.base_model import BaseModel
 from backend.services.base_service import BaseService
 from backend.repositories.base_repository import BaseRepository
 from backend.schemas.base_schema import BaseSchema
+from backend.metaclases.singleton_meta import SingletonMeta
 
 
-class BaseServiceImpl(BaseService):
+class BaseServiceImpl(BaseService, metaclass=SingletonMeta):
     """ Base Service Implementation"""
     def __init__(self, repository: BaseRepository,
                  model: Type[BaseModel],
