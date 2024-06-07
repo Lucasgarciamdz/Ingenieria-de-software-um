@@ -5,8 +5,8 @@ from abc import abstractmethod, ABC
 from typing import List, Type
 from sqlalchemy.orm import Session
 
-from models.base_model import BaseModel
-from schemas.base_schema import BaseSchema
+from backend.models.base_model import BaseModel
+from backend.schemas.base_schema import BaseSchema
 
 
 class BaseRepository(ABC):

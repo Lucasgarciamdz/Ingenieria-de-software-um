@@ -19,7 +19,7 @@ class InstanceNotFoundError(Exception):
     """
 
 
-class BaseRepositoryImpl(BaseRepository, metaclass=SingletonMeta):
+class BaseRepositoryImpl(BaseRepository):
     """
     Class BaseRepositoryImpl implements BaseRepository
     """
