@@ -10,7 +10,17 @@ from backend.metaclases.singleton_meta import SingletonMeta
 
 
 class BaseServiceImpl(BaseService):
-    """ Base Service Implementation"""
+    """
+    Base Service Implementation
+    """
+
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not isinstance(cls._instance, cls):
+            cls._instance = super(BaseServiceImpl, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+
     def __init__(self, repository: BaseRepository,
                  model: Type[BaseModel],
                  schema: Type[BaseSchema]):

@@ -24,11 +24,24 @@ class BaseRepositoryImpl(BaseRepository):
     Class BaseRepositoryImpl implements BaseRepository
     """
 
+    _instance = None
+
+    def __new__(cls, *args, **kwargs):
+        if not isinstance(cls._instance, cls):
+            cls._instance = super(BaseRepositoryImpl, cls).__new__(cls, *args, **kwargs)
+        return cls._instance
+
     def __init__(self, model: Type[BaseModel], schema: Type[BaseSchema]):
         self._model = model
         self._schema = schema
         self.logger = logging.getLogger(__name__)
         self._session = Database().get_session()
+
+    @classmethod
+    def get_instance(cls):
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
 
     @property
     def session(self) -> Session:
