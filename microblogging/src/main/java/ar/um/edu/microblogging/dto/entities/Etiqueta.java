@@ -15,6 +15,9 @@ public class Etiqueta extends BaseEntity {
   @Column(nullable = false)
   private String nombre;
 
+  @Column(nullable = false)
+  private boolean delMomento;
+
   @ManyToMany(mappedBy = "etiquetas")
   private Set<Mensaje> mensajes;
 }

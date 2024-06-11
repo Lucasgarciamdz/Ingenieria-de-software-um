@@ -17,7 +17,7 @@ import lombok.EqualsAndHashCode;
 public class Usuario extends BaseEntity {
 
   @Column(length = 15)
-  private String username;
+  private String nombreUsuario;
 
   private String email;
 
@@ -38,6 +38,7 @@ public class Usuario extends BaseEntity {
       name = "seguidores_seguidos",
       joinColumns = @JoinColumn(name = "seguido_id"),
       inverseJoinColumns = @JoinColumn(name = "seguidor_id"))
+
   private Set<Usuario> seguidores;
 
   @ManyToMany(mappedBy = "seguidores")

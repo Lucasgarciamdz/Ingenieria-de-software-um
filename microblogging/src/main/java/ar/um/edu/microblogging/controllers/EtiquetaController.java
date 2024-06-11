@@ -32,8 +32,8 @@ public class EtiquetaController implements BaseController<Etiqueta> {
     }
 
     @Override
-    @PostMapping("/{id}")
-    public BaseResponse<Etiqueta> post(@PathVariable Long id, @RequestBody Etiqueta body) {
+    @PostMapping
+    public BaseResponse<Etiqueta> post(@RequestBody Etiqueta body) {
         return null;
     }
 

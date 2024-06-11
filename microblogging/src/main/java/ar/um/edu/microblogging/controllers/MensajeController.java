@@ -35,8 +35,8 @@ public class MensajeController implements BaseController<Mensaje>{
     }
 
     @Override
-    @PostMapping("/{id}")
-    public BaseResponse<Mensaje> post(@PathVariable Long id, @RequestBody Mensaje body) {
+    @PostMapping
+    public BaseResponse<Mensaje> post(@RequestBody Mensaje body) {
         return null;
     }
 

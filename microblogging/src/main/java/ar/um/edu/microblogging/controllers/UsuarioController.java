@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/usuarios")
-public class UserController implements BaseController<Usuario> {
+public class UsuarioController implements BaseController<Usuario> {
   
   private final UsuarioService usuarioService;
   
-  public UserController(UsuarioService usuarioService) {
+  public UsuarioController(UsuarioService usuarioService) {
     this.usuarioService = usuarioService;
   }
 
@@ -36,8 +36,8 @@ public class UserController implements BaseController<Usuario> {
   }
 
   @Override
-  @PostMapping("/{id}")
-  public BaseResponse<Usuario> post(@PathVariable Long id, @RequestBody Usuario body) {
+  @PostMapping
+  public BaseResponse<Usuario> post(@RequestBody Usuario body) {
     return null;
   }
 

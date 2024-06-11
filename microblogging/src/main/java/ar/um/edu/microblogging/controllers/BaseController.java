@@ -10,7 +10,7 @@ public interface BaseController<T> {
   
   List<BaseResponse<T>> getAll();
   
-  BaseResponse<T> post(Long id, T body);
+  BaseResponse<T> post(T body);
   
   BaseResponse<T> put(Long id, T modificacion);
   
