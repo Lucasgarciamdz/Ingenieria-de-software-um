@@ -8,7 +8,7 @@ public interface BaseController<T> {
   
   BaseResponse<T> get(Long id);
   
-  List<BaseResponse<T>> get_all();
+  List<BaseResponse<T>> getAll();
   
   BaseResponse<T> post(Long id, T body);
   

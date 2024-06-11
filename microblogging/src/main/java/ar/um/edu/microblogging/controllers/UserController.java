@@ -26,12 +26,12 @@ public class UserController implements BaseController<Usuario> {
   @Override
   @GetMapping("/{id}")
   public BaseResponse<Usuario> get(@PathVariable Long id) {
-    return new BaseResponse<>("se encontro un usuario", usuarioService.getUsuario(id));
+    return new BaseResponse<>("Se encontro un usuario", usuarioService.getById(id));
   }
   
   @Override
   @GetMapping
-  public List<BaseResponse<Usuario>> get_all() {
+  public List<BaseResponse<Usuario>> getAll() {
     return List.of();
   }
 
