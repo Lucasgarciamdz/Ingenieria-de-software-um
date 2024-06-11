@@ -1,5 +1,6 @@
 package ar.um.edu.microblogging.dto.entities;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.ManyToMany;
 import java.util.Set;
@@ -11,6 +12,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Etiqueta extends BaseEntity {
 
+  @Column(nullable = false)
   private String nombre;
 
   @ManyToMany(mappedBy = "etiquetas")

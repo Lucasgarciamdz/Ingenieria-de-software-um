@@ -42,4 +42,7 @@ public class Usuario extends BaseEntity {
 
   @ManyToMany(mappedBy = "seguidores")
   private Set<Usuario> seguidos;
+
+  @ManyToMany(mappedBy = "usuariosRepublicados")
+  private Set<Mensaje> mensajesRepublicados;
 }

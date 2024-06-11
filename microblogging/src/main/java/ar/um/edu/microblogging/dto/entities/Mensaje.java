@@ -6,6 +6,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+
+import java.util.Date;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -22,10 +24,22 @@ public class Mensaje extends BaseEntity {
   @Column(length = 140)
   private String texto;
 
+  @Column(nullable = false)
+  private Date fechaPublicacion;
+
   @ManyToMany
   @JoinTable(
       name = "mensaje_etiqueta",
       joinColumns = @JoinColumn(name = "mensaje_id"),
       inverseJoinColumns = @JoinColumn(name = "etiqueta_id"))
   private Set<Etiqueta> etiquetas;
+
+
+  @ManyToMany
+  @JoinTable(
+          name = "republicaciones",
+          joinColumns = @JoinColumn(name = "mensaje_id"),
+          inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+  private Set<Usuario> usuariosRepublicados;
+
 }
