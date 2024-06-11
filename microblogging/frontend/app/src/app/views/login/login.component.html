@@ -1,0 +1,13 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="container">
+    <div class="form-container">
+        <h2>Login</h2>
+        <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)">
+            <input type="text" placeholder="Username" required name="username" ngModel>
+            <input type="password" placeholder="Password" required name="password" ngModel>
+            <button type="submit">Login</button>
+        </form>
+        <div class="registration-text">I am not registered, <a href="/register">registrate</a></div>
+    </div>
+</div>

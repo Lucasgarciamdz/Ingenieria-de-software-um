@@ -1,0 +1,22 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="container">
+  <div class="search-box">
+    <input type="text" placeholder="Search..." [(ngModel)]="searchText">
+    <button class="apply-filter-button" type="button" (click)="filterPublications()">
+      <i class="fas fa-search"></i>
+    </button>
+    <button class="clear-filter-button" type="button" *ngIf="showClearFilterButton" (click)="clearFilter()">
+      Clear Filter
+    </button>
+  </div>
+  <div class="publications">
+    <app-publication-summary
+      *ngFor="let publication of publications"
+      [publicationUrl]="'publication/' + publication.publication_id"
+      [publicationTitle]="publication.title"
+      [publicationCaption]="publication.description"
+      [publicationAuthor]="publication.editor_id === editorId"
+    ></app-publication-summary>
+  </div>
+</div>

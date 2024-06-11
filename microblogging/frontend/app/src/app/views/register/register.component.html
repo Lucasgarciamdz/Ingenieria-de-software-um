@@ -1,0 +1,22 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="container">
+    <div class="form-container">
+        <h2>Register</h2>
+        <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+            <input type="text" placeholder="Name" required name="name" ngModel>
+            <input type="text" placeholder="Lastname" required name="lastname" ngModel>
+            <input type="date" placeholder="Birthdate" required name="birthdate" ngModel>
+            <input type="text" placeholder="Username" required name="username" ngModel>
+            <input type="email" placeholder="Email" required name="email" ngModel>
+            <input type="password" placeholder="Password" required name="password" ngModel>
+            <select name="rol" required ngModel>
+                <option value="" disabled selected>Role</option>
+                <option value="editor">Editor</option>
+                <option value="reader">Reader</option>
+            </select>
+            <button type="submit">Register</button>
+        </form>
+        <div class="login-text">¿Already have an account? <a href="/login">Login</a></div>
+    </div>
+</div>

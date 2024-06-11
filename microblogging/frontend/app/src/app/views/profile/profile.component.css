@@ -1,0 +1,26 @@
+.profile {
+    width: 50%;
+    margin: 40px auto 0;
+    padding: 20px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
+.profile h2 {
+    text-align: center;
+}
+
+.profile-info {
+    margin-top: 20px;
+}
+
+.profile-info p {
+    margin-bottom: 10px;
+}
+
+.profile-info strong {
+    font-weight: bold;
+}

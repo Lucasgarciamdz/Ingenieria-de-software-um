@@ -1,0 +1,92 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.container > .form-container {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 300px;
+}
+
+.container > .form-container h2 {
+    margin-top: 0;
+    margin-bottom: 20px;
+    font-size: 18px;
+}
+
+.container > .form-container input[type="text"],
+.container > .form-container input[type="email"],
+.container > .form-container input[type="password"],
+.container > .form-container button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+}
+
+.container > .form-container input[type="date"] {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: grey;
+    -webkit-appearance: none;
+}
+
+.container > .form-container input[type="date"]::-webkit-inner-spin-button,
+.container > .form-container input[type="date"]::-webkit-calendar-picker-indicator {
+    display: none;
+}
+
+.container > .form-container select {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    box-sizing: border-box;
+    color: #555;
+    background-color: #fff;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.container > .form-container select:hover {
+    border-color: #0074d9;
+}
+
+.container > .form-container select:focus {
+    outline: none;
+    border-color: #0074d9;
+    box-shadow: 0 0 5px rgba(0, 116, 217, 0.5);
+}
+
+.container > .form-container button {
+    background-color: #0074d9;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+}
+
+.container > .form-container button:hover {
+    background-color: #0056b3;
+}
+
+.login-text {
+    text-align: center;
+    margin-top: 20px;
+}
