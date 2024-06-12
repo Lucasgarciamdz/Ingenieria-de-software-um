@@ -18,6 +18,9 @@ import {FormsModule} from "@angular/forms";
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
+
+
+
 export class HomeComponent implements OnInit {
   publications: any[] = [];
   editorId: number | null = parseInt(localStorage.getItem('editorId') || '0', 10);
@@ -29,6 +32,8 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.getTopFivePublications();
   }
+
+  
 
   getTopFivePublications() {
     this.publicationsService.getAll().subscribe(

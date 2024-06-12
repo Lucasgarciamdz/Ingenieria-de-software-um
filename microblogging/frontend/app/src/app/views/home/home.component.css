@@ -3,7 +3,7 @@
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    width: 37%;
+    width: 50%; /* Ajusta este valor para cambiar el tamaño del cuadro de búsqueda */
     margin-left: auto;
     margin-right: auto;
 }
@@ -19,6 +19,7 @@
 .search-box input[type="text"] {
     margin-right: 5px;
     width: calc(100% - 85px);
+    overflow: auto;
 }
 
 .apply-filter-button {
@@ -50,9 +51,25 @@
 
 .publication-summary-box {
     width: 50%;
-    margin: 40px auto 0;
+    margin: 30px auto 0;
     padding: 20px;
     border: 2px solid #000;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    display: inline-block;
+    border: 2px solid gray;
+    border-radius: 5px; /* Ajusta este valor para cambiar cuánto se redondean los bordes */
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    margin: 3px;
+}
+
+button:hover {
+    background-color: gray;
+    color: #fff;
 }

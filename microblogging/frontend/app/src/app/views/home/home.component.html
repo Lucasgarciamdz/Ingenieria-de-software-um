@@ -9,6 +9,10 @@
     <button class="clear-filter-button" type="button" *ngIf="showClearFilterButton" (click)="clearFilter()">
       Clear Filter
     </button>
+    <div style="display: flex; justify-content: space-between;">
+      <button type="button">Seguidores</button>
+      <button type="button">Seguidos</button>
+    </div>
   </div>
   <div class="publications">
     <app-publication-summary
