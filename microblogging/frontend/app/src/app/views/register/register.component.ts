@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavBarComponent } from "../../components/nav-bar/nav-bar.component";
-import { UsersService } from '../../services/users.service';
+
 import { FormsModule, NgForm } from "@angular/forms";
 import { tap } from 'rxjs/operators';
 import { Router } from "@angular/router";
@@ -17,7 +17,7 @@ import { Router } from "@angular/router";
 })
 export class RegisterComponent {
 
-  constructor(private userService: UsersService, private router: Router) { }
+  
 
   onSubmit(registerForm: NgForm) {
     if (registerForm.valid) {
@@ -31,22 +31,6 @@ export class RegisterComponent {
         rol: registerForm.value.rol.toLowerCase() // Convertir el rol a minúsculas
       };
 
-      console.log('Datos del usuario:', userData);
-
-      this.userService.post(userData)
-        .pipe(
-          tap((response) => {
-            console.log('Registro exitoso:', response);
-          })
-        )
-        .subscribe(
-          () => {
-            this.router.navigate(['/home']);
-          },
-          (error) => {
-            console.error('Error al registrar usuario:', error);
-          }
-        );
     }
   }
 }

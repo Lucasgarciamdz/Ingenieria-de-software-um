@@ -3,10 +3,10 @@
 <div class="container">
   <div class="search-box">
     <input type="text" placeholder="Search..." [(ngModel)]="searchText">
-    <button class="apply-filter-button" type="button" (click)="filterPublications()">
+    <button class="apply-filter-button" type="button" >
       <i class="fas fa-search"></i>
     </button>
-    <button class="clear-filter-button" type="button" *ngIf="showClearFilterButton" (click)="clearFilter()">
+    <button class="clear-filter-button" type="button" *ngIf="showClearFilterButton" >
       Clear Filter
     </button>
     <div style="display: flex; justify-content: space-between;">

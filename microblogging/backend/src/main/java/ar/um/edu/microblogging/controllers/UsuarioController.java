@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/usuarios")
@@ -28,8 +29,8 @@ public class UsuarioController implements BaseController<Usuario> {
   @Override
   @GetMapping("/{id}")
   public BaseResponse<Usuario> get(@PathVariable Long id) {
-    Usuario usuario = usuarioService.getById(id);
-    return new BaseResponse<>("Usuario", usuario);
+    Usuario usuario1 = usuarioService.getById(id);
+    return new BaseResponse<>("Usuariooooo", usuario1);
   }
 
   @Override
@@ -37,7 +38,7 @@ public class UsuarioController implements BaseController<Usuario> {
   public List<BaseResponse<Usuario>> getAll() {
     List<Usuario> usuarios = usuarioService.getAll();
     return usuarios.stream()
-                   .map(usuario -> new BaseResponse<>("Usuario", usuario))
+                   .map(usuario -> new BaseResponse<Usuario>("Usuario", usuario))
                    .collect(Collectors.toList());
   }
 
@@ -47,14 +48,33 @@ public class UsuarioController implements BaseController<Usuario> {
     Usuario usuario = usuarioService.save(body);
     return new BaseResponse<>("Usuario", usuario);
   }
+//
+//  @Override
+//  @PutMapping("/{id}")
+//  public BaseResponse<Usuario> put(@PathVariable Long id, @RequestBody Usuario modificacion) {
+//    modificacion.setId(id);
+//    Usuario usuario = usuarioService.update(modificacion);
+//    return new BaseResponse<>("Usuario", usuario);
+//  }
 
-  @Override
   @PutMapping("/{id}")
-  public BaseResponse<Usuario> put(@PathVariable Long id, @RequestBody Usuario modificacion) {
-    modificacion.setId(id);
-    Usuario usuario = usuarioService.update(modificacion);
-    return new BaseResponse<>("Usuario", usuario);
-  }
+public BaseResponse<Usuario> put(@PathVariable Long id, @RequestBody Usuario newUser) {
+    return usuarioService.getById(id).map(usuario -> {
+        usuario = Usuario.builder()
+                .id(id)
+                .nombreUsuario(newUser.getNombreUsuario())
+                .email(newUser.getEmail())
+                .clave(newUser.getClave())
+                .nombreCompleto(newUser.getNombreCompleto())
+                .descripcion(newUser.getDescripcion())
+                .mensajes(newUser.getMensajes())
+                .seguidores(newUser.getSeguidores())
+                .seguidos(newUser.getSeguidos())
+                .mensajesRepublicados(newUser.getMensajesRepublicados())
+                .build();
+        return new BaseResponse<>("Usuario", usuarioService.save(usuario));
+    }).orElse(null);
+}
 
   @Override
   @DeleteMapping("/{id}")

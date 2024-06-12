@@ -1,12 +1,7 @@
 package ar.um.edu.microblogging.dto.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.Lob;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
+
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -30,10 +25,10 @@ public class Usuario extends BaseEntity {
 
   private String descripcion;
 
-  @OneToMany(mappedBy = "autor")
+  @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY)
   private Set<Mensaje> mensajes;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
       name = "seguidores_seguidos",
       joinColumns = @JoinColumn(name = "seguido_id"),
@@ -41,9 +36,9 @@ public class Usuario extends BaseEntity {
 
   private Set<Usuario> seguidores;
 
-  @ManyToMany(mappedBy = "seguidores")
+  @ManyToMany(mappedBy = "seguidores", fetch = FetchType.LAZY)
   private Set<Usuario> seguidos;
 
-  @ManyToMany(mappedBy = "usuariosRepublicados")
+  @ManyToMany(mappedBy = "usuariosRepublicados", fetch = FetchType.LAZY)
   private Set<Mensaje> mensajesRepublicados;
 }

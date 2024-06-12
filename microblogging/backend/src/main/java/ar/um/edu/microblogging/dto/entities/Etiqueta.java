@@ -2,6 +2,7 @@ package ar.um.edu.microblogging.dto.entities;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.ManyToMany;
 import java.util.Set;
 import lombok.Data;
@@ -18,6 +19,6 @@ public class Etiqueta extends BaseEntity {
   @Column(nullable = false)
   private boolean delMomento;
 
-  @ManyToMany(mappedBy = "etiquetas")
+  @ManyToMany(mappedBy = "etiquetas", fetch = FetchType.LAZY)
   private Set<Mensaje> mensajes;
 }

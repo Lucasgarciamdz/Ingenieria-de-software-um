@@ -16,7 +16,7 @@ export class NavBarComponent {
   constructor(private authService: AuthService) {
     afterNextRender(() => {
       this.user_id = this.authService.getUserId();
-      this.rol = this.authService.getRole();
+      
     });
   }
 

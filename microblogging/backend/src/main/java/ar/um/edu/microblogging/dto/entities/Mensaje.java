@@ -1,11 +1,6 @@
 package ar.um.edu.microblogging.dto.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.Set;
@@ -17,7 +12,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Mensaje extends BaseEntity {
 
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "autor_id", nullable = false)
   private Usuario autor;
 
@@ -27,11 +22,11 @@ public class Mensaje extends BaseEntity {
   @Column(nullable = false)
   private Date fechaPublicacion;
   
-  @ManyToOne
+  @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "usuario_destinatario_id", nullable = true)
   private Usuario usuarioDestinatario;
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
       name = "mensaje_etiqueta",
       joinColumns = @JoinColumn(name = "mensaje_id"),
@@ -39,7 +34,7 @@ public class Mensaje extends BaseEntity {
   private Set<Etiqueta> etiquetas;
 
 
-  @ManyToMany
+  @ManyToMany(fetch = FetchType.LAZY)
   @JoinTable(
           name = "republicaciones",
           joinColumns = @JoinColumn(name = "mensaje_id"),
