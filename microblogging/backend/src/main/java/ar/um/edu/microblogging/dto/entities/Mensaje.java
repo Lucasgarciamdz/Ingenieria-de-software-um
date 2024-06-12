@@ -26,6 +26,10 @@ public class Mensaje extends BaseEntity {
 
   @Column(nullable = false)
   private Date fechaPublicacion;
+  
+  @ManyToOne
+  @JoinColumn(name = "usuario_destinatario_id", nullable = true)
+  private Usuario usuarioDestinatario;
 
   @ManyToMany
   @JoinTable(
@@ -41,5 +45,4 @@ public class Mensaje extends BaseEntity {
           joinColumns = @JoinColumn(name = "mensaje_id"),
           inverseJoinColumns = @JoinColumn(name = "usuario_id"))
   private Set<Usuario> usuariosRepublicados;
-
 }

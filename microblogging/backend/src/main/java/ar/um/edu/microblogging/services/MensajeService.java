@@ -17,26 +17,29 @@ public class MensajeService implements BaseService<Mensaje> {
 
     @Override
     public List<Mensaje> getAll() {
-        return List.of();
+        return this.mensajeRepository.findAll();
     }
 
     @Override
     public Mensaje getById(Long id) {
-        return null;
+        return this.mensajeRepository.findById(id).orElse(null);
     }
 
     @Override
     public Mensaje save(Mensaje entity) {
-        return null;
+        return this.mensajeRepository.save(entity);
     }
 
     @Override
     public Mensaje update(Mensaje entity) {
-        return null;
+        return this.mensajeRepository.save(entity);
     }
 
     @Override
     public boolean delete(Long id) {
-        return false;
+        return this.mensajeRepository.findById(id).map(mensaje -> {
+            this.mensajeRepository.delete(mensaje);
+            return true;
+        }).orElse(false);
     }
 }

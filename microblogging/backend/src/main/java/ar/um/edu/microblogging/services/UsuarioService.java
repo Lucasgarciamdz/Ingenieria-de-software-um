@@ -17,27 +17,30 @@ public class UsuarioService implements BaseService<Usuario>{
   
   @Override
   public List<Usuario> getAll() {
-    return List.of();
+    return this.usuarioRepository.findAll();
   }
 
   @Override
   public Usuario getById(Long id) {
-    return null;
+    return this.usuarioRepository.findById(id).orElse(null);
   }
 
   @Override
   public Usuario save(Usuario entity) {
-    return null;
+    return this.usuarioRepository.save(entity);
   }
 
   @Override
   public Usuario update(Usuario entity) {
-    return null;
+    return this.usuarioRepository.save(entity);
   }
 
   @Override
   public boolean delete(Long id) {
-    return false;
+    return this.usuarioRepository.findById(id).map(usuario -> {
+      this.usuarioRepository.delete(usuario);
+      return true;
+    }).orElse(false);
   }
 
   public Usuario login(String email, String clave) {
