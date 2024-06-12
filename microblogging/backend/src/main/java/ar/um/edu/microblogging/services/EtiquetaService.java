@@ -4,6 +4,7 @@ import ar.um.edu.microblogging.dto.entities.Etiqueta;
 import ar.um.edu.microblogging.repositories.EtiquetaRepository;
 import java.util.List;
 
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -38,5 +39,9 @@ public class EtiquetaService implements BaseService<Etiqueta> {
     @Override
     public boolean delete(Long id) {
         return false;
+    }
+
+    public List<Etiqueta> getEtiquetasTrending() {
+        return null;
     }
 }

@@ -38,7 +38,7 @@ public class TopicsService {
     }
 
     private Set<Etiqueta> fetchTrendingTopics() {
-        List<Object[]> topEtiquetas = etiquetaRepository.findTop5Etiquetas();
+        List<Object[]> topEtiquetas = etiquetaRepository.findTop5Etiquetas("1 WEEK");
         Set<Etiqueta> etiquetas = new HashSet<>();
         for (Object[] result : topEtiquetas) {
             Etiqueta etiqueta = (Etiqueta) result[0];

@@ -39,4 +39,8 @@ public class UsuarioService implements BaseService<Usuario>{
   public boolean delete(Long id) {
     return false;
   }
+
+  public Usuario login(String email, String clave) {
+    return usuarioRepository.findByEmailAndClave(email, clave);
+  }
 }

@@ -16,4 +16,3 @@ public class TopicsController {
         topicsService.registerEmail(email);
     }
 }
-

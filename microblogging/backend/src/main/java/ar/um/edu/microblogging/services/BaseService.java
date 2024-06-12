@@ -13,8 +13,4 @@ public interface BaseService<T> {
   T update ( T entity);
   
   boolean delete(Long id);
-  
-  
-  
-  
 }

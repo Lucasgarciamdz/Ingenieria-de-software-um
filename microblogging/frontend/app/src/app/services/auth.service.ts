@@ -11,12 +11,11 @@ export class AuthService {
   constructor(private httpClient: HttpClient) { }
 
   login(user_name: string, password: string): Observable<any> {
-    return this.httpClient.post(this.url + '/users/login', { user_name, password });
+    return this.httpClient.post(this.url + '/usuarios/login', { user_name, password });
   }
 
   logout(): void {
     localStorage.removeItem('userId');
-    localStorage.removeItem('role');
   }
 
   isLoggedIn(): boolean {
@@ -25,9 +24,5 @@ export class AuthService {
 
   getUserId(): string | null {
     return localStorage.getItem('userId');
-  }
-
-  getRole(): string | null {
-    return localStorage.getItem('role');
   }
 }
