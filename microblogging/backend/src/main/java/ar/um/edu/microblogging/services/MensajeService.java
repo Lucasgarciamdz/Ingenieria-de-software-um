@@ -32,8 +32,11 @@ public class MensajeService implements BaseService<Mensaje> {
 
     @Override
     public Mensaje update(Mensaje entity) {
-        return this.mensajeRepository.save(entity);
-    }
+     if (mensajeRepository.existsById(entity.getId())) {
+       return this.mensajeRepository.save(entity);
+     } else {
+       return null; // O lanza una excepción si prefieres manejarlo de otra manera
+     }}
 
     @Override
     public boolean delete(Long id) {

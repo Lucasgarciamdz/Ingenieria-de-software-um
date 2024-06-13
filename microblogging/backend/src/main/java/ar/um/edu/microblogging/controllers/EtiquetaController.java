@@ -30,7 +30,7 @@ public class EtiquetaController implements BaseController<Etiqueta> {
     public List<BaseResponse<Etiqueta>> getAll() {
         List<Etiqueta> etiquetas = etiquetaService.getAll();
         return etiquetas.stream()
-                        .map(etiqueta -> new BaseResponse<>("Etiqueta", etiqueta))
+                        .map(etiqueta -> new BaseResponse<Etiqueta>("Etiqueta", etiqueta))
                         .collect(Collectors.toList());
     }
 
@@ -41,13 +41,26 @@ public class EtiquetaController implements BaseController<Etiqueta> {
         return new BaseResponse<>("Etiqueta", etiqueta);
     }
 
-    @Override
-    @PutMapping("/{id}")
-    public BaseResponse<Etiqueta> put(@PathVariable Long id, @RequestBody Etiqueta modificacion) {
-        modificacion.setId(id);
-        Etiqueta etiqueta = etiquetaService.update(modificacion);
-        return new BaseResponse<>("Etiqueta", etiqueta);
-    }
+ @Override
+@PutMapping("/{id}")
+public BaseResponse<Etiqueta> put(@PathVariable Long id, @RequestBody Etiqueta modificacion) {
+  Etiqueta etiquetaExistente = etiquetaService.getById(id);
+  if (etiquetaExistente == null) {
+    return new BaseResponse<>("Etiqueta no encontrada", null);
+  }
+
+  // Actualizar solo los campos que no son nulos
+  if (modificacion.getNombre() != null) {
+    etiquetaExistente.setNombre(modificacion.getNombre());
+  }
+  if (modificacion.getDelMomento() != null) {
+    etiquetaExistente.setDelMomento(modificacion.getDelMomento());
+  }
+
+  Etiqueta etiquetaActualizada = etiquetaService.update(etiquetaExistente);
+  return new BaseResponse<>("Etiqueta", etiquetaActualizada);
+}
+
 
     @Override
     @DeleteMapping("/{id}")

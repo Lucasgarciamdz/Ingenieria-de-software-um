@@ -17,7 +17,7 @@ public class Etiqueta extends BaseEntity {
   private String nombre;
 
   @Column(nullable = false)
-  private boolean delMomento;
+  private Boolean delMomento;
 
   @ManyToMany(mappedBy = "etiquetas", fetch = FetchType.LAZY)
   private Set<Mensaje> mensajes;

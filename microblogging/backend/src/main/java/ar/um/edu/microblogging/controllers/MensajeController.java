@@ -38,7 +38,7 @@ public class MensajeController implements BaseController<Mensaje>{
     public List<BaseResponse<Mensaje>> getAll() {
         List<Mensaje> mensajes = mensajeService.getAll();
         return mensajes.stream()
-                .map(mensaje -> new BaseResponse<>("Mensaje", mensaje))
+                .map(mensaje -> new BaseResponse<Mensaje>("Mensaje", mensaje))
                 .collect(Collectors.toList());
 
     }
@@ -55,10 +55,35 @@ public class MensajeController implements BaseController<Mensaje>{
     @Override
     @PutMapping("/{id}")
     public BaseResponse<Mensaje> put(@PathVariable Long id, @RequestBody Mensaje modificacion) {
-        modificacion.setId(id);
-        Mensaje mensaje = mensajeService.update(modificacion);
-        return new BaseResponse<>("Mensaje", mensaje);
+      Mensaje mensajeExistente = mensajeService.getById(id);
+      if (mensajeExistente == null) {
+        return new BaseResponse<>("Mensaje no encontrado", null);
+      }
+
+      // Actualizar solo los campos que no son nulos
+      if (modificacion.getTexto() != null) {
+        mensajeExistente.setTexto(modificacion.getTexto());
+      }
+      if (modificacion.getFechaPublicacion() != null) {
+        mensajeExistente.setFechaPublicacion(modificacion.getFechaPublicacion());
+      }
+      if (modificacion.getAutor() != null) {
+        mensajeExistente.setAutor(modificacion.getAutor());
+      }
+      if (modificacion.getUsuarioDestinatario() != null) {
+        mensajeExistente.setUsuarioDestinatario(modificacion.getUsuarioDestinatario());
+      }
+      if (modificacion.getEtiquetas() != null) {
+        mensajeExistente.setEtiquetas(modificacion.getEtiquetas());
+      }
+      if (modificacion.getUsuariosRepublicados() != null) {
+        mensajeExistente.setUsuariosRepublicados(modificacion.getUsuariosRepublicados());
+      }
+
+      Mensaje mensajeActualizado = mensajeService.update(mensajeExistente);
+      return new BaseResponse<>("Mensaje", mensajeActualizado);
     }
+
 
     @Override
     @DeleteMapping("/{id}")
