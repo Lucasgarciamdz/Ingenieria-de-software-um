@@ -48,33 +48,42 @@ public class UsuarioController implements BaseController<Usuario> {
     Usuario usuario = usuarioService.save(body);
     return new BaseResponse<>("Usuario", usuario);
   }
-//
-//  @Override
-//  @PutMapping("/{id}")
-//  public BaseResponse<Usuario> put(@PathVariable Long id, @RequestBody Usuario modificacion) {
-//    modificacion.setId(id);
-//    Usuario usuario = usuarioService.update(modificacion);
-//    return new BaseResponse<>("Usuario", usuario);
-//  }
 
+
+  @Override
   @PutMapping("/{id}")
-public BaseResponse<Usuario> put(@PathVariable Long id, @RequestBody Usuario newUser) {
-    return usuarioService.getById(id).map(usuario -> {
-        usuario = Usuario.builder()
-                .id(id)
-                .nombreUsuario(newUser.getNombreUsuario())
-                .email(newUser.getEmail())
-                .clave(newUser.getClave())
-                .nombreCompleto(newUser.getNombreCompleto())
-                .descripcion(newUser.getDescripcion())
-                .mensajes(newUser.getMensajes())
-                .seguidores(newUser.getSeguidores())
-                .seguidos(newUser.getSeguidos())
-                .mensajesRepublicados(newUser.getMensajesRepublicados())
-                .build();
-        return new BaseResponse<>("Usuario", usuarioService.save(usuario));
-    }).orElse(null);
-}
+  public BaseResponse<Usuario> put(@PathVariable Long id, @RequestBody Usuario modificacion) {
+    Usuario usuarioExistente = usuarioService.getById(id);
+    if (usuarioExistente == null) {
+      return new BaseResponse<>("Usuario no encontrado", null);
+    }
+
+    // Actualizar solo los campos que no son nulos
+    if (modificacion.getNombreUsuario() != null) {
+      usuarioExistente.setNombreUsuario(modificacion.getNombreUsuario());
+    }
+    if (modificacion.getEmail() != null) {
+      usuarioExistente.setEmail(modificacion.getEmail());
+    }
+    if (modificacion.getFoto() != null) {
+      usuarioExistente.setFoto(modificacion.getFoto());
+    }
+    if (modificacion.getClave() != null) {
+      usuarioExistente.setClave(modificacion.getClave());
+    }
+    if (modificacion.getNombreCompleto() != null) {
+      usuarioExistente.setNombreCompleto(modificacion.getNombreCompleto());
+    }
+    if (modificacion.getDescripcion() != null) {
+      usuarioExistente.setDescripcion(modificacion.getDescripcion());
+    }
+    // No actualizamos los campos de relaciones (mensajes, seguidores, seguidos, mensajesRepublicados)
+
+    Usuario usuarioActualizado = usuarioService.update(usuarioExistente);
+    return new BaseResponse<>("Usuario", usuarioActualizado);
+  }
+
+
 
   @Override
   @DeleteMapping("/{id}")

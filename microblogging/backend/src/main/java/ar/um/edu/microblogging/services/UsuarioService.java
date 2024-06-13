@@ -32,7 +32,11 @@ public class UsuarioService implements BaseService<Usuario>{
 
   @Override
   public Usuario update(Usuario entity) {
-    return this.usuarioRepository.save(entity);
+    if (usuarioRepository.existsById(entity.getId())) {
+      return this.usuarioRepository.save(entity);
+    } else {
+      return null; // O lanza una excepción si prefieres manejarlo de otra manera
+    }
   }
 
   @Override
