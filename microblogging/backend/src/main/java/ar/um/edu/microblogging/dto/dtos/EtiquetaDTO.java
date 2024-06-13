@@ -17,6 +17,4 @@ public class EtiquetaDTO {
     public EtiquetaDTO() {
         this.mensajeIds = new HashSet<>();
     }
-
-    // Getters y setters
 }

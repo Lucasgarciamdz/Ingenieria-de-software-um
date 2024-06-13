@@ -1,8 +1,8 @@
 package ar.um.edu.microblogging.services;
 
+import ar.um.edu.microblogging.controllers.GlobalExceptionHandler;
 import ar.um.edu.microblogging.dto.dtos.EtiquetaDTO;
 import ar.um.edu.microblogging.dto.entities.Etiqueta;
-import ar.um.edu.microblogging.dto.entities.Mensaje;
 import ar.um.edu.microblogging.repositories.EtiquetaRepository;
 import ar.um.edu.microblogging.repositories.MensajeRepository;
 import org.springframework.stereotype.Service;
@@ -47,6 +47,8 @@ public class EtiquetaService {
         } else {
             etiqueta.setMensajes(new HashSet<>());
         }
+
+
         return etiqueta;
     }
 
@@ -68,11 +70,23 @@ public class EtiquetaService {
     }
 
     public EtiquetaDTO update(EtiquetaDTO dto) {
+
         Etiqueta etiqueta = convertToEntity(dto);
-        if (etiquetaRepository.existsById(etiqueta.getId())) {
+
+        Etiqueta etiquetaExistente = etiquetaRepository.findById(dto.getId()).orElse(null);
+
+        if (etiquetaExistente != null) {
+
+            if (dto.getNombre() != null) {
+                etiquetaExistente.setNombre(dto.getNombre());
+            }
+            if (dto.getDelMomento() != null) {
+                etiquetaExistente.setDelMomento(dto.getDelMomento());
+            }
+
             return convertToDTO(etiquetaRepository.save(etiqueta));
         } else {
-            return null; // O lanza una excepción si prefieres manejarlo de otra manera
+            return null;
         }
     }
 
