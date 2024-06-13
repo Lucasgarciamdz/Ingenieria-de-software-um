@@ -1,47 +1,95 @@
 package ar.um.edu.microblogging.services;
 
+import ar.um.edu.microblogging.dto.dtos.MensajeDTO;
 import ar.um.edu.microblogging.dto.entities.Mensaje;
+import ar.um.edu.microblogging.dto.entities.Usuario;
+import ar.um.edu.microblogging.dto.entities.Etiqueta;
 import ar.um.edu.microblogging.repositories.MensajeRepository;
-import java.util.List;
-
+import ar.um.edu.microblogging.repositories.UsuarioRepository;
+import ar.um.edu.microblogging.repositories.EtiquetaRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
-public class MensajeService implements BaseService<Mensaje> {
+public class MensajeService {
 
     private final MensajeRepository mensajeRepository;
+    private final UsuarioRepository usuarioRepository;
+    private final EtiquetaRepository etiquetaRepository;
 
-    public MensajeService(MensajeRepository mensajeRepository) {
+    public MensajeService(MensajeRepository mensajeRepository, UsuarioRepository usuarioRepository, EtiquetaRepository etiquetaRepository) {
         this.mensajeRepository = mensajeRepository;
+        this.usuarioRepository = usuarioRepository;
+        this.etiquetaRepository = etiquetaRepository;
     }
 
-    @Override
-    public List<Mensaje> getAll() {
-        return this.mensajeRepository.findAll();
+    public MensajeDTO convertToDTO(Mensaje mensaje) {
+        MensajeDTO dto = new MensajeDTO();
+        dto.setId(mensaje.getId());
+        dto.setTexto(mensaje.getTexto());
+        dto.setFechaPublicacion(mensaje.getFechaPublicacion());
+        dto.setAutorId(mensaje.getAutor().getId());
+        if (mensaje.getUsuarioDestinatario() != null) {
+            dto.setUsuarioDestinatarioId(mensaje.getUsuarioDestinatario().getId());
+        }
+        dto.setEtiquetaIds(mensaje.getEtiquetas().stream()
+                .map(etiqueta -> etiqueta.getId())
+                .collect(Collectors.toSet()));
+        dto.setUsuarioRepublicadoIds(mensaje.getUsuariosRepublicados().stream()
+                .map(usuario -> usuario.getId())
+                .collect(Collectors.toSet()));
+        return dto;
     }
 
-    @Override
-    public Mensaje getById(Long id) {
-        return this.mensajeRepository.findById(id).orElse(null);
+    public Mensaje convertToEntity(MensajeDTO dto) {
+        Mensaje mensaje = new Mensaje();
+        mensaje.setId(dto.getId());
+        mensaje.setTexto(dto.getTexto());
+        mensaje.setFechaPublicacion(dto.getFechaPublicacion());
+        mensaje.setAutor(usuarioRepository.findById(dto.getAutorId()).orElse(null));
+        if (dto.getUsuarioDestinatarioId() != null) {
+            mensaje.setUsuarioDestinatario(usuarioRepository.findById(dto.getUsuarioDestinatarioId()).orElse(null));
+        }
+        mensaje.setEtiquetas(dto.getEtiquetaIds().stream()
+                .map(etiquetaId -> etiquetaRepository.findById(etiquetaId).orElse(null))
+                .collect(Collectors.toSet()));
+        mensaje.setUsuariosRepublicados(dto.getUsuarioRepublicadoIds().stream()
+                .map(usuarioId -> usuarioRepository.findById(usuarioId).orElse(null))
+                .collect(Collectors.toSet()));
+        return mensaje;
     }
 
-    @Override
-    public Mensaje save(Mensaje entity) {
-        return this.mensajeRepository.save(entity);
+    public List<MensajeDTO> getAll() {
+        return mensajeRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
     }
 
-    @Override
-    public Mensaje update(Mensaje entity) {
-     if (mensajeRepository.existsById(entity.getId())) {
-       return this.mensajeRepository.save(entity);
-     } else {
-       return null; // O lanza una excepción si prefieres manejarlo de otra manera
-     }}
+    public MensajeDTO getById(Long id) {
+        return mensajeRepository.findById(id)
+                .map(this::convertToDTO)
+                .orElse(null);
+    }
 
-    @Override
+    public MensajeDTO save(MensajeDTO dto) {
+        Mensaje mensaje = convertToEntity(dto);
+        return convertToDTO(mensajeRepository.save(mensaje));
+    }
+
+    public MensajeDTO update(MensajeDTO dto) {
+        Mensaje mensaje = convertToEntity(dto);
+        if (mensajeRepository.existsById(mensaje.getId())) {
+            return convertToDTO(mensajeRepository.save(mensaje));
+        } else {
+            return null; // O lanza una excepción si prefieres manejarlo de otra manera
+        }
+    }
+
     public boolean delete(Long id) {
-        return this.mensajeRepository.findById(id).map(mensaje -> {
-            this.mensajeRepository.delete(mensaje);
+        return mensajeRepository.findById(id).map(mensaje -> {
+            mensajeRepository.delete(mensaje);
             return true;
         }).orElse(false);
     }
