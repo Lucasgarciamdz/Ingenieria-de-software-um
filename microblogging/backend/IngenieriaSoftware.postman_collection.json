@@ -1,0 +1,384 @@
+{
+	"info": {
+		"_postman_id": "e82aea4b-dd21-409d-8990-ec89da86c78f",
+		"name": "IngenieriaSoftware",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26654361"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "getUsuarios",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putUsuarios",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n \"nombreCompleto\": \"Nombre Completo 53\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios/53",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios",
+								"53"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postUsuarios",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n            // \"id\":4,\n            \"nombreUsuario\": \"nombre_usuario3\",\n            \"email\": \"usuario3@example.com\",\n            \"foto\": null,\n            \"clave\": \"clave3\",\n            \"nombreCompleto\": \"Nombre Completo 3\",\n            \"descripcion\": \"Descripción del usuario 3\"\n            // \"mensajes\": [],\n            // \"seguidores\": [],\n            // \"seguidos\": [],\n            // \"mensajesRepublicados\": []\n        }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUsuarios",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios/52",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios",
+								"52"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneUsuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios/53",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios",
+								"53"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mensaje",
+			"item": [
+				{
+					"name": "getMensajes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "id",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putMensajes",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"texto\": \"Mensaje de prueba 1\",\n        \"fechaPublicacion\": \"2024-06-12T17:02:38.457+00:00\",\n        \"autorId\": 1,\n        \"usuarioDestinatarioId\": 2\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postMensajes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteMensajes",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes/3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneMensajes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Etiqueta",
+			"item": [
+				{
+					"name": "getEtiquetas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http:/microblogging/etiquetas",
+							"host": [
+								"http"
+							],
+							"port": "",
+							"path": [
+								"microblogging",
+								"etiquetas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putEtiquetas",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http:/microblogging/etiquetas?id",
+							"host": [
+								"http"
+							],
+							"port": "",
+							"path": [
+								"microblogging",
+								"etiquetas"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postEtiquetas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"etiqueta piola\",\n    \"delMomento\": false\n\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http:/microblogging/etiquetas",
+							"host": [
+								"http"
+							],
+							"port": "",
+							"path": [
+								"microblogging",
+								"etiquetas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteEtiquetas",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/etiquetas/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"etiquetas",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneEtiquetas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/etiquetas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"etiquetas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
