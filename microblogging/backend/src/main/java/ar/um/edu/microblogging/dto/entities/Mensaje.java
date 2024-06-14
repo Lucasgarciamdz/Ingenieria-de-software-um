@@ -13,7 +13,7 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Mensaje extends BaseEntity {
 
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne()
   @JoinColumn(name = "autor_id", nullable = false)
   private Usuario autor;
 
@@ -23,11 +23,11 @@ public class Mensaje extends BaseEntity {
   @Column(nullable = false)
   private Date fechaPublicacion;
   
-  @ManyToOne(fetch = FetchType.LAZY)
+  @ManyToOne(fetch = FetchType.EAGER)
   @JoinColumn(name = "usuario_destinatario_id", nullable = true)
   private Usuario usuarioDestinatario;
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
   @JoinTable(
       name = "mensaje_etiqueta",
       joinColumns = @JoinColumn(name = "mensaje_id"),
@@ -35,7 +35,7 @@ public class Mensaje extends BaseEntity {
   private Set<Etiqueta> etiquetas = new HashSet<>();
 
 
-  @ManyToMany(fetch = FetchType.LAZY)
+  @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
           name = "republicaciones",
           joinColumns = @JoinColumn(name = "mensaje_id"),

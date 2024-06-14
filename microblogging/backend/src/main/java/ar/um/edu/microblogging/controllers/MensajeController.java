@@ -1,11 +1,13 @@
 package ar.um.edu.microblogging.controllers;
 
 import ar.um.edu.microblogging.dto.dtos.MensajeDTO;
+import ar.um.edu.microblogging.dto.entities.Mensaje;
 import ar.um.edu.microblogging.dto.responses.BaseResponse;
 import ar.um.edu.microblogging.services.MensajeService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @RestController
@@ -25,11 +27,9 @@ public class MensajeController {
     }
 
     @GetMapping
-    public List<BaseResponse<MensajeDTO>> getAll() {
-        List<MensajeDTO> mensajes = mensajeService.getAll();
-        return mensajes.stream()
-                .map(dto -> new BaseResponse<>("Mensaje", dto))
-                .collect(Collectors.toList());
+    public BaseResponse<Set<Mensaje>> getAll() {
+        Set<Mensaje> dtos = mensajeService.getAll();
+        return new BaseResponse<>("Se encontraron los siguientes mensajes", dtos);
     }
 
     @PostMapping

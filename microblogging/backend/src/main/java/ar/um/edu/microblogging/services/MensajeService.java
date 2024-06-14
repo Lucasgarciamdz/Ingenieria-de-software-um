@@ -9,6 +9,7 @@ import ar.um.edu.microblogging.repositories.MensajeRepository;
 import ar.um.edu.microblogging.repositories.UsuarioRepository;
 import ar.um.edu.microblogging.repositories.EtiquetaRepository;
 import ar.um.edu.microblogging.services.EtiquetaService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 
@@ -71,6 +72,9 @@ public class MensajeService {
             mensaje.setUsuarioDestinatario(usuarioRepository.findById(dto.getUsuarioDestinatarioId()).orElse(null));
         }
 
+        // Save the mensaje first to get a valid ID
+        Mensaje savedMensaje = mensajeRepository.save(mensaje);
+
         Set<Etiqueta> etiquetas = new HashSet<>();
         if (dto.getEtiquetaIds() != null) {
             etiquetas.addAll(dto.getEtiquetaIds().stream()
@@ -91,27 +95,36 @@ public class MensajeService {
             etiquetas.add(etiqueta);
         }
 
-        mensaje.setEtiquetas(etiquetas);
+        savedMensaje.setEtiquetas(etiquetas);
+        dto.setEtiquetaIds(etiquetas.stream().map(Etiqueta::getId).collect(Collectors.toSet()));
 
         if (dto.getUsuarioRepublicadoIds() != null) {
-            mensaje.setUsuariosRepublicados(dto.getUsuarioRepublicadoIds().stream()
+            savedMensaje.setUsuariosRepublicados(dto.getUsuarioRepublicadoIds().stream()
                     .map(usuarioId -> usuarioRepository.findById(usuarioId).orElse(null))
                     .filter(Objects::nonNull)
                     .collect(Collectors.toSet()));
         } else {
-            mensaje.setUsuariosRepublicados(new HashSet<>());
+            savedMensaje.setUsuariosRepublicados(new HashSet<>());
         }
 
-        return mensaje;
+        return mensajeRepository.save(savedMensaje);
     }
 
 
 
-    public List<MensajeDTO> getAll() {
-        return mensajeRepository.findAll().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
+
+@Transactional
+public Set<Mensaje> getAll() {
+    List<Object[]> results = mensajeRepository.findAllWithEtiquetas();
+    Set<Mensaje> mensajes = new HashSet<>();
+    for (Object[] result : results) {
+        Mensaje mensaje = (Mensaje) result[0];
+        Etiqueta etiqueta = (Etiqueta) result[1];
+        mensaje.getEtiquetas().add(etiqueta);
+        mensajes.add(mensaje);
     }
+    return mensajes;
+}
 
     public MensajeDTO getById(Long id) {
         return mensajeRepository.findById(id)

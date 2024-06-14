@@ -1,11 +1,13 @@
 package ar.um.edu.microblogging.repositories;
 
+import ar.um.edu.microblogging.dto.dtos.Mensaje2;
 import ar.um.edu.microblogging.dto.entities.Mensaje;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
 public interface MensajeRepository extends BaseRepository<Mensaje, Long> {
@@ -15,6 +17,19 @@ public interface MensajeRepository extends BaseRepository<Mensaje, Long> {
 
     @Query(value="INSERT INTO republicaciones (usuario_id, mensaje_id) VALUES (:idUsuario, :idMensaje)", nativeQuery = true)
     void saveMensajeRepublicado(@Param("idUsuario") Long idUsuario, @Param("idMensaje") Long idMensaje);
+
+
+
+
+    @Query("SELECT new ar.um.edu.microblogging.dto.dtos.Etiqueta2(e.id, e.nombre) " +
+            "FROM Mensaje m JOIN m.etiquetas e WHERE m.id = :mensajeId")
+    List<Etiqueta2> findEtiquetasByMensajeId(@Param("mensajeId") Long mensajeId);
+
+    @Query("SELECT new ar.um.edu.microblogging.dto.dtos.Mensaje2(m.id, m.texto, m.fechaPublicacion, " +
+            "(SELECT new ar.um.edu.microblogging.dto.dtos.Etiqueta2(e.id, e.nombre) FROM m.etiquetas e)) " +
+            "FROM Mensaje m")
+    Set<Mensaje2> findMensajeWithEtiquetasById();
+}
 
 
 }
