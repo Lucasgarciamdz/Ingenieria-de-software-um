@@ -3,6 +3,7 @@ package ar.um.edu.microblogging.dto.entities;
 import jakarta.persistence.*;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -31,7 +32,7 @@ public class Mensaje extends BaseEntity {
       name = "mensaje_etiqueta",
       joinColumns = @JoinColumn(name = "mensaje_id"),
       inverseJoinColumns = @JoinColumn(name = "etiqueta_id"))
-  private Set<Etiqueta> etiquetas;
+  private Set<Etiqueta> etiquetas = new HashSet<>();
 
 
   @ManyToMany(fetch = FetchType.LAZY)
@@ -39,5 +40,5 @@ public class Mensaje extends BaseEntity {
           name = "republicaciones",
           joinColumns = @JoinColumn(name = "mensaje_id"),
           inverseJoinColumns = @JoinColumn(name = "usuario_id"))
-  private Set<Usuario> usuariosRepublicados;
+  private Set<Usuario> usuariosRepublicados = new HashSet<>();
 }

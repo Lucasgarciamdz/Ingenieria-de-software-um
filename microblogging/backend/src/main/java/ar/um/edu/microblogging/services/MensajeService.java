@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,47 +42,70 @@ public class MensajeService {
             dto.setUsuarioDestinatarioId(mensaje.getUsuarioDestinatario().getId());
         }
 
-       if (mensaje.getUsuariosRepublicados() != null) {
-        dto.setUsuarioRepublicadoIds(mensaje.getUsuariosRepublicados().stream()
-                .map(usuario -> usuario.getId())
-                .collect(Collectors.toSet()));
+        if (mensaje.getUsuariosRepublicados() != null) {
+            dto.setUsuarioRepublicadoIds(mensaje.getUsuariosRepublicados().stream()
+                    .map(Usuario::getId)
+                    .collect(Collectors.toSet()));
         }
 
-       if (dto.getEtiquetaIds() != null) {
-        mensaje.setEtiquetas(
-                dto.getEtiquetaIds().stream()
-                        .map(id -> etiquetaRepository.findById(id).orElse(null))
-                        .collect(Collectors.toSet()));
+        if (mensaje.getEtiquetas() != null) {
+            dto.setEtiquetaIds(mensaje.getEtiquetas().stream()
+                    .map(Etiqueta::getId)
+                    .collect(Collectors.toSet()));
+        } else {
+            dto.setEtiquetaIds(new HashSet<>());
         }
 
         return dto;
     }
 
-   public Mensaje convertToEntity(MensajeDTO dto) {
+
+    public Mensaje convertToEntity(MensajeDTO dto) {
         Mensaje mensaje = new Mensaje();
         mensaje.setId(dto.getId());
         mensaje.setTexto(dto.getTexto());
         mensaje.setFechaPublicacion(dto.getFechaPublicacion());
         mensaje.setAutor(usuarioRepository.findById(dto.getAutorId()).orElse(null));
+
         if (dto.getUsuarioDestinatarioId() != null) {
             mensaje.setUsuarioDestinatario(usuarioRepository.findById(dto.getUsuarioDestinatarioId()).orElse(null));
         }
+
+        Set<Etiqueta> etiquetas = new HashSet<>();
         if (dto.getEtiquetaIds() != null) {
-            mensaje.setEtiquetas(dto.getEtiquetaIds().stream()
+            etiquetas.addAll(dto.getEtiquetaIds().stream()
                     .map(etiquetaId -> etiquetaRepository.findById(etiquetaId).orElse(null))
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toSet()));
-        } else {
-            mensaje.setEtiquetas(new HashSet<>());
         }
+
+        Set<String> hashtags = extractHashtags(dto.getTexto());
+        for (String hashtag : hashtags) {
+            Etiqueta etiqueta = etiquetaRepository.findByNombre(hashtag)
+                    .orElseGet(() -> {
+                        Etiqueta newEtiqueta = new Etiqueta();
+                        newEtiqueta.setNombre(hashtag);
+                        newEtiqueta.setDelMomento(true);
+                        return etiquetaRepository.save(newEtiqueta);
+                    });
+            etiquetas.add(etiqueta);
+        }
+
+        mensaje.setEtiquetas(etiquetas);
+
         if (dto.getUsuarioRepublicadoIds() != null) {
             mensaje.setUsuariosRepublicados(dto.getUsuarioRepublicadoIds().stream()
                     .map(usuarioId -> usuarioRepository.findById(usuarioId).orElse(null))
+                    .filter(Objects::nonNull)
                     .collect(Collectors.toSet()));
         } else {
             mensaje.setUsuariosRepublicados(new HashSet<>());
         }
+
         return mensaje;
-}
+    }
+
+
 
     public List<MensajeDTO> getAll() {
         return mensajeRepository.findAll().stream()
@@ -143,5 +168,17 @@ public class MensajeService {
             mensajeRepository.delete(mensaje);
             return true;
         }).orElse(false);
+    }
+
+
+    private Set<String> extractHashtags(String texto) {
+        Set<String> hashtags = new HashSet<>();
+        String[] words = texto.split("\\s+");
+        for (String word : words) {
+            if (word.startsWith("#")) {
+                hashtags.add(word.substring(1));
+            }
+        }
+        return hashtags;
     }
 }
