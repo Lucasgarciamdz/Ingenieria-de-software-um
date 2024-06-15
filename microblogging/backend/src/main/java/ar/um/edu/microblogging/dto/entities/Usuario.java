@@ -25,20 +25,9 @@ public class Usuario extends BaseEntity {
 
   private String descripcion;
 
-  @OneToMany(mappedBy = "autor", fetch = FetchType.LAZY)
+  @OneToMany(mappedBy = "autor")
   private Set<Mensaje> mensajes;
 
-  @ManyToMany(fetch = FetchType.LAZY)
-  @JoinTable(
-      name = "seguidores_seguidos",
-      joinColumns = @JoinColumn(name = "seguido_id"),
-      inverseJoinColumns = @JoinColumn(name = "seguidor_id"))
-
-  private Set<Usuario> seguidores;
-
-  @ManyToMany(mappedBy = "seguidores", fetch = FetchType.LAZY)
-  private Set<Usuario> seguidos;
-
-  @ManyToMany(mappedBy = "usuariosRepublicados", fetch = FetchType.LAZY)
-  private Set<Mensaje> mensajesRepublicados;
+  @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
+  private Set<Seguidores> seguidores;
 }
