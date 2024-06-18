@@ -1,20 +1,24 @@
 package ar.um.edu.microblogging.services;
 
 import ar.um.edu.microblogging.dto.entities.Usuario;
+import ar.um.edu.microblogging.dto.requests.NuevoUsuarioDto;
 import ar.um.edu.microblogging.repositories.UsuarioRepository;
-import java.util.List;
-
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class UsuarioService implements BaseService<Usuario>{
-  
+public class UsuarioService implements BaseService<Usuario> {
+
   private final UsuarioRepository usuarioRepository;
-  
-  public UsuarioService(UsuarioRepository usuarioRepository) {
+  private final BCryptPasswordEncoder passwordEncoder;
+
+  public UsuarioService(UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder) {
     this.usuarioRepository = usuarioRepository;
+    this.passwordEncoder = passwordEncoder;
   }
-  
+
   @Override
   public List<Usuario> getAll() {
     return this.usuarioRepository.findAll();
@@ -35,19 +39,38 @@ public class UsuarioService implements BaseService<Usuario>{
     if (usuarioRepository.existsById(entity.getId())) {
       return this.usuarioRepository.save(entity);
     } else {
-      return null; // O lanza una excepción si prefieres manejarlo de otra manera
+      return null;
     }
   }
 
   @Override
   public boolean delete(Long id) {
-    return this.usuarioRepository.findById(id).map(usuario -> {
-      this.usuarioRepository.delete(usuario);
-      return true;
-    }).orElse(false);
+    return this.usuarioRepository
+        .findById(id)
+        .map(
+            usuario -> {
+              this.usuarioRepository.delete(usuario);
+              return true;
+            })
+        .orElse(false);
   }
 
   public Usuario login(String email, String clave) {
     return usuarioRepository.findByEmailAndClave(email, clave);
+  }
+
+  public Usuario registrarNuevoUsuario(NuevoUsuarioDto nuevoUsuarioDto) {
+    Usuario usuario = new Usuario();
+    usuario.setNombreUsuario(nuevoUsuarioDto.getNombre());
+    usuario.setEmail(nuevoUsuarioDto.getEmail());
+    usuario.setClave(passwordEncoder.encode(nuevoUsuarioDto.getClave()));
+    usuario.setFoto(nuevoUsuarioDto.getFoto());
+    usuario.setNombreCompleto(nuevoUsuarioDto.getNombreCompleto());
+    usuario.setDescripcion(nuevoUsuarioDto.getDescripcion());
+    usuario.setMensajes(nuevoUsuarioDto.getMensajes());
+    usuario.setSeguidores(nuevoUsuarioDto.getSeguidores());
+    usuario.setSeguidos(nuevoUsuarioDto.getSeguidos());
+
+    return this.usuarioRepository.save(usuario);
   }
 }

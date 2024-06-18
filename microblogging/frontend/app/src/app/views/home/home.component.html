@@ -2,11 +2,11 @@
 
 <div class="container">
   <div class="search-box">
-    <input type="text" placeholder="Search..." [(ngModel)]="searchText">
+    <input type="text" placeholder="Search..." >
     <button class="apply-filter-button" type="button" >
       <i class="fas fa-search"></i>
     </button>
-    <button class="clear-filter-button" type="button" *ngIf="showClearFilterButton" >
+    <button class="clear-filter-button" type="button"  >
       Clear Filter
     </button>
     <div style="display: flex; justify-content: space-between;">
@@ -15,12 +15,14 @@
     </div>
   </div>
   <div class="publications">
-    <app-publication-summary
+    <app-publicacion-mensaje></app-publicacion-mensaje>
+    <app-mensaje></app-mensaje>
+<!--    <app-publication-summary
       *ngFor="let publication of publications"
       [publicationUrl]="'publication/' + publication.publication_id"
       [publicationTitle]="publication.title"
       [publicationCaption]="publication.description"
       [publicationAuthor]="publication.editor_id === editorId"
-    ></app-publication-summary>
+    ></app-publication-summary>-->
   </div>
 </div>

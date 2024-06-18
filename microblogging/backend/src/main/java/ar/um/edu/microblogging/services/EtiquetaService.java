@@ -1,99 +1,67 @@
 package ar.um.edu.microblogging.services;
 
-import ar.um.edu.microblogging.controllers.GlobalExceptionHandler;
-import ar.um.edu.microblogging.dto.dtos.EtiquetaDTO;
 import ar.um.edu.microblogging.dto.entities.Etiqueta;
+import ar.um.edu.microblogging.dto.requests.NuevaEtiquetaDto;
 import ar.um.edu.microblogging.repositories.EtiquetaRepository;
 import ar.um.edu.microblogging.repositories.MensajeRepository;
-import org.springframework.stereotype.Service;
-
-import java.util.HashSet;
 import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class EtiquetaService {
 
-    private final EtiquetaRepository etiquetaRepository;
-    private final MensajeRepository mensajeRepository;
+  private final EtiquetaRepository etiquetaRepository;
+  private final MensajeRepository mensajeRepository;
 
-    public EtiquetaService(EtiquetaRepository etiquetaRepository, MensajeRepository mensajeRepository) {
-        this.etiquetaRepository = etiquetaRepository;
-        this.mensajeRepository = mensajeRepository;
+  public EtiquetaService(
+      EtiquetaRepository etiquetaRepository, MensajeRepository mensajeRepository) {
+    this.etiquetaRepository = etiquetaRepository;
+    this.mensajeRepository = mensajeRepository;
+  }
+
+  public List<Etiqueta> getAll() {
+    return etiquetaRepository.findAll();
+  }
+
+  public Etiqueta getById(Long id) {
+    return etiquetaRepository.findById(id).orElse(null);
+  }
+
+  public Etiqueta save(Etiqueta etiqueta) {
+    return etiquetaRepository.save(etiqueta);
+  }
+
+  public Etiqueta create(NuevaEtiquetaDto nuevaEtiquetaDto) {
+    Etiqueta nuevaEtiqueta = new Etiqueta();
+    nuevaEtiqueta.setNombre(nuevaEtiquetaDto.getNombre());
+    nuevaEtiqueta.setDelMomento(nuevaEtiquetaDto.getDelMomento() == 1);
+    // Lógica adicional si es necesario, como asociar con mensajes.
+    return etiquetaRepository.save(nuevaEtiqueta);
+  }
+
+  public Etiqueta update(Long id, NuevaEtiquetaDto nuevaEtiquetaDto) {
+    Etiqueta etiquetaExistente = etiquetaRepository.findById(id).orElse(null);
+    if (etiquetaExistente != null) {
+      if (nuevaEtiquetaDto.getNombre() != null) {
+        etiquetaExistente.setNombre(nuevaEtiquetaDto.getNombre());
+      }
+      if (nuevaEtiquetaDto.getDelMomento() != null) {
+        etiquetaExistente.setDelMomento(nuevaEtiquetaDto.getDelMomento() == 1);  
+      }
+      return etiquetaRepository.save(etiquetaExistente);
+    } else {
+      return null;
     }
+  }
 
-    public EtiquetaDTO convertToDTO(Etiqueta etiqueta) {
-        EtiquetaDTO dto = new EtiquetaDTO();
-        dto.setId(etiqueta.getId());
-        dto.setNombre(etiqueta.getNombre());
-        dto.setDelMomento(etiqueta.getDelMomento());
-        if (etiqueta.getMensajes() != null) {
-            dto.setMensajeIds(etiqueta.getMensajes().stream()
-                    .map(mensaje -> mensaje.getId())
-                    .collect(Collectors.toSet()));
-        }
-        return dto;
-    }
-
-    public Etiqueta convertToEntity(EtiquetaDTO dto) {
-        Etiqueta etiqueta = new Etiqueta();
-        etiqueta.setId(dto.getId());
-        etiqueta.setNombre(dto.getNombre());
-        etiqueta.setDelMomento(dto.getDelMomento());
-        if (dto.getMensajeIds() != null) {
-            etiqueta.setMensajes(dto.getMensajeIds().stream()
-                    .map(mensajeId -> mensajeRepository.findById(mensajeId).orElse(null))
-                    .collect(Collectors.toSet()));
-        } else {
-            etiqueta.setMensajes(new HashSet<>());
-        }
-
-
-        return etiqueta;
-    }
-
-    public List<EtiquetaDTO> getAll() {
-        return etiquetaRepository.findAll().stream()
-                .map(this::convertToDTO)
-                .collect(Collectors.toList());
-    }
-
-    public EtiquetaDTO getById(Long id) {
-        return etiquetaRepository.findById(id)
-                .map(this::convertToDTO)
-                .orElse(null);
-    }
-
-    public EtiquetaDTO save(EtiquetaDTO dto) {
-        Etiqueta etiqueta = convertToEntity(dto);
-        return convertToDTO(etiquetaRepository.save(etiqueta));
-    }
-
-    public EtiquetaDTO update(EtiquetaDTO dto) {
-
-        Etiqueta etiqueta = convertToEntity(dto);
-
-        Etiqueta etiquetaExistente = etiquetaRepository.findById(dto.getId()).orElse(null);
-
-        if (etiquetaExistente != null) {
-
-            if (dto.getNombre() != null) {
-                etiquetaExistente.setNombre(dto.getNombre());
-            }
-            if (dto.getDelMomento() != null) {
-                etiquetaExistente.setDelMomento(dto.getDelMomento());
-            }
-
-            return convertToDTO(etiquetaRepository.save(etiqueta));
-        } else {
-            return null;
-        }
-    }
-
-    public boolean delete(Long id) {
-        return etiquetaRepository.findById(id).map(etiqueta -> {
-            etiquetaRepository.delete(etiqueta);
-            return true;
-        }).orElse(false);
-    }
+  public boolean delete(Long id) {
+    return etiquetaRepository
+        .findById(id)
+        .map(
+            etiqueta -> {
+              etiquetaRepository.delete(etiqueta);
+              return true;
+            })
+        .orElse(false);
+  }
 }

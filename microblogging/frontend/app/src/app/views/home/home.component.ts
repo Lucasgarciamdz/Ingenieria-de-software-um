@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import {NavBarComponent} from "../../components/nav-bar/nav-bar.component";
 import {PublicationSummaryComponent} from "../../components/publication-summary/publication-summary.component";
-import {NgForOf, NgIf} from "@angular/common";
+import {NgFor, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
+import {MensajeComponent} from "../../components/mensaje/mensaje.component";
+import {PublicacionMensajeComponent} from "../../components/publicacion-mensaje/publicacion-mensaje.component";
 
 @Component({
   selector: 'app-home',
@@ -10,20 +12,17 @@ import {FormsModule} from "@angular/forms";
   imports: [
     NavBarComponent,
     PublicationSummaryComponent,
-    NgForOf,
+    NgFor,
     FormsModule,
-    NgIf
+    NgIf,
+    MensajeComponent,
+    PublicacionMensajeComponent
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
 
 
-export class HomeComponent implements OnInit {
-  constructor() {
-  }
-
-  ngOnInit(): void {
-  }
+export class HomeComponent {
 
 }

@@ -8,11 +8,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TopicsController {
 
-    @Autowired
-    private TopicsService topicsService;
+  @Autowired private TopicsService topicsService;
 
-    @PostMapping("/register")
-    public void register(@RequestParam String email) {
-        topicsService.registerEmail(email);
-    }
+  @PostMapping("/register")
+  public void register(@RequestParam String email) {
+    topicsService.registerEmail(email);
+  }
 }
