@@ -1,8 +1,6 @@
 package ar.um.edu.microblogging.dto.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,11 +11,11 @@ import lombok.Setter;
 @Entity
 public class Seguidores extends BaseEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_id", nullable = false)
-    private Usuario usuario;
+  @ManyToOne
+  @JoinColumn(name = "usuario_id", nullable = false)
+  private Usuario usuario;
 
-    @ManyToOne
-    @JoinColumn(name = "usuario_seguido_id", nullable = false)
-    private Usuario usuarioSeguido;
+  @ManyToOne
+  @JoinColumn(name = "usuario_seguido_id", nullable = false)
+  private Usuario usuarioSeguido;
 }

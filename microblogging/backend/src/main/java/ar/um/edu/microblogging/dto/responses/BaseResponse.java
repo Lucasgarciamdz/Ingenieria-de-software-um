@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseResponse<T> {
-  
+
   private String mensaje;
   private T object;
 }

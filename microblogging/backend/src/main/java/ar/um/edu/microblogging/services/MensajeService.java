@@ -1,197 +1,137 @@
 package ar.um.edu.microblogging.services;
 
-import ar.um.edu.microblogging.dto.dtos.EtiquetaDTO;
-import ar.um.edu.microblogging.dto.dtos.MensajeDTO;
+import ar.um.edu.microblogging.dto.entities.Etiqueta;
 import ar.um.edu.microblogging.dto.entities.Mensaje;
 import ar.um.edu.microblogging.dto.entities.Usuario;
-import ar.um.edu.microblogging.dto.entities.Etiqueta;
+import ar.um.edu.microblogging.dto.requests.NuevoMensajeDto;
+import ar.um.edu.microblogging.repositories.EtiquetaRepository;
+import ar.um.edu.microblogging.repositories.MensajeDao;
 import ar.um.edu.microblogging.repositories.MensajeRepository;
 import ar.um.edu.microblogging.repositories.UsuarioRepository;
-import ar.um.edu.microblogging.repositories.EtiquetaRepository;
-import ar.um.edu.microblogging.services.EtiquetaService;
-import jakarta.transaction.Transactional;
-import org.springframework.stereotype.Service;
-
-
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
 
 @Service
 public class MensajeService {
 
-    private final MensajeRepository mensajeRepository;
-    private final UsuarioRepository usuarioRepository;
-    private final EtiquetaRepository etiquetaRepository;
+  private final MensajeRepository mensajeRepository;
+  private final UsuarioRepository usuarioRepository;
+  private final EtiquetaRepository etiquetaRepository;
+  private final MensajeDao mensajeDao;
 
-    public MensajeService(MensajeRepository mensajeRepository, UsuarioRepository usuarioRepository, EtiquetaRepository etiquetaRepository) {
-        this.mensajeRepository = mensajeRepository;
-        this.usuarioRepository = usuarioRepository;
-        this.etiquetaRepository = etiquetaRepository;
+  public MensajeService(
+      MensajeRepository mensajeRepository,
+      UsuarioRepository usuarioRepository,
+      EtiquetaRepository etiquetaRepository,
+      MensajeDao mensajeDao) {
+    this.mensajeRepository = mensajeRepository;
+    this.usuarioRepository = usuarioRepository;
+    this.etiquetaRepository = etiquetaRepository;
+    this.mensajeDao = mensajeDao;
+  }
+
+  public List<Mensaje> getAll() {
+    return mensajeRepository.findAll();
+  }
+
+//  public Mensaje getById(Long id) {
+//    Optional<Mensaje> mensaje = mensajeRepository.findById(id);
+//    return mensaje.orElse(null);
+//  }
+//  
+  public Mensaje getById(Long id) {
+    return mensajeDao.findByIdWithEtiquetas(id);
+  }
+
+  public boolean delete(Long id) {
+    return mensajeRepository
+        .findById(id)
+        .map(
+            mensaje -> {
+              mensajeRepository.delete(mensaje);
+              return true;
+            })
+        .orElse(false);
+  }
+
+  public Mensaje guardarMensaje(NuevoMensajeDto request) {
+    Usuario autor =
+        usuarioRepository
+            .findById(request.getAutorId())
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+    Usuario destinatario =
+        request.getDestinatarioId() != null
+            ? usuarioRepository.findById(request.getDestinatarioId()).orElse(null)
+            : null;
+
+    Set<Etiqueta> etiquetas = new HashSet<>();
+    if (request.getEtiquetaIds() != null) {
+      etiquetas.addAll(
+          request.getEtiquetaIds().stream()
+              .map(
+                  id ->
+                      etiquetaRepository
+                          .findById(id)
+                          .orElseThrow(() -> new RuntimeException("Etiqueta no encontrada")))
+              .collect(Collectors.toSet()));
     }
 
-    public MensajeDTO convertToDTO(Mensaje mensaje) {
-        MensajeDTO dto = new MensajeDTO();
-        dto.setId(mensaje.getId());
-        dto.setTexto(mensaje.getTexto());
-        dto.setFechaPublicacion(mensaje.getFechaPublicacion());
-        dto.setAutorId(mensaje.getAutor().getId());
+    Mensaje mensaje = new Mensaje();
+    mensaje.setAutor(autor);
+    mensaje.setTexto(request.getTexto());
+    mensaje.setFechaPublicacion(new Date());
+    mensaje.setUsuarioDestinatario(destinatario);
+    mensaje.setEtiquetas(etiquetas);
 
-        if (mensaje.getUsuarioDestinatario() != null) {
-            dto.setUsuarioDestinatarioId(mensaje.getUsuarioDestinatario().getId());
-        }
+    return mensajeRepository.save(mensaje);
+  }
 
-        if (mensaje.getUsuariosRepublicados() != null) {
-            dto.setUsuarioRepublicadoIds(mensaje.getUsuariosRepublicados().stream()
-                    .map(Usuario::getId)
-                    .collect(Collectors.toSet()));
-        }
+  public Mensaje update(Long idMensaje, NuevoMensajeDto request) {
+    Mensaje mensaje =
+        mensajeRepository
+            .findById(idMensaje)
+            .orElseThrow(() -> new RuntimeException("Mensaje no encontrado"));
 
-        if (mensaje.getEtiquetas() != null) {
-            dto.setEtiquetaIds(mensaje.getEtiquetas().stream()
-                    .map(Etiqueta::getId)
-                    .collect(Collectors.toSet()));
-        } else {
-            dto.setEtiquetaIds(new HashSet<>());
-        }
-
-        return dto;
+    if (request.getTexto() != null) {
+      mensaje.setTexto(request.getTexto());
     }
 
-
-    public Mensaje convertToEntity(MensajeDTO dto) {
-        Mensaje mensaje = new Mensaje();
-        mensaje.setId(dto.getId());
-        mensaje.setTexto(dto.getTexto());
-        mensaje.setFechaPublicacion(dto.getFechaPublicacion());
-        mensaje.setAutor(usuarioRepository.findById(dto.getAutorId()).orElse(null));
-
-        if (dto.getUsuarioDestinatarioId() != null) {
-            mensaje.setUsuarioDestinatario(usuarioRepository.findById(dto.getUsuarioDestinatarioId()).orElse(null));
-        }
-
-        // Save the mensaje first to get a valid ID
-        Mensaje savedMensaje = mensajeRepository.save(mensaje);
-
-        Set<Etiqueta> etiquetas = new HashSet<>();
-        if (dto.getEtiquetaIds() != null) {
-            etiquetas.addAll(dto.getEtiquetaIds().stream()
-                    .map(etiquetaId -> etiquetaRepository.findById(etiquetaId).orElse(null))
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet()));
-        }
-
-        Set<String> hashtags = extractHashtags(dto.getTexto());
-        for (String hashtag : hashtags) {
-            Etiqueta etiqueta = etiquetaRepository.findByNombre(hashtag)
-                    .orElseGet(() -> {
-                        Etiqueta newEtiqueta = new Etiqueta();
-                        newEtiqueta.setNombre(hashtag);
-                        newEtiqueta.setDelMomento(true);
-                        return etiquetaRepository.save(newEtiqueta);
-                    });
-            etiquetas.add(etiqueta);
-        }
-
-        savedMensaje.setEtiquetas(etiquetas);
-        dto.setEtiquetaIds(etiquetas.stream().map(Etiqueta::getId).collect(Collectors.toSet()));
-
-        if (dto.getUsuarioRepublicadoIds() != null) {
-            savedMensaje.setUsuariosRepublicados(dto.getUsuarioRepublicadoIds().stream()
-                    .map(usuarioId -> usuarioRepository.findById(usuarioId).orElse(null))
-                    .filter(Objects::nonNull)
-                    .collect(Collectors.toSet()));
-        } else {
-            savedMensaje.setUsuariosRepublicados(new HashSet<>());
-        }
-
-        return mensajeRepository.save(savedMensaje);
+    if (request.getDestinatarioId() != null) {
+      Usuario destinatario =
+          usuarioRepository
+              .findById(request.getDestinatarioId())
+              .orElseThrow(() -> new RuntimeException("Destinatario no encontrado"));
+      mensaje.setUsuarioDestinatario(destinatario);
     }
 
-
-
-
-@Transactional
-public Set<Mensaje> getAll() {
-    List<Object[]> results = mensajeRepository.findAllWithEtiquetas();
-    Set<Mensaje> mensajes = new HashSet<>();
-    for (Object[] result : results) {
-        Mensaje mensaje = (Mensaje) result[0];
-        Etiqueta etiqueta = (Etiqueta) result[1];
-        mensaje.getEtiquetas().add(etiqueta);
-        mensajes.add(mensaje);
-    }
-    return mensajes;
-}
-
-    public MensajeDTO getById(Long id) {
-        return mensajeRepository.findById(id)
-                .map(this::convertToDTO)
-                .orElse(null);
+    if (request.getEtiquetaIds() != null) {
+      Set<Etiqueta> etiquetas =
+          request.getEtiquetaIds().stream()
+              .map(
+                  id ->
+                      etiquetaRepository
+                          .findById(id)
+                          .orElseThrow(() -> new RuntimeException("Etiqueta no encontrada")))
+              .collect(Collectors.toSet());
+      mensaje.setEtiquetas(etiquetas);
     }
 
-    public MensajeDTO save(MensajeDTO dto) {
-        Mensaje mensaje = convertToEntity(dto);
-        return convertToDTO(mensajeRepository.save(mensaje));
+    return mensajeRepository.save(mensaje);
+  }
+
+  private Set<String> extractHashtags(String texto) {
+    Set<String> hashtags = new HashSet<>();
+    String[] words = texto.split("\\s+");
+    for (String word : words) {
+      if (word.startsWith("#")) {
+        hashtags.add(word.substring(1));
+      }
     }
-
-    public MensajeDTO update(MensajeDTO dto) {
-
-        Mensaje mensajeExistente = mensajeRepository.findById(dto.getId()).orElse(null);
-
-        if (dto.getTexto() == null) {
-            dto.setTexto(mensajeExistente.getTexto());
-        }
-        if (dto.getAutorId() == null) {
-            dto.setAutorId(mensajeExistente.getAutor().getId());
-        }
-        if (dto.getFechaPublicacion() == null) {
-            dto.setFechaPublicacion(mensajeExistente.getFechaPublicacion());
-        }
-        if (dto.getUsuarioDestinatarioId() == null) {
-            if (mensajeExistente.getUsuarioDestinatario() != null) {
-                dto.setUsuarioDestinatarioId(mensajeExistente.getUsuarioDestinatario().getId());
-            } else {
-                dto.setUsuarioDestinatarioId(null);
-            }
-        }
-        if (dto.getEtiquetaIds() == null) {
-            dto.setEtiquetaIds(mensajeExistente.getEtiquetas().stream()
-                    .map(etiqueta -> etiqueta.getId())
-                    .collect(Collectors.toSet()));
-        }
-        if (dto.getUsuarioRepublicadoIds() == null) {
-            dto.setUsuarioRepublicadoIds(mensajeExistente.getUsuariosRepublicados().stream()
-                    .map(usuario -> usuario.getId())
-                    .collect(Collectors.toSet()));
-        }
-
-        Mensaje mensaje = convertToEntity(dto);
-        if (mensajeRepository.existsById(mensaje.getId())) {
-            return convertToDTO(mensajeRepository.save(mensaje));
-        } else {
-            return null;
-        }
-    }
-
-    public boolean delete(Long id) {
-        return mensajeRepository.findById(id).map(mensaje -> {
-            mensajeRepository.delete(mensaje);
-            return true;
-        }).orElse(false);
-    }
-
-
-    private Set<String> extractHashtags(String texto) {
-        Set<String> hashtags = new HashSet<>();
-        String[] words = texto.split("\\s+");
-        for (String word : words) {
-            if (word.startsWith("#")) {
-                hashtags.add(word.substring(1));
-            }
-        }
-        return hashtags;
-    }
+    return hashtags;
+  }
 }
