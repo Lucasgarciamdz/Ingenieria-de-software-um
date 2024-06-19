@@ -5,7 +5,7 @@ import ar.um.edu.microblogging.dto.entities.Mensaje;
 import ar.um.edu.microblogging.dto.entities.Usuario;
 import ar.um.edu.microblogging.dto.requests.NuevoMensajeDto;
 import ar.um.edu.microblogging.repositories.EtiquetaRepository;
-import ar.um.edu.microblogging.repositories.MensajeDao;
+
 import ar.um.edu.microblogging.repositories.MensajeRepository;
 import ar.um.edu.microblogging.repositories.UsuarioRepository;
 import java.util.Date;
@@ -22,31 +22,25 @@ public class MensajeService {
   private final MensajeRepository mensajeRepository;
   private final UsuarioRepository usuarioRepository;
   private final EtiquetaRepository etiquetaRepository;
-  private final MensajeDao mensajeDao;
 
   public MensajeService(
       MensajeRepository mensajeRepository,
       UsuarioRepository usuarioRepository,
-      EtiquetaRepository etiquetaRepository,
-      MensajeDao mensajeDao) {
+      EtiquetaRepository etiquetaRepository) {
     this.mensajeRepository = mensajeRepository;
     this.usuarioRepository = usuarioRepository;
     this.etiquetaRepository = etiquetaRepository;
-    this.mensajeDao = mensajeDao;
   }
 
   public List<Mensaje> getAll() {
     return mensajeRepository.findAll();
   }
 
-//  public Mensaje getById(Long id) {
-//    Optional<Mensaje> mensaje = mensajeRepository.findById(id);
-//    return mensaje.orElse(null);
-//  }
-//  
   public Mensaje getById(Long id) {
-    return mensajeDao.findByIdWithEtiquetas(id);
+    Optional<Mensaje> mensaje = mensajeRepository.findById(id);
+    return mensaje.orElse(null);
   }
+
 
   public boolean delete(Long id) {
     return mensajeRepository

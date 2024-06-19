@@ -20,6 +20,8 @@ public class MensajeController {
   @GetMapping("/{id}")
   public BaseResponse<Mensaje> get(@PathVariable Long id) {
     Mensaje mensaje = mensajeService.getById(id);
+    
+    
     return new BaseResponse<>("Mensaje", mensaje);
   }
 

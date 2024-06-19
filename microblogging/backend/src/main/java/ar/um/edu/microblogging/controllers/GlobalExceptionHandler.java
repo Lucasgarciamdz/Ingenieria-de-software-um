@@ -13,6 +13,6 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(Exception.class)
   public ResponseEntity<String> handleException(Exception e) {
     log.info("Error: {}", e.getMessage());
-    return new ResponseEntity<>("exploto", HttpStatus.INTERNAL_SERVER_ERROR);
+    return new ResponseEntity<>("explotoooooo, JPA yo se que tu me escuchas", HttpStatus.INTERNAL_SERVER_ERROR);
   }
 }
