@@ -77,9 +77,9 @@ button:hover {
 .publications {
     background-color: #f0f0f0; /* Fondo gris */
     padding: 20px; /* Espacio alrededor del contenido */
-    padding-left: 270px;
-    margin: 20px 0; /* Espacio alrededor del recuadro */
+    margin: 20px auto; /* Espacio alrededor del recuadro y centrado horizontal */
     border: 1px solid #ccc; /* Borde alrededor del recuadro */
+    width: 90%; /* Ajusta este valor para cambiar el ancho del bloque */
 }
 
 .publications div {
@@ -111,3 +111,16 @@ button:hover {
 .etiquetas-del-momento li {
     margin-bottom: 10px; /* Espacio entre cada etiqueta */
 }
+.example-form-field {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+
+.example-form-field button {
+  border: none;
+  background-color: transparent;
+  color: gray;
+}
+

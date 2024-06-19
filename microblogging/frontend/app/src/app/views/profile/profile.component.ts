@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import {NavBarComponent} from "../../components/nav-bar/nav-bar.component";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @Component({
   selector: 'app-profile',
   standalone: true,
   imports: [
-    NavBarComponent
+    NavBarComponent,
+    MatTabsModule
   ],
   templateUrl: './profile.component.html',
   styleUrl: './profile.component.css'

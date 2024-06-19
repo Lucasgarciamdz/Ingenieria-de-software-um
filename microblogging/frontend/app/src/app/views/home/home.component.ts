@@ -5,6 +5,10 @@ import {NgFor, NgIf} from "@angular/common";
 import {FormsModule} from "@angular/forms";
 import {MensajeComponent} from "../../components/mensaje/mensaje.component";
 import {PublicacionMensajeComponent} from "../../components/publicacion-mensaje/publicacion-mensaje.component";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatInputModule} from "@angular/material/input";
+import {MatButtonModule} from "@angular/material/button";
+import {MatIconModule} from "@angular/material/icon";
 
 @Component({
   selector: 'app-home',
@@ -16,7 +20,8 @@ import {PublicacionMensajeComponent} from "../../components/publicacion-mensaje/
     FormsModule,
     NgIf,
     MensajeComponent,
-    PublicacionMensajeComponent
+    PublicacionMensajeComponent,
+    MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
@@ -25,4 +30,7 @@ import {PublicacionMensajeComponent} from "../../components/publicacion-mensaje/
 
 export class HomeComponent {
 
+  borrar() {
+
+  }
 }
