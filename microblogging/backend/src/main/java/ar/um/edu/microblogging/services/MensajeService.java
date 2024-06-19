@@ -5,7 +5,6 @@ import ar.um.edu.microblogging.dto.entities.Mensaje;
 import ar.um.edu.microblogging.dto.entities.Usuario;
 import ar.um.edu.microblogging.dto.requests.NuevoMensajeDto;
 import ar.um.edu.microblogging.repositories.EtiquetaRepository;
-
 import ar.um.edu.microblogging.repositories.MensajeRepository;
 import ar.um.edu.microblogging.repositories.UsuarioRepository;
 import java.util.Date;
@@ -40,7 +39,6 @@ public class MensajeService {
     Optional<Mensaje> mensaje = mensajeRepository.findById(id);
     return mensaje.orElse(null);
   }
-
 
   public boolean delete(Long id) {
     return mensajeRepository

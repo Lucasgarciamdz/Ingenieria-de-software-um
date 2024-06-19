@@ -5,15 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.util.Objects;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
-@JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Setter
 @Entity
 public class Seguidores extends BaseEntity {
@@ -39,8 +35,8 @@ public class Seguidores extends BaseEntity {
     if (!super.equals(o)) {
       return false;
     }
-    return Objects.equals(usuario, seguidores.usuario) &&
-        Objects.equals(usuarioSeguido, seguidores.usuarioSeguido);
+    return Objects.equals(usuario, seguidores.usuario)
+        && Objects.equals(usuarioSeguido, seguidores.usuarioSeguido);
   }
 
   @Override

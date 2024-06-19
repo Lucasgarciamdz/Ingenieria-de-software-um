@@ -46,7 +46,7 @@ public class EtiquetaService {
         etiquetaExistente.setNombre(nuevaEtiquetaDto.getNombre());
       }
       if (nuevaEtiquetaDto.getDelMomento() != null) {
-        etiquetaExistente.setDelMomento(nuevaEtiquetaDto.getDelMomento() == 1);  
+        etiquetaExistente.setDelMomento(nuevaEtiquetaDto.getDelMomento() == 1);
       }
       return etiquetaRepository.save(etiquetaExistente);
     } else {

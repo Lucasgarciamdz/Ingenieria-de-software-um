@@ -7,18 +7,12 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.util.Objects;
 import java.util.Set;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
-@JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Usuario extends BaseEntity {
 
@@ -39,7 +33,6 @@ public class Usuario extends BaseEntity {
 
   @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonBackReference
-  
   private Set<Mensaje> mensajes;
 
   @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -61,11 +54,11 @@ public class Usuario extends BaseEntity {
     if (!super.equals(o)) {
       return false;
     }
-    return Objects.equals(nombreUsuario, usuario.nombreUsuario) &&
-        Objects.equals(email, usuario.email) &&
-        Objects.equals(clave, usuario.clave) &&
-        Objects.equals(nombreCompleto, usuario.nombreCompleto) &&
-        Objects.equals(descripcion, usuario.descripcion);
+    return Objects.equals(nombreUsuario, usuario.nombreUsuario)
+        && Objects.equals(email, usuario.email)
+        && Objects.equals(clave, usuario.clave)
+        && Objects.equals(nombreCompleto, usuario.nombreCompleto)
+        && Objects.equals(descripcion, usuario.descripcion);
   }
 
   @Override

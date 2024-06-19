@@ -36,7 +36,8 @@ public class EtiquetaController {
   }
 
   @PutMapping("/{id}")
-  public BaseResponse<Etiqueta> put(@PathVariable Long id, @RequestBody NuevaEtiquetaDto modificacion) {
+  public BaseResponse<Etiqueta> put(
+      @PathVariable Long id, @RequestBody NuevaEtiquetaDto modificacion) {
     Etiqueta etiqueta = etiquetaService.update(id, modificacion);
     return new BaseResponse<>("Etiqueta actualizada", etiqueta);
   }

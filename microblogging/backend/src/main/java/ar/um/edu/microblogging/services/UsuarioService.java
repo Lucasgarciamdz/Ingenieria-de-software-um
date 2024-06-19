@@ -3,10 +3,9 @@ package ar.um.edu.microblogging.services;
 import ar.um.edu.microblogging.dto.entities.Usuario;
 import ar.um.edu.microblogging.dto.requests.NuevoUsuarioDto;
 import ar.um.edu.microblogging.repositories.UsuarioRepository;
+import java.util.List;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UsuarioService implements BaseService<Usuario> {
@@ -14,7 +13,8 @@ public class UsuarioService implements BaseService<Usuario> {
   private final UsuarioRepository usuarioRepository;
   private final BCryptPasswordEncoder passwordEncoder;
 
-  public UsuarioService(UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder) {
+  public UsuarioService(
+      UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder) {
     this.usuarioRepository = usuarioRepository;
     this.passwordEncoder = passwordEncoder;
   }

@@ -1,6 +1,5 @@
 package ar.um.edu.microblogging.dto.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -14,9 +13,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-@JsonIdentityInfo(
-    generator = ObjectIdGenerators.PropertyGenerator.class,
-    property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Mensaje extends BaseEntity {
 
@@ -35,8 +32,7 @@ public class Mensaje extends BaseEntity {
   @JoinColumn(name = "destinatario_id")
   @JsonManagedReference
   private Usuario usuarioDestinatario;
-  
-  
+
   @ManyToMany(fetch = FetchType.EAGER)
   @JoinTable(
       name = "mensaje_etiqueta",
@@ -56,10 +52,10 @@ public class Mensaje extends BaseEntity {
     if (!super.equals(o)) {
       return false;
     }
-    return Objects.equals(autor, mensaje.autor) &&
-        Objects.equals(texto, mensaje.texto) &&
-        Objects.equals(fechaPublicacion, mensaje.fechaPublicacion) &&
-        Objects.equals(usuarioDestinatario, mensaje.usuarioDestinatario);
+    return Objects.equals(autor, mensaje.autor)
+        && Objects.equals(texto, mensaje.texto)
+        && Objects.equals(fechaPublicacion, mensaje.fechaPublicacion)
+        && Objects.equals(usuarioDestinatario, mensaje.usuarioDestinatario);
   }
 
   @Override

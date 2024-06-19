@@ -5,7 +5,6 @@ import ar.um.edu.microblogging.dto.entities.Seguidores;
 import java.util.Set;
 import lombok.Data;
 
-
 @Data
 public class NuevoUsuarioDto {
   private Long usuarioId;
@@ -18,5 +17,4 @@ public class NuevoUsuarioDto {
   private Set<Mensaje> mensajes;
   private Set<Seguidores> seguidores;
   private Set<Seguidores> seguidos;
-  
 }
