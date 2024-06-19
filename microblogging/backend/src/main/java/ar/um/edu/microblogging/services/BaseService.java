@@ -9,8 +9,10 @@ public interface BaseService<T> {
   T getById(Long id);
 
   T save(T entity);
-
+  
   T update(T entity);
 
   boolean delete(Long id);
+  
+  
 }

@@ -1,5 +1,6 @@
 package ar.um.edu.microblogging.controllers;
 
+import ar.um.edu.microblogging.dto.dtos.UsuarioDto;
 import ar.um.edu.microblogging.dto.entities.Usuario;
 import ar.um.edu.microblogging.dto.responses.BaseResponse;
 import ar.um.edu.microblogging.services.UsuarioService;
@@ -39,10 +40,16 @@ public class UsuarioController implements BaseController<Usuario> {
   }
 
   @Override
-  @PostMapping
+  @PostMapping()
   public BaseResponse<Usuario> post(@RequestBody Usuario body) {
     Usuario usuario = usuarioService.save(body);
-    return new BaseResponse<>("Usuario", usuario);
+    return new BaseResponse<>("Usuario creado con exito", usuario);
+  }
+
+  @PostMapping("/v2")
+  public BaseResponse<Usuario> post2(@RequestBody UsuarioDto body) {
+    Usuario usuario = usuarioService.saveDto(body);
+    return new BaseResponse<>("Usuario creado con exito", usuario);
   }
 
   @Override
@@ -87,7 +94,7 @@ public class UsuarioController implements BaseController<Usuario> {
   }
 
   @PostMapping("/login")
-  public BaseResponse<Usuario> login(@RequestBody String email, @RequestBody String clave) {
+  public BaseResponse<Usuario> login(@RequestParam String email, @RequestParam String clave) {
     Usuario usuario = usuarioService.login(email, clave);
     return new BaseResponse<>("Usuario", usuario);
   }

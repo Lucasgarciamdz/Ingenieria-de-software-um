@@ -7,11 +7,15 @@ import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Etiqueta extends BaseEntity {
@@ -23,7 +27,7 @@ public class Etiqueta extends BaseEntity {
   private Boolean delMomento;
 
   @ManyToMany(mappedBy = "etiquetas", fetch = FetchType.LAZY)
-  @JsonBackReference
+  @JsonBackReference(value = "mensaje-etiquetas4")
   private Set<Mensaje> mensajes = new HashSet<>();
 
   @Override

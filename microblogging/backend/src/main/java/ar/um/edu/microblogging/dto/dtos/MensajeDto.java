@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class MensajeDto {
+  
   private Long id;
   private Long autorId;
   private String texto;

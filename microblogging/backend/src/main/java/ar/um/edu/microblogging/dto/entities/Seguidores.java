@@ -5,23 +5,27 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.util.Objects;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 public class Seguidores extends BaseEntity {
 
   @ManyToOne
   @JoinColumn(name = "usuario_id", nullable = false)
-  @JsonBackReference
+  @JsonBackReference(value = "usuario-seguidores2")
   private Usuario usuario;
 
   @ManyToOne
   @JoinColumn(name = "usuario_seguido_id", nullable = false)
-  @JsonBackReference
+  @JsonBackReference(value = "usuario-seguidos2")
   private Usuario usuarioSeguido;
 
   @Override

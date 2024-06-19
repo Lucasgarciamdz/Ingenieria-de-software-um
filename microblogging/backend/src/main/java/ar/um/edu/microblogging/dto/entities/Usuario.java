@@ -7,11 +7,15 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.util.Objects;
 import java.util.Set;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Usuario extends BaseEntity {
@@ -32,16 +36,20 @@ public class Usuario extends BaseEntity {
   private String descripcion;
 
   @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonBackReference
+  @JsonBackReference(value="usuario-mensajes1")
   private Set<Mensaje> mensajes;
 
   @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonManagedReference
+  @JsonManagedReference(value="usuario-seguidores1")
   private Set<Seguidores> seguidores;
 
   @OneToMany(mappedBy = "usuarioSeguido", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonManagedReference
+  @JsonManagedReference(value="usuario-seguidos1")
   private Set<Seguidores> seguidos;
+
+  @OneToMany(mappedBy = "usuarioDestinatario", cascade = CascadeType.ALL, orphanRemoval = true)
+  @JsonManagedReference(value="mensaje-privado1")
+  private Set<Mensaje> mensajePrivado;
 
   @Override
   public boolean equals(Object o) {

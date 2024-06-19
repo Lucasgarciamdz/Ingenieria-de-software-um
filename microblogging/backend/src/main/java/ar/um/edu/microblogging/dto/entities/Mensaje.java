@@ -1,5 +1,6 @@
 package ar.um.edu.microblogging.dto.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
@@ -8,18 +9,22 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 public class Mensaje extends BaseEntity {
 
   @ManyToOne
   @JoinColumn(name = "autor_id", nullable = false)
-  @JsonManagedReference
+  @JsonManagedReference(value = "usuario-mensajes3")
   private Usuario autor;
 
   @Column(length = 140, nullable = false)
@@ -30,7 +35,7 @@ public class Mensaje extends BaseEntity {
 
   @ManyToOne
   @JoinColumn(name = "destinatario_id")
-  @JsonManagedReference
+  @JsonBackReference(value = "mensaje-privado3")
   private Usuario usuarioDestinatario;
 
   @ManyToMany(fetch = FetchType.EAGER)
@@ -38,7 +43,7 @@ public class Mensaje extends BaseEntity {
       name = "mensaje_etiqueta",
       joinColumns = @JoinColumn(name = "mensaje_id"),
       inverseJoinColumns = @JoinColumn(name = "etiqueta_id"))
-  @JsonManagedReference
+  @JsonManagedReference(value = "mensaje-etiquetas3")
   private Set<Etiqueta> etiquetas = new HashSet<>();
 
   @Override

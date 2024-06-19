@@ -1,9 +1,12 @@
 package ar.um.edu.microblogging.services;
 
+import ar.um.edu.microblogging.dto.dtos.UsuarioDto;
 import ar.um.edu.microblogging.dto.entities.Usuario;
 import ar.um.edu.microblogging.dto.requests.NuevoUsuarioDto;
 import ar.um.edu.microblogging.repositories.UsuarioRepository;
+import java.lang.reflect.InvocationTargetException;
 import java.util.List;
+import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,13 +37,40 @@ public class UsuarioService implements BaseService<Usuario> {
     return this.usuarioRepository.save(entity);
   }
 
+  
+  public Usuario saveDto(UsuarioDto dto) {
+
+      Usuario entity = new Usuario();
+      BeanUtils.copyProperties(dto, entity);
+      entity.setClave(passwordEncoder.encode(entity.getClave()));
+      return this.usuarioRepository.save(entity);
+
+  }
+  
+  
+
   @Override
   public Usuario update(Usuario entity) {
+    
+    Usuario user = this.usuarioRepository.findById(entity.getId()).orElse(null);
+
+    BeanUtils.copyProperties(dto, entity);
+    
+    
     if (usuarioRepository.existsById(entity.getId())) {
       return this.usuarioRepository.save(entity);
     } else {
       return null;
     }
+  }
+  
+  public Usuario updateDto(UsuarioDto dto, Long id) {
+
+    Usuario entity = this.usuarioRepository.findById(id).orElse(null);
+    assert entity != null;
+    BeanUtils.copyProperties(dto, entity);
+    entity.setClave(passwordEncoder.encode(entity.getClave()));
+    return this.usuarioRepository.save(entity);
   }
 
   @Override

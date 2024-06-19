@@ -2,7 +2,9 @@ package ar.um.edu.microblogging.controllers;
 
 import ar.um.edu.microblogging.dto.responses.BaseResponse;
 import java.util.List;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
 public interface BaseController<T> {
 
   BaseResponse<T> get(Long id);
