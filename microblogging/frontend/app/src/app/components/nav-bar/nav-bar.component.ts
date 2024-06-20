@@ -27,16 +27,10 @@ export class NavBarComponent {
   rol: string | null = null;
 
   constructor(private authService: AuthService) {
-    afterNextRender(() => {
-      this.user_id = this.authService.getUserId();
-
-    });
   }
   readonly panelOpenState = signal(false);
 
-  borrar() {
 
-  }
 
 
 }

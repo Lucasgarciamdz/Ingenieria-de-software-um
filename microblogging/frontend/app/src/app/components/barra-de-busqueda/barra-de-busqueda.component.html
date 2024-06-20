@@ -1,15 +1,22 @@
-<div class="search-box">
-  <mat-form-field class="example-form-field">
-    <mat-icon matPrefix>search</mat-icon>
-    <mat-label>Buscar usuarios</mat-label>
-    <input matInput #searchInput>
-    <button matSuffix mat-icon-button aria-label="Clear" (click)="buscarUsuario(searchInput.value)">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
+<div class="search-box w-100">
+    <mat-form-field class="example-form-field w-100">
+        <mat-label>Buscar usuarios</mat-label>
+        <input matInput #searchInput>
+        <button matSuffix mat-icon-button aria-label="Clear" (click)="buscarUsuario(searchInput.value)">
+            <mat-icon>search</mat-icon>
+        </button>
+    </mat-form-field>
 </div>
 
-<div *ngFor="let usuario of usuarios">
-  <p>{{ usuario.nombreUsuario }}</p>
-  <button (click)="seguirUsuario(usuario.nombreUsuario)">Seguir</button>
+<div class="card mb-3" *ngFor="let usuario of usuarios">
+    <div class="card-body d-flex justify-content-between align-items-center">
+        <div>
+            <h4 class="card-title mb-0">{{ usuario.nombreUsuario }}</h4>
+            <h5 class="card-title mb-0">{{ usuario.nombreCompleto }}</h5>
+        </div>
+        <button class="btn btn-primary" (click)="seguirUsuario(usuario.id)">Seguir</button>
+    </div>
 </div>
+
+
+<!-- TODO Cambiar componente a un dropdown y que se cierre cuando toco seguir o no lo focueo-->

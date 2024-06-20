@@ -15,5 +15,6 @@ export class UnsetUserAction implements Action {
 
 
 
-export type authActions=    SetUserAction  |
+export type authActions=
+    SetUserAction  |
     UnsetUserAction ;
