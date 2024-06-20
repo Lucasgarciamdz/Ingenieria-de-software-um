@@ -1,13 +1,16 @@
-<mat-toolbar class="toolbar">
+<mat-toolbar class="toolbar d-flex align-items-center">
   <span>MicroApp</span>
-  <span class="example-spacer"></span>
-  <button mat-icon-button class="example-icon favorite-icon" aria-label="Example icon-button with heart icon" routerLink="/profile">
+  <span class="spacer"></span>
+  <button mat-icon-button routerLink="/profile">
     <mat-icon>home</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" routerLink="/my-publications">
+  <button mat-icon-button routerLink="/my-publications">
     <mat-icon>account_circle</mat-icon>
   </button>
-  <button mat-icon-button class="example-icon" aria-label="Example icon-button with share icon" routerLink="/my-publications">
+  <button mat-icon-button routerLink="/my-publications">
     <mat-icon>article</mat-icon>
+  </button>
+  <button mat-icon-button routerLink="/temas-del-momento">
+    <mat-icon>tag</mat-icon>
   </button>
 </mat-toolbar>

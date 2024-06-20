@@ -1,0 +1,5 @@
+.search-box input[type="text"] {
+  margin-right: 5px;
+  width: calc(100% - 85px);
+  overflow: auto;
+}

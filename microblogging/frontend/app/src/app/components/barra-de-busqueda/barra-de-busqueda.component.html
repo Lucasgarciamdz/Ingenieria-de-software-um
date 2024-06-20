@@ -1,0 +1,15 @@
+<div class="search-box">
+  <mat-form-field class="example-form-field">
+    <mat-icon matPrefix>search</mat-icon>
+    <mat-label>Buscar usuarios</mat-label>
+    <input matInput #searchInput>
+    <button matSuffix mat-icon-button aria-label="Clear" (click)="buscarUsuario(searchInput.value)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<div *ngFor="let usuario of usuarios">
+  <p>{{ usuario.nombreUsuario }}</p>
+  <button (click)="seguirUsuario(usuario.nombreUsuario)">Seguir</button>
+</div>

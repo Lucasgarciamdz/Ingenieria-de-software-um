@@ -1,26 +1,22 @@
-.search-box {
+/*.search-box {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 20px;
-    width: 50%; /* Ajusta este valor para cambiar el tamaño del cuadro de búsqueda */
+    width: 50%; !* Ajusta este valor para cambiar el tamaño del cuadro de búsqueda *!
     margin-left: auto;
     margin-right: auto;
 }
 
 
-.search-box input[type="text"],
+.search-box input[type="text"],*/
 .apply-filter-button {
     border: 2px solid #ccc;
     border-radius: 5px;
     padding: 10px;
 }
 
-.search-box input[type="text"] {
-    margin-right: 5px;
-    width: calc(100% - 85px);
-    overflow: auto;
-}
+
 
 .apply-filter-button {
     background-color: #007bff;

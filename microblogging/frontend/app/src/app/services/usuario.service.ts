@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../environment/environment.dev";
+import {BasicResponse} from "../models/basic-response.model";
+
 
 @Injectable({
   providedIn: 'root'
@@ -8,27 +10,24 @@ import { Observable } from 'rxjs';
 
 export class UsuarioService {
 
-  private url = '/api/users';
+  constructor(
+    private http: HttpClient
+  ) {}
 
-  constructor(private http: HttpClient) { }
+/*  obtenerUsuariosPorNombre(nombre : string) : Promise<any>{
+    const url = `${environment.url}/usuarios?nombre=`+nombre;
+    return new Promise<any | void>( (resolve,reject) => {
+      this.http.post<BasicResponse>(url, this.authSvc.headers_http).subscribe(
+        {
+          next(res:any) {
+            resolve(res.response)
+          },
+          error(msg) {
+            reject(msg)
+          }
+        });
 
-  getAll(): Observable<any[]> {
-    return this.http.get<any[]>(this.url);
-  }
+    });
 
-  get(id: number): Observable<any> {
-    return this.http.get<any>(`${this.url}/${id}`);
-  }
-
-  post(data: any): Observable<any> {
-    return this.http.post<any>(this.url, data);
-  }
-
-  put(id: number, data: any): Observable<any> {
-    return this.http.put<any>(`${this.url}/${id}`, data);
-  }
-
-  delete(id: number): Observable<any> {
-    return this.http.delete<any>(`${this.url}/${id}`);
-  }
+  }*/
 }

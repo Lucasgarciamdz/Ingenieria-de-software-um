@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component,  ChangeDetectionStrategy} from '@angular/core';
 import {NavBarComponent} from "../../components/nav-bar/nav-bar.component";
 import {PublicationSummaryComponent} from "../../components/publication-summary/publication-summary.component";
 import {NgFor, NgIf} from "@angular/common";
@@ -9,6 +9,8 @@ import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatInputModule} from "@angular/material/input";
 import {MatButtonModule} from "@angular/material/button";
 import {MatIconModule} from "@angular/material/icon";
+import {MatExpansionModule} from "@angular/material/expansion";
+import {BarraDeBusquedaComponent} from "../../components/barra-de-busqueda/barra-de-busqueda.component";
 
 @Component({
   selector: 'app-home',
@@ -21,14 +23,17 @@ import {MatIconModule} from "@angular/material/icon";
     NgIf,
     MensajeComponent,
     PublicacionMensajeComponent,
-    MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule
+    MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule,
+    MatExpansionModule, BarraDeBusquedaComponent
   ],
   templateUrl: './home.component.html',
-  styleUrl: './home.component.css'
+  styleUrl: './home.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 
 
 export class HomeComponent {
+
 
   borrar() {
 
