@@ -1,10 +1,8 @@
 package ar.um.edu.microblogging.dto.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToMany;
-
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.Data;
@@ -15,12 +13,13 @@ import lombok.EqualsAndHashCode;
 @Entity
 public class Etiqueta extends BaseEntity {
 
-  @Column(nullable = false)
+  @Column(nullable = false, unique = true)
   private String nombre;
 
   @Column(nullable = false)
   private Boolean delMomento;
 
-  @ManyToMany(mappedBy = "etiquetas", fetch = FetchType.LAZY)
+  @ManyToMany(mappedBy = "etiquetas", fetch = FetchType.EAGER)
+  @JsonBackReference
   private Set<Mensaje> mensajes = new HashSet<>();
 }
