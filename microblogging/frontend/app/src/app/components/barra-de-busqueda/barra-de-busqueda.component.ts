@@ -1,11 +1,12 @@
-import {Component} from '@angular/core';
+import {ChangeDetectorRef, Component} from '@angular/core';
 import {MatFormField, MatLabel, MatPrefix, MatSuffix} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
 import {Usuario} from "../../models/usuario.model";
 import {UsuarioService} from "../../services/usuario.service";
-import {NgFor} from "@angular/common";
+import {NgFor, NgIf} from "@angular/common";
+import {MatDialogActions, MatDialogClose, MatDialogContent} from "@angular/material/dialog";
 
 @Component({
     selector: 'app-barra-de-busqueda',
@@ -18,35 +19,42 @@ import {NgFor} from "@angular/common";
         MatLabel,
         MatPrefix,
         MatSuffix,
-        NgFor
+        NgFor,
+        NgIf,
+        MatDialogActions,
+        MatDialogClose,
+        MatDialogContent
     ],
     templateUrl: './barra-de-busqueda.component.html',
     styleUrl: './barra-de-busqueda.component.css'
+
+
 })
 export class BarraDeBusquedaComponent {
+
 
     usuarios: Usuario[] = [];
 
     constructor(
-       private usuarioSvc: UsuarioService
+        private usuarioSvc: UsuarioService,
+        private changeDetector: ChangeDetectorRef
     ) {
     }
 
-    borrar() {
 
-    }
-
-   async buscarUsuario(nombreUsuario: string) {
+    async buscarUsuario(nombreUsuario: string) {
         this.usuarios = [];
-       console.log(" --- Buscando usuarios por nombre de usuario : " + nombreUsuario);
-       await this.usuarioSvc.obtenerUsuariosPorNombre(nombreUsuario).then(
-            res =>{
-                    this.usuarios = res.slice();
-                    console.log(" ------ USUARIOS : " +  this.usuarios.length )
+        console.log(" --- Buscando usuarios por nombre de usuario : " + nombreUsuario);
+        await this.usuarioSvc.obtenerUsuariosPorNombre(nombreUsuario).then(
+            res => {
+                this.usuarios = res.slice();
+                console.log(" ------ USUARIOS encontrados: " + this.usuarios.length)
+                console.log(" ------ USUARIOS encontrados: " + this.usuarios)
+                this.changeDetector.detectChanges();
             }
         ).catch(error => {
             console.log(error)
-       })
+        })
     }
 
     seguirUsuario(idUsuarioASeguir: number | string) {

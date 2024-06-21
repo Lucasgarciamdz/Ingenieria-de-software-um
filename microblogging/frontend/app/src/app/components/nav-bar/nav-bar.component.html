@@ -1,16 +1,10 @@
 <mat-toolbar class="toolbar d-flex align-items-center">
   <span>MicroApp</span>
   <span class="spacer"></span>
-  <button mat-icon-button routerLink="/profile">
+  <button mat-icon-button [routerLink]="['/home']">
     <mat-icon>home</mat-icon>
   </button>
-  <button mat-icon-button routerLink="/my-publications">
+  <button mat-icon-button [routerLink]="['/profile']">
     <mat-icon>account_circle</mat-icon>
-  </button>
-  <button mat-icon-button routerLink="/my-publications">
-    <mat-icon>article</mat-icon>
-  </button>
-  <button mat-icon-button routerLink="/temas-del-momento">
-    <mat-icon>tag</mat-icon>
   </button>
 </mat-toolbar>

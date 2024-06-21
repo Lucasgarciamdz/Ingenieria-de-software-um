@@ -1,21 +1,58 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {NavBarComponent} from "../../components/nav-bar/nav-bar.component";
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatCard, MatCardActions, MatCardContent, MatCardHeader} from "@angular/material/card";
+import {Usuario} from "../../models/usuario.model";
+import {UsuarioService} from "../../services/usuario.service";
+import {MatList, MatListItem} from "@angular/material/list";
+import {NgForOf} from "@angular/common";
+import {MensajeComponent} from "../../components/mensaje/mensaje.component";
+import {PublicacionMensajeComponent} from "../../components/publicacion-mensaje/publicacion-mensaje.component";
 
 @Component({
-  selector: 'app-profile',
-  standalone: true,
-  imports: [
-    NavBarComponent,
-    MatTabsModule
-  ],
-  templateUrl: './profile.component.html',
-  styleUrl: './profile.component.css'
+    selector: 'app-profile',
+    standalone: true,
+    imports: [
+        NavBarComponent,
+        MatTabsModule,
+        MatCard,
+        MatCardHeader,
+        MatCardContent,
+        MatCardActions,
+        MatList,
+        NgForOf,
+        MatListItem,
+        MensajeComponent,
+        PublicacionMensajeComponent
+    ],
+    templateUrl: './profile.component.html',
+    styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
-  name: string = 'John'; // Valor predeterminado para el nombre
-  lastname: string = 'Doe'; // Valor predeterminado para el apellido
-  birth_date: Date = new Date('1990-01-01'); // Valor predeterminado para la fecha de nacimiento
-  user_name: string = 'johndoe'; // Valor predeterminado para el nombre de usuario
-  email: string = 'john@example.com'; // Valor predeterminado para el email
+
+    usuario: Usuario | any;
+
+    constructor(
+        private usuarioSvc: UsuarioService
+    ) {
+    }
+
+    ngOnInit() {
+        // Consumirlo de redux
+        console.log(" --- askhdlsak")
+        this.buscarInformacionDeUsuarioPorId(1)
+    }
+
+    private async buscarInformacionDeUsuarioPorId(idUsuario: number) {
+        console.log(" --- Buscando información de usuario por ID: ");
+        await this.usuarioSvc.obtenerInformacionDeUsuarioPorId(idUsuario).then(
+            res => {
+                console.log(" --- Usuario encontrado:", res)
+                this.usuario = res;
+            }
+        ).catch(error =>{
+            console.log(error)
+        })
+        }
+
 }

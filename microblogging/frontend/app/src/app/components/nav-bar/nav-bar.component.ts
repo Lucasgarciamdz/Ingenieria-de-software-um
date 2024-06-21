@@ -12,11 +12,12 @@ import {
   MatExpansionPanelHeader,
   MatExpansionPanelTitle
 } from "@angular/material/expansion";
+import {RouterLink} from "@angular/router";
 
 @Component({
   selector: 'app-nav-bar',
   standalone: true,
-  imports: [NgIf, MatToolbarModule, MatButtonModule, MatIconModule, MatFormField, MatInput, MatLabel, MatPrefix, MatSuffix, MatExpansionPanel, MatExpansionPanelDescription, MatExpansionPanelHeader, MatExpansionPanelTitle],
+    imports: [NgIf, MatToolbarModule, MatButtonModule, MatIconModule, MatFormField, MatInput, MatLabel, MatPrefix, MatSuffix, MatExpansionPanel, MatExpansionPanelDescription, MatExpansionPanelHeader, MatExpansionPanelTitle, RouterLink],
   templateUrl: './nav-bar.component.html',
   styleUrl: './nav-bar.component.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
