@@ -20,12 +20,12 @@ public class Seguidores extends BaseEntity {
 
   @ManyToOne
   @JoinColumn(name = "usuario_id", nullable = false)
-  @JsonBackReference(value = "usuario-seguidores2")
+  @JsonBackReference(value = "usuario-seguidores")
   private Usuario usuario;
 
   @ManyToOne
   @JoinColumn(name = "usuario_seguido_id", nullable = false)
-  @JsonBackReference(value = "usuario-seguidos2")
+  @JsonBackReference(value = "usuario-seguidos")
   private Usuario usuarioSeguido;
 
   @Override

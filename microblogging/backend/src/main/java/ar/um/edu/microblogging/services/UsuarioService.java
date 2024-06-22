@@ -4,6 +4,7 @@ import ar.um.edu.microblogging.dto.dtos.UsuarioDto;
 import ar.um.edu.microblogging.dto.entities.Seguidores;
 import ar.um.edu.microblogging.dto.entities.Usuario;
 import ar.um.edu.microblogging.dto.requests.FollowUserDto;
+import ar.um.edu.microblogging.repositories.SeguidoresRepository;
 import ar.um.edu.microblogging.repositories.UsuarioRepository;
 import java.util.List;
 import java.util.Optional;
@@ -16,11 +17,13 @@ public class UsuarioService extends DtoMapper implements BaseService<Usuario, Us
 
   private final UsuarioRepository usuarioRepository;
   private final BCryptPasswordEncoder passwordEncoder;
+  private final SeguidoresRepository seguidoresRepository;
 
   public UsuarioService(
-      UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder) {
+      UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder, SeguidoresRepository seguidoresRepository) {
     this.usuarioRepository = usuarioRepository;
     this.passwordEncoder = passwordEncoder;
+    this.seguidoresRepository = seguidoresRepository;
   }
 
   @Override
@@ -84,6 +87,8 @@ public class UsuarioService extends DtoMapper implements BaseService<Usuario, Us
       seguidor.setUsuario(usuario);
       seguidor.setUsuarioSeguido(usuarioFollow);
       usuario.getSeguidos().add(seguidor);
+
+      seguidoresRepository.save(seguidor);
 
       return usuarioRepository.save(usuario);
       
