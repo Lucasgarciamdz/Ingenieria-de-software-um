@@ -72,7 +72,7 @@ public class UsuarioService extends DtoMapper implements BaseService<Usuario, Us
     return null;
   }
 
-  public Usuario follow(FollowUserDto followUserDto) {
+  public Usuario follow(FollowUserDto followUserDto) throws Exception {
     Optional<Usuario> optionalUsuario = usuarioRepository.findById(followUserDto.idUsuario());
     Optional<Usuario> optionalUsuarioFollow = usuarioRepository.findById(followUserDto.idSeguir());
 
@@ -88,8 +88,7 @@ public class UsuarioService extends DtoMapper implements BaseService<Usuario, Us
       return usuarioRepository.save(usuario);
       
     } else {
-      System.out.println("No existe perro, fijate logi");
-      return null;
+      throw new Exception("No existe perro, fijate logi");
     }
   }
 }

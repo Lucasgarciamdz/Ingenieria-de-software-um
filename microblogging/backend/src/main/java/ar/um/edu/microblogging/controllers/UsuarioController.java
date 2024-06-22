@@ -62,11 +62,7 @@ public class UsuarioController implements BaseController<Usuario, UsuarioDto> {
     return new BaseResponse<>("Usuario", deleted ? "Deleted" : "Error deleting");
   }
 
-//  @PostMapping("/login")
-//  public BaseResponse<Usuario> login(@RequestParam String email, @RequestParam String clave) {
-//    Usuario usuario = usuarioService.login(email, clave);
-//    return new BaseResponse<>("Usuario", usuario);
-//  }
+
 @PostMapping("/login")
 public BaseResponse<Usuario> login(@RequestBody LoginRequest loginRequest) {
     Usuario usuario = usuarioService.login(loginRequest.getEmail(), loginRequest.getClave());
@@ -74,7 +70,7 @@ public BaseResponse<Usuario> login(@RequestBody LoginRequest loginRequest) {
 }
   
   @PostMapping("/follow")
-  public BaseResponse<Usuario> follow(@RequestBody FollowUserDto followUserDto) {
+  public BaseResponse<Usuario> follow(@RequestBody FollowUserDto followUserDto) throws Exception {
     Usuario user = usuarioService.follow(followUserDto);
     return new BaseResponse<>("Usuario", user);
   }
