@@ -52,18 +52,14 @@ public class EtiquetaService extends DtoMapper implements BaseService<Etiqueta, 
 
   @Override
   public boolean delete(Long etiquetaId) {
-    // Step 1: Retrieve the Etiqueta
     Etiqueta etiqueta = etiquetaRepository.findById(etiquetaId)
         .orElseThrow(() -> new EntityNotFoundException("Etiqueta not found with id " + etiquetaId));
 
-    // Step 2: Remove the Etiqueta from all associated Mensaje entities
     for (Mensaje mensaje : etiqueta.getMensajes()) {
       mensaje.getEtiquetas().remove(etiqueta);
-      // Step 3: Save the updated Mensaje entities
       mensajeRepository.save(mensaje);
     }
 
-    // Step 4: Delete the Etiqueta
     etiquetaRepository.delete(etiqueta);
     return true;
   }

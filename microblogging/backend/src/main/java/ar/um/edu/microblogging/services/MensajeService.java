@@ -64,9 +64,6 @@ public class MensajeService extends DtoMapper implements BaseService<Mensaje, Me
     Set<Etiqueta> etiquetas = new HashSet<>();
 
     for (String hashtag : request.getEtiquetas()) {
-      if (hashtag.startsWith("#")) {
-        hashtag = hashtag.substring(1);
-      }
       Etiqueta etiqueta = etiquetaService.getEtiquetaByNombre(hashtag);
       if (etiqueta == null) {
         Etiqueta newEtiqueta = new Etiqueta();
@@ -95,9 +92,8 @@ public class MensajeService extends DtoMapper implements BaseService<Mensaje, Me
   public Mensaje update(Long id, MensajeDto request) {
     Mensaje mensaje = mensajeRepository.findById(id).orElse(null);
     assert mensaje != null;
-
     copyNonNullProperties(request, mensaje);
-
     return mensajeRepository.save(mensaje);
   }
+  
 }

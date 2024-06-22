@@ -1,12 +1,15 @@
 package ar.um.edu.microblogging.services;
 
 import ar.um.edu.microblogging.dto.dtos.UsuarioDto;
+import ar.um.edu.microblogging.dto.entities.Seguidores;
 import ar.um.edu.microblogging.dto.entities.Usuario;
-import ar.um.edu.microblogging.dto.requests.NuevoUsuarioDto;
+import ar.um.edu.microblogging.dto.requests.FollowUserDto;
 import ar.um.edu.microblogging.repositories.UsuarioRepository;
 import java.util.List;
+import java.util.Optional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 
 @Service
 public class UsuarioService extends DtoMapper implements BaseService<Usuario, UsuarioDto> {
@@ -69,18 +72,24 @@ public class UsuarioService extends DtoMapper implements BaseService<Usuario, Us
     return null;
   }
 
-  public Usuario registrarNuevoUsuario(NuevoUsuarioDto nuevoUsuarioDto) {
-    Usuario usuario = new Usuario();
-    usuario.setNombreUsuario(nuevoUsuarioDto.getNombre());
-    usuario.setEmail(nuevoUsuarioDto.getEmail());
-    usuario.setClave(passwordEncoder.encode(nuevoUsuarioDto.getClave()));
-    usuario.setFoto(nuevoUsuarioDto.getFoto());
-    usuario.setNombreCompleto(nuevoUsuarioDto.getNombreCompleto());
-    usuario.setDescripcion(nuevoUsuarioDto.getDescripcion());
-    usuario.setMensajes(nuevoUsuarioDto.getMensajes());
-    usuario.setSeguidores(nuevoUsuarioDto.getSeguidores());
-    usuario.setSeguidos(nuevoUsuarioDto.getSeguidos());
+  public Usuario follow(FollowUserDto followUserDto) {
+    Optional<Usuario> optionalUsuario = usuarioRepository.findById(followUserDto.idUsuario());
+    Optional<Usuario> optionalUsuarioFollow = usuarioRepository.findById(followUserDto.idSeguir());
 
-    return this.usuarioRepository.save(usuario);
+    if (optionalUsuario.isPresent() && optionalUsuarioFollow.isPresent()) {
+      Usuario usuario = optionalUsuario.get();
+      Usuario usuarioFollow = optionalUsuarioFollow.get();
+
+      Seguidores seguidor = new Seguidores();
+      seguidor.setUsuario(usuario);
+      seguidor.setUsuarioSeguido(usuarioFollow);
+      usuario.getSeguidos().add(seguidor);
+
+      return usuarioRepository.save(usuario);
+      
+    } else {
+      System.out.println("No existe perro, fijate logi");
+      return null;
+    }
   }
 }
