@@ -62,7 +62,11 @@ public class UsuarioService extends DtoMapper implements BaseService<Usuario, Us
   }
 
   public Usuario login(String email, String clave) {
-    return usuarioRepository.findByEmailAndClave(email, clave);
+    Usuario usuario = usuarioRepository.findByEmail(email);
+    if (usuario != null && passwordEncoder.matches(clave, usuario.getClave())) {
+      return usuario;
+    }
+    return null;
   }
 
   public Usuario registrarNuevoUsuario(NuevoUsuarioDto nuevoUsuarioDto) {

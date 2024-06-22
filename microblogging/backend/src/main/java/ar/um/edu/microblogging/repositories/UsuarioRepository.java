@@ -19,4 +19,6 @@ public interface UsuarioRepository extends BaseRepository<Usuario, Long> {
       value = "SELECT s FROM seguidores_seguidos s WHERE s.seguidor_id = :idUsuario",
       nativeQuery = true)
   List<Usuario> findAllFollowed(@Param("idUsuario") Long idUsuario);
+
+    Usuario findByEmail(String email);
 }
