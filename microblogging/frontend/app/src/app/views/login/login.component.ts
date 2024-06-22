@@ -35,11 +35,12 @@ export class EstadoErrorMatcher implements ErrorStateMatcher {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-  constructor(private authService: AuthService, private router: Router) {}
+  constructor(
+      private router: Router
+  ) {}
     emailFormControl = new FormControl('', [Validators.required, Validators.email]);
     contrasenaFormControl = new FormControl('', [Validators.required]);
     matcher = new EstadoErrorMatcher();
 
 
 }
-

@@ -1,12 +1,69 @@
 <app-nav-bar></app-nav-bar>
-
-<div class="profile">
-    <h2>Perfil de Usuario</h2>
-    <div class="profile-info">
-        <p><strong>Nombre:</strong> {{ name }}</p>
-        <p><strong>Apellido:</strong> {{ lastname }}</p>
-        <p><strong>Fecha de Nacimiento:</strong> {{ birth_date }}</p>
-        <p><strong>Nombre de Usuario:</strong> {{ user_name }}</p>
-        <p><strong>Email:</strong> {{ email }}</p>
+<mat-tab-group>
+<mat-tab label="Mis post">
+    <div class="publications d-flex justify-content-center align-items-center mt-2">
+        <div class="w-50">
+            <app-mensaje></app-mensaje>
+        </div>
     </div>
-</div>
+</mat-tab>
+    <mat-tab label="Biografía">
+        <div class="d-flex justify-content-center align-items-center vh-50 mt-10">
+            <div class="card w-50">
+                <div class="card-body p-4">
+                    <div class="d-flex">
+                        <div class="flex-shrink-0">
+                            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                                 alt="Generic placeholder image" class="img-fluid rounded-circle"
+                                 style="width: 180px;">
+                        </div>
+                        <div class="flex-grow-1 ms-2">
+                            <h4 class="mb-1">{{usuario.nombreUsuario}}| {{usuario.nombreCompleto}} </h4> <!--Nombre de usuario-->
+                            <p class="mb-2 pb-1">{{usuario.descripcion}}</p>
+                            <p class="mb-2 pb-1">{{usuario.email}}</p>
+                            <div class="d-flex justify-content-start rounded-3 p-2 mb-2 bg-light">
+                                <div>
+                                    <p class="small text-muted mb-1">Mensajes</p>
+                                    <p class="mb-0">{{usuario.mensajes.length}}</p>
+                                </div>
+                                <div class="px-3">
+                                    <p class="small text-muted mb-1">Seguidores</p>
+                                    <p class="mb-0">{{usuario.seguidores.length}}</p>
+                                </div>
+                                <div>
+                                    <p class="small text-muted mb-1">Seguidos</p>
+                                    <p class="mb-0">{{usuario.seguidos.length}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </mat-tab>
+    <mat-tab label="Seguidos">
+        <mat-list *ngFor="let user of usuario.seguidos">
+            <mat-list-item>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-user-circle fa-2x mr-10 me-1"></i>
+                    <h3>{{ user.nombreUsuario }}</h3>
+                    <p>{{ user.email }}</p>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </mat-tab>
+    <mat-tab label="Seguidores">
+        <mat-list *ngFor="let user of usuario.seguidores">
+            <mat-list-item>
+                <div class="d-flex align-items-center">
+                    <i class="fas fa-user-circle fa-2x mr-10 me-1"></i>
+                    <h3>{{ user.nombreUsuario }}</h3>
+                    <p>{{ user.email }}</p>
+                </div>
+            </mat-list-item>
+        </mat-list>
+    </mat-tab>
+</mat-tab-group>
+
+
+
