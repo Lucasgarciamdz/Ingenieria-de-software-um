@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/usuarios")
-public class UsuarioController implements BaseController<Usuario> {
+public class UsuarioController implements BaseController<Usuario, UsuarioDto> {
 
   private final UsuarioService usuarioService;
 
@@ -41,48 +41,15 @@ public class UsuarioController implements BaseController<Usuario> {
 
   @Override
   @PostMapping()
-  public BaseResponse<Usuario> post(@RequestBody Usuario body) {
+  public BaseResponse<Usuario> post(@RequestBody UsuarioDto body) {
     Usuario usuario = usuarioService.save(body);
-    return new BaseResponse<>("Usuario creado con exito", usuario);
-  }
-
-  @PostMapping("/v2")
-  public BaseResponse<Usuario> post2(@RequestBody UsuarioDto body) {
-    Usuario usuario = usuarioService.saveDto(body);
     return new BaseResponse<>("Usuario creado con exito", usuario);
   }
 
   @Override
   @PutMapping("/{id}")
-  public BaseResponse<Usuario> put(@PathVariable Long id, @RequestBody Usuario modificacion) {
-    Usuario usuarioExistente = usuarioService.getById(id);
-    if (usuarioExistente == null) {
-      return new BaseResponse<>("Usuario no encontrado", null);
-    }
-
-    // Actualizar solo los campos que no son nulos
-    if (modificacion.getNombreUsuario() != null) {
-      usuarioExistente.setNombreUsuario(modificacion.getNombreUsuario());
-    }
-    if (modificacion.getEmail() != null) {
-      usuarioExistente.setEmail(modificacion.getEmail());
-    }
-    if (modificacion.getFoto() != null) {
-      usuarioExistente.setFoto(modificacion.getFoto());
-    }
-    if (modificacion.getClave() != null) {
-      usuarioExistente.setClave(modificacion.getClave());
-    }
-    if (modificacion.getNombreCompleto() != null) {
-      usuarioExistente.setNombreCompleto(modificacion.getNombreCompleto());
-    }
-    if (modificacion.getDescripcion() != null) {
-      usuarioExistente.setDescripcion(modificacion.getDescripcion());
-    }
-    // No actualizamos los campos de relaciones (mensajes, seguidores, seguidos,
-    // mensajesRepublicados)
-
-    Usuario usuarioActualizado = usuarioService.update(usuarioExistente);
+  public BaseResponse<Usuario> put(@PathVariable Long id, @RequestBody UsuarioDto modificacion) {
+    Usuario usuarioActualizado = usuarioService.update(id, modificacion);
     return new BaseResponse<>("Usuario", usuarioActualizado);
   }
 

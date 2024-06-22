@@ -1,13 +1,18 @@
-FROM amazoncorretto:11
 
+FROM maven:3.8.4-openjdk-21 AS build
 WORKDIR /app
 
 COPY pom.xml .
+COPY src src
 
-RUN mvn dependency:go-offline -B
+RUN --mount=type=cache,target=/root/.m2 \
+    mvn clean package -DskipTests
 
-COPY src /app/src
+FROM openjdk:21-jdk-slim
+WORKDIR /app
 
-RUN mvn package -DskipTests
+COPY --from=build /app/target/*.jar app.jar
 
-ENTRYPOINT ["java", "-jar", "target/MicrobloggingApplication.jar"]
+EXPOSE 8080
+
+CMD ["java", "-jar", "app.jar"]

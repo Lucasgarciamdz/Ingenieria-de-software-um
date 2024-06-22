@@ -5,12 +5,11 @@ import ar.um.edu.microblogging.dto.entities.Usuario;
 import ar.um.edu.microblogging.dto.requests.NuevoUsuarioDto;
 import ar.um.edu.microblogging.repositories.UsuarioRepository;
 import java.util.List;
-import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UsuarioService implements BaseService<Usuario> {
+public class UsuarioService extends DtoMapper implements BaseService<Usuario, UsuarioDto> {
 
   private final UsuarioRepository usuarioRepository;
   private final BCryptPasswordEncoder passwordEncoder;
@@ -32,41 +31,20 @@ public class UsuarioService implements BaseService<Usuario> {
   }
 
   @Override
-  public Usuario save(Usuario entity) {
+  public Usuario save(UsuarioDto dto) {
+
+    Usuario entity = new Usuario();
+    copyNonNullProperties(dto, entity);
+    entity.setClave(passwordEncoder.encode(entity.getClave()));
     return this.usuarioRepository.save(entity);
   }
 
-  
-  public Usuario saveDto(UsuarioDto dto) {
-
-      Usuario entity = new Usuario();
-      BeanUtils.copyProperties(dto, entity);
-      entity.setClave(passwordEncoder.encode(entity.getClave()));
-      return this.usuarioRepository.save(entity);
-
-  }
-  
-
   @Override
-  public Usuario update(Usuario entity) {
-    
-    Usuario user = this.usuarioRepository.findById(entity.getId()).orElse(null);
-
-    BeanUtils.copyProperties(dto, entity);
-    
-    
-    if (usuarioRepository.existsById(entity.getId())) {
-      return this.usuarioRepository.save(entity);
-    } else {
-      return null;
-    }
-  }
-  
-  public Usuario updateDto(UsuarioDto dto, Long id) {
+  public Usuario update(Long id, UsuarioDto dto) {
 
     Usuario entity = this.usuarioRepository.findById(id).orElse(null);
     assert entity != null;
-    BeanUtils.copyProperties(dto, entity);
+    copyNonNullProperties(dto, entity);
     entity.setClave(passwordEncoder.encode(entity.getClave()));
     return this.usuarioRepository.save(entity);
   }

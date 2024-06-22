@@ -36,19 +36,19 @@ public class Usuario extends BaseEntity {
   private String descripcion;
 
   @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonBackReference(value="usuario-mensajes1")
+  @JsonBackReference(value = "usuario-mensajes1")
   private Set<Mensaje> mensajes;
 
   @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonManagedReference(value="usuario-seguidores1")
+  @JsonManagedReference(value = "usuario-seguidores1")
   private Set<Seguidores> seguidores;
 
   @OneToMany(mappedBy = "usuarioSeguido", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonManagedReference(value="usuario-seguidos1")
+  @JsonManagedReference(value = "usuario-seguidos1")
   private Set<Seguidores> seguidos;
 
   @OneToMany(mappedBy = "usuarioDestinatario", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonManagedReference(value="mensaje-privado1")
+  @JsonManagedReference(value = "mensaje-privado1")
   private Set<Mensaje> mensajePrivado;
 
   @Override

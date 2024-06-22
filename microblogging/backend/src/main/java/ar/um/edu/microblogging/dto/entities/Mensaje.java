@@ -38,7 +38,7 @@ public class Mensaje extends BaseEntity {
   @JsonBackReference(value = "mensaje-privado3")
   private Usuario usuarioDestinatario;
 
-  @ManyToMany(fetch = FetchType.EAGER)
+  @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
   @JoinTable(
       name = "mensaje_etiqueta",
       joinColumns = @JoinColumn(name = "mensaje_id"),
