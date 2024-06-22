@@ -4,7 +4,6 @@ import ar.um.edu.microblogging.dto.dtos.UsuarioDto;
 import ar.um.edu.microblogging.dto.entities.Usuario;
 import ar.um.edu.microblogging.dto.requests.NuevoUsuarioDto;
 import ar.um.edu.microblogging.repositories.UsuarioRepository;
-import java.lang.reflect.InvocationTargetException;
 import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -46,7 +45,6 @@ public class UsuarioService implements BaseService<Usuario> {
       return this.usuarioRepository.save(entity);
 
   }
-  
   
 
   @Override
