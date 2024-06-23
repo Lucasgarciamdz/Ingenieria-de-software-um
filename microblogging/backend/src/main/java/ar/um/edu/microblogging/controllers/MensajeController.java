@@ -57,6 +57,7 @@ public class MensajeController implements BaseController<Mensaje, MensajeDto> {
   @GetMapping("/usuario/{id}")
   public BaseResponse<List<Mensaje>> getMensajesByUsuario(@PathVariable Long id) {
     List<Mensaje> mensajes = mensajeService.getMensajesByUsuario(id);
+    mensajes.addAll(mensajeService.getMensajesPrivados(id));
     return new BaseResponse<>("Se encontraron los siguientes mensajes", mensajes);
   }
 
