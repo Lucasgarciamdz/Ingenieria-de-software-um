@@ -1,4 +1,3 @@
-
 FROM maven:3.9.7-amazoncorretto-21 AS build
 WORKDIR /app
 
