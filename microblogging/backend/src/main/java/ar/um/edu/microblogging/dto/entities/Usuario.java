@@ -36,6 +36,9 @@ public class Usuario extends BaseEntity {
   private String nombreCompleto;
 
   private String descripcion;
+  
+  @Transient
+  private Boolean seguido;
 
   @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonBackReference(value = "usuario-mensajes1")
