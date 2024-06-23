@@ -43,6 +43,7 @@ export class ProfileComponent {
             res => {
                 console.log(" --- Usuario encontrado:", res)
                 this.usuario = res;
+                alert("Credenciales incorrectas.")
             }
         ).catch(error =>{
             console.log(error)

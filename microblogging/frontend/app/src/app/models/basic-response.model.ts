@@ -1,4 +1,4 @@
-export class BasicResponse{
+export class BaseResponse {
   message : string = "";
   response : any;
   constructor(message :string, response : any) {

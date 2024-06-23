@@ -13,57 +13,69 @@ import {of} from "rxjs";
 import {UsuarioService} from "../../services/usuario.service";
 
 export class EstadoErrorMatcher implements ErrorStateMatcher {
-    isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
-        const isSubmitted = form && form.submitted;
-        return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
-    }
+  isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+    const isSubmitted = form && form.submitted;
+    return !!(control && control.invalid && (control.dirty || control.touched || isSubmitted));
+  }
 }
 
 @Component({
-    selector: 'app-login',
-    standalone: true,
-    imports: [
-        NavBarComponent,
-        FormsModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatIconModule,
-        ReactiveFormsModule,
-        NgIf
+  selector: 'app-login',
+  standalone: true,
+  imports: [
+    NavBarComponent,
+    FormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    ReactiveFormsModule,
+    NgIf
 
-    ],
-    templateUrl: './login.component.html',
-    styleUrl: './login.component.css',
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  ],
+  templateUrl: './login.component.html',
+  styleUrl: './login.component.css',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LoginComponent {
-    constructor(
-        private router: Router,
-        private authService : AuthService
-    ) {
-    }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {
+  }
 
-    emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-    contrasenaFormControl = new FormControl('', [Validators.required]);
-    matcher = new EstadoErrorMatcher();
+  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
+  contrasenaFormControl = new FormControl('', [Validators.required]);
+  matcher = new EstadoErrorMatcher();
 
-    ngOnInit(){
-      localStorage.removeItem('idUsuario');
-      localStorage.removeItem('nombreUsuario');
-      localStorage.removeItem('emailUsuario');
-    }
+  ngOnInit() {
+    localStorage.removeItem('idUsuario');
+    localStorage.removeItem('nombreUsuario');
+    localStorage.removeItem('emailUsuario');
+  }
 
-autenticarUsario(){
+  async autenticarUsuario() {
     console.log("--- Autenticando usuario")
     const email = this.emailFormControl.value;
     const password = this.contrasenaFormControl.value;
     if (!email || !password) {
-        console.error('Por favor, ingrese un email y una contraseña');
-        return;
+      console.error('Por favor, ingrese un email y una contraseña');
+      return;
     }
     console.log("----- Email ", email)
     console.log("------Password ", password)
-    this.authService.logIn(email, password);
-}
+    await this.authService.logIn(email, password).then(
+      res => {
+        if (res.response == null) {
+          console.log("Credenciales inválidas")
+          alert("Crendenciales incorrectas")
+          return;
+        }
+        localStorage.setItem('idUsuario', res.response.id);
+        localStorage.setItem('nombreUsuario', res.response.nombreUsuario);
+        localStorage.setItem('emailUsuario', res.response.email);
+        this.router.navigate(['/home'])
+      }
+    )
+  }
 
 }
