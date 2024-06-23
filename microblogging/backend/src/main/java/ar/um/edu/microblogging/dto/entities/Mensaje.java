@@ -7,6 +7,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,14 @@ public class Mensaje extends BaseEntity {
   @JsonManagedReference(value = "usuario-mensajes3")
   private Usuario autor;
 
+  @ManyToMany
+  @JoinTable(
+      name = "repost_mensaje",
+      joinColumns = @JoinColumn(name = "mensaje_id"),
+      inverseJoinColumns = @JoinColumn(name = "usuario_id")
+  )
+  private Set<Usuario> reposts = new HashSet<>();
+
   @Column(length = 140, nullable = false)
   private String texto;
 
@@ -35,7 +44,6 @@ public class Mensaje extends BaseEntity {
 
   @ManyToOne
   @JoinColumn(name = "destinatario_id")
-  @JsonBackReference(value = "mensaje-privado3")
   private Usuario usuarioDestinatario;
 
   @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)

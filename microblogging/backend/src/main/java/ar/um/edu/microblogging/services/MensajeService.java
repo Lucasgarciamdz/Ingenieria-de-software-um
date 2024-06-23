@@ -5,6 +5,7 @@ import ar.um.edu.microblogging.dto.dtos.MensajeDto;
 import ar.um.edu.microblogging.dto.entities.Etiqueta;
 import ar.um.edu.microblogging.dto.entities.Mensaje;
 import ar.um.edu.microblogging.dto.entities.Usuario;
+import ar.um.edu.microblogging.dto.requests.RepostMensajeDto;
 import ar.um.edu.microblogging.repositories.MensajeRepository;
 import java.util.Date;
 import java.util.HashSet;
@@ -96,4 +97,24 @@ public class MensajeService extends DtoMapper implements BaseService<Mensaje, Me
     return mensajeRepository.save(mensaje);
   }
   
+  public List<Mensaje> getMensajesByUsuario(Long id) {
+    return mensajeRepository.findByAutorId(id);
+  }
+  
+  public Mensaje repost(RepostMensajeDto repostMensaje) {
+    Usuario usuario = usuarioService.getById(repostMensaje.idUsuario());
+    Mensaje mensaje = this.mensajeRepository.findById(repostMensaje.idMensaje()).orElse(null);
+
+    if (usuario != null && mensaje != null) {
+      
+        mensaje.getReposts().add(usuario);
+        return this.mensajeRepository.save(mensaje);
+    } else {
+        throw new RuntimeException("Usuario or Mensaje not found");
+    }
+}
+
+  public List<Mensaje> getMensajesByEtiqueta(String nombre) {
+    return mensajeRepository.findByEtiquetasNombre(nombre);
+  }
 }

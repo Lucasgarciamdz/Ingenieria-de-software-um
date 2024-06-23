@@ -2,6 +2,7 @@ package ar.um.edu.microblogging.controllers;
 
 import ar.um.edu.microblogging.dto.dtos.MensajeDto;
 import ar.um.edu.microblogging.dto.entities.Mensaje;
+import ar.um.edu.microblogging.dto.requests.RepostMensajeDto;
 import ar.um.edu.microblogging.dto.responses.BaseResponse;
 import ar.um.edu.microblogging.services.MensajeService;
 import java.util.List;
@@ -52,4 +53,30 @@ public class MensajeController implements BaseController<Mensaje, MensajeDto> {
     boolean deleted = mensajeService.delete(id);
     return new BaseResponse<>("Mensaje", deleted ? "Deleted" : "Error deleting");
   }
+
+  @GetMapping("/usuario/{id}")
+  public BaseResponse<List<Mensaje>> getMensajesByUsuario(@PathVariable Long id) {
+    List<Mensaje> mensajes = mensajeService.getMensajesByUsuario(id);
+    return new BaseResponse<>("Se encontraron los siguientes mensajes", mensajes);
+  }
+
+  @PostMapping("/repost")
+  public BaseResponse<Mensaje> post(@RequestBody RepostMensajeDto repostMensaje) {
+    Mensaje mensaje = mensajeService.repost(repostMensaje);
+    return new BaseResponse<>("Mensaje", mensaje);
+  }
+
+  @GetMapping("/etiqueta/{nombre}")
+  public BaseResponse<List<Mensaje>> getMensajesByEtiqueta(@PathVariable String nombre) {
+    List<Mensaje> mensajes = mensajeService.getMensajesByEtiqueta(nombre);
+    return new BaseResponse<>("Se encontraron los siguientes mensajes", mensajes);
+  }
 }
+
+//
+//@Override
+//@PostMapping
+//public BaseResponse<Mensaje> post(@RequestBody MensajeDto nuevoMensaje) {
+//  Mensaje mensaje = mensajeService.save(nuevoMensaje);
+//  return new BaseResponse<>("Mensaje", mensaje);
+//}

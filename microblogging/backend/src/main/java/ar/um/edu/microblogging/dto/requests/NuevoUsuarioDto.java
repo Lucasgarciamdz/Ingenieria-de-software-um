@@ -1,7 +1,7 @@
 package ar.um.edu.microblogging.dto.requests;
 
 import ar.um.edu.microblogging.dto.entities.Mensaje;
-import ar.um.edu.microblogging.dto.entities.Seguidores;
+
 import java.util.Set;
 import lombok.Data;
 
@@ -15,6 +15,4 @@ public class NuevoUsuarioDto {
   private String nombreCompleto;
   private String descripcion;
   private Set<Mensaje> mensajes;
-  private Set<Seguidores> seguidores;
-  private Set<Seguidores> seguidos;
 }

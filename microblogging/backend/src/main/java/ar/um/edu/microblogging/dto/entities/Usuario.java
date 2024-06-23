@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -17,7 +19,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonSerialize(using = UsuarioSerializer.class)
 @Entity
 public class Usuario extends BaseEntity {
 
@@ -26,31 +28,33 @@ public class Usuario extends BaseEntity {
 
   @Column(nullable = false, unique = true)
   private String email;
-
+  
   @Lob private byte[] foto;
 
-  @Column(nullable = false)
   @JsonIgnore
   private String clave;
 
   private String nombreCompleto;
 
   private String descripcion;
-  
+
   @Transient
   private Boolean seguido;
-
+  
   @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonBackReference(value = "usuario-mensajes1")
   private Set<Mensaje> mensajes;
 
-  @OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonManagedReference(value = "usuario-seguidores")
-  private Set<Seguidores> seguidores;
+  @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @JoinTable(
+      name = "usuario_seguidores_seguidos",
+      joinColumns = @JoinColumn(name = "seguido_id"),
+      inverseJoinColumns = @JoinColumn(name = "seguidor_id")
+  )
+  private Set<Usuario> seguidores = new HashSet<>();
 
-  @OneToMany(mappedBy = "usuarioSeguido", cascade = CascadeType.ALL, orphanRemoval = true)
-  @JsonManagedReference(value = "usuario-seguidos")
-  private Set<Seguidores> seguidos;
+  @ManyToMany(mappedBy = "seguidores", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  private Set<Usuario> seguidos = new HashSet<>();
 
   @OneToMany(mappedBy = "usuarioDestinatario", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonManagedReference(value = "mensaje-privado1")

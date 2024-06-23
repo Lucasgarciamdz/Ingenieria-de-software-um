@@ -1,13 +1,13 @@
 package ar.um.edu.microblogging.services;
 
 import ar.um.edu.microblogging.dto.dtos.UsuarioDto;
-import ar.um.edu.microblogging.dto.entities.Seguidores;
 import ar.um.edu.microblogging.dto.entities.Usuario;
 import ar.um.edu.microblogging.dto.requests.FollowUserDto;
-import ar.um.edu.microblogging.repositories.SeguidoresRepository;
 import ar.um.edu.microblogging.repositories.UsuarioRepository;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +17,11 @@ public class UsuarioService extends DtoMapper implements BaseService<Usuario, Us
 
   private final UsuarioRepository usuarioRepository;
   private final BCryptPasswordEncoder passwordEncoder;
-  private final SeguidoresRepository seguidoresRepository;
 
   public UsuarioService(
-      UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder, SeguidoresRepository seguidoresRepository) {
+      UsuarioRepository usuarioRepository, BCryptPasswordEncoder passwordEncoder) {
     this.usuarioRepository = usuarioRepository;
     this.passwordEncoder = passwordEncoder;
-    this.seguidoresRepository = seguidoresRepository;
   }
 
   @Override
@@ -83,17 +81,44 @@ public class UsuarioService extends DtoMapper implements BaseService<Usuario, Us
       Usuario usuario = optionalUsuario.get();
       Usuario usuarioFollow = optionalUsuarioFollow.get();
 
-      Seguidores seguidor = new Seguidores();
-      seguidor.setUsuario(usuario);
-      seguidor.setUsuarioSeguido(usuarioFollow);
-      usuario.getSeguidos().add(seguidor);
+      
+      usuario.getSeguidos().add(usuarioFollow);
+      usuarioFollow.getSeguidores().add(usuario);
+      
+      usuarioRepository.save(usuario);
+      usuarioRepository.save(usuarioFollow);
 
-      seguidoresRepository.save(seguidor);
-
-      return usuarioRepository.save(usuario);
+      return usuario;
       
     } else {
       throw new Exception("No existe perro, fijate logi");
     }
+  }
+
+
+  public List<Usuario> getUsuariosByNombre(Long idUsuario, String nombreUsuario) {
+    Optional<Usuario> requestingUserOpt = usuarioRepository.findById(idUsuario);
+
+    if (requestingUserOpt.isEmpty()) {
+      return Collections.emptyList();
+    }
+
+    Usuario requestingUser = requestingUserOpt.get();
+
+    List<Usuario> users = usuarioRepository.findByNombreUsuarioContaining(nombreUsuario);
+
+    Set<Usuario> alreadyFollowing = requestingUser.getSeguidos();
+
+    for (Usuario user : users) {
+      if (alreadyFollowing.contains(user)) {
+        user.setSeguido(true);
+      } else {
+        user.setSeguido(false);
+      }
+    }
+
+    users.removeIf(usuario -> usuario.getId().equals(idUsuario));
+
+    return users;
   }
 }

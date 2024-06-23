@@ -6,6 +6,7 @@ import ar.um.edu.microblogging.dto.requests.LoginRequest;
 import ar.um.edu.microblogging.dto.requests.FollowUserDto;
 import ar.um.edu.microblogging.dto.responses.BaseResponse;
 import ar.um.edu.microblogging.services.UsuarioService;
+import com.fasterxml.jackson.annotation.JsonView;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -74,4 +75,12 @@ public BaseResponse<Usuario> login(@RequestBody LoginRequest loginRequest) {
     Usuario user = usuarioService.follow(followUserDto);
     return new BaseResponse<>("Usuario", user);
   }
+  
+  @GetMapping("/buscar/{nombreUsuario}")
+  public BaseResponse<List<Usuario>> buscar(@PathVariable String nombreUsuario, @RequestParam Long idUsuario){
+    
+    List<Usuario> users = usuarioService.getUsuariosByNombre(idUsuario, nombreUsuario);
+    return new BaseResponse<>("Usuarios", users);
+  }
+    
 }

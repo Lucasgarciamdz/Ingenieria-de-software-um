@@ -2,16 +2,15 @@
 
 ## todo esto es lo que falta
 
-- [ ] seguidor seguido
-- [ ] repost mensaje
+- [x] seguidor seguido
+- [x] repost mensaje
 - [ ] n temas del momento
-- [ ] get seguidores seguidos
-- [ ] get mensajes de un usuario
-- [ ] buscar usuarios
-- [ ] eliminar mensaje solo de usuario
+- [x] get seguidores seguidos
+- [x] get mensajes de un usuario
+- [x] buscar usuarios
+- [ ] eliminar mensaje solo de usuario (lo hace el front)
 - [ ] envio de mail?
-- [ ] publicar mensaje privado
+- [X] publicar mensaje privado
 - [ ] get mensajes de mis seguidores
-- [ ] get mensaje por etiquetas
+- [x] get mensaje por etiquetas
 - [ ] ver temas momento
-- 
