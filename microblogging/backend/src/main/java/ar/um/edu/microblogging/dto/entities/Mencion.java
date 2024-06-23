@@ -11,8 +11,7 @@ import lombok.Setter;
 @Entity
 public class Mencion extends BaseEntity {
 
-    @ManyToOne
-    @JoinColumn(name = "mensaje_id", nullable = false)
-    private Mensaje mensaje;
-
+  @ManyToOne
+  @JoinColumn(name = "mensaje_id", nullable = false)
+  private Mensaje mensaje;
 }

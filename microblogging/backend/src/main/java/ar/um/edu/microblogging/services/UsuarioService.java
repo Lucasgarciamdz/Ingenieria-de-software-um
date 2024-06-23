@@ -11,7 +11,6 @@ import java.util.Set;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-
 @Service
 public class UsuarioService extends DtoMapper implements BaseService<Usuario, UsuarioDto> {
 
@@ -81,20 +80,18 @@ public class UsuarioService extends DtoMapper implements BaseService<Usuario, Us
       Usuario usuario = optionalUsuario.get();
       Usuario usuarioFollow = optionalUsuarioFollow.get();
 
-      
       usuario.getSeguidos().add(usuarioFollow);
       usuarioFollow.getSeguidores().add(usuario);
-      
+
       usuarioRepository.save(usuario);
       usuarioRepository.save(usuarioFollow);
 
       return usuario;
-      
+
     } else {
       throw new Exception("No existe perro, fijate logi");
     }
   }
-
 
   public List<Usuario> getUsuariosByNombre(Long idUsuario, String nombreUsuario) {
     Optional<Usuario> requestingUserOpt = usuarioRepository.findById(idUsuario);
@@ -110,11 +107,7 @@ public class UsuarioService extends DtoMapper implements BaseService<Usuario, Us
     Set<Usuario> alreadyFollowing = requestingUser.getSeguidos();
 
     for (Usuario user : users) {
-      if (alreadyFollowing.contains(user)) {
-        user.setSeguido(true);
-      } else {
-        user.setSeguido(false);
-      }
+      user.setSeguido(alreadyFollowing.contains(user));
     }
 
     users.removeIf(usuario -> usuario.getId().equals(idUsuario));

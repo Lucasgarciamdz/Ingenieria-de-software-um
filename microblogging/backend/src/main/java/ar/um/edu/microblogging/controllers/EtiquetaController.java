@@ -51,4 +51,11 @@ public class EtiquetaController implements BaseController<Etiqueta, EtiquetaDto>
     boolean deleted = etiquetaService.delete(id);
     return new BaseResponse<>("Etiqueta", deleted ? "Deleted" : "Error deleting");
   }
+
+  @GetMapping("/temasMomento")
+  public BaseResponse<List<Etiqueta>> getTemasMomento(
+      @RequestParam(required = false) Integer cantidad) {
+    List<Etiqueta> etiquetas = etiquetaService.getTemasMomento(cantidad);
+    return new BaseResponse<>("Estos son los temas del momento", etiquetas);
+  }
 }

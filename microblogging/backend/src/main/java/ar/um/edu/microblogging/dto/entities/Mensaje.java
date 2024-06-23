@@ -1,13 +1,11 @@
 package ar.um.edu.microblogging.dto.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 import lombok.AllArgsConstructor;
@@ -32,8 +30,7 @@ public class Mensaje extends BaseEntity {
   @JoinTable(
       name = "repost_mensaje",
       joinColumns = @JoinColumn(name = "mensaje_id"),
-      inverseJoinColumns = @JoinColumn(name = "usuario_id")
-  )
+      inverseJoinColumns = @JoinColumn(name = "usuario_id"))
   private Set<Usuario> reposts = new HashSet<>();
 
   @Column(length = 140, nullable = false)

@@ -2,11 +2,10 @@ package ar.um.edu.microblogging.controllers;
 
 import ar.um.edu.microblogging.dto.dtos.UsuarioDto;
 import ar.um.edu.microblogging.dto.entities.Usuario;
-import ar.um.edu.microblogging.dto.requests.LoginRequest;
 import ar.um.edu.microblogging.dto.requests.FollowUserDto;
+import ar.um.edu.microblogging.dto.requests.LoginRequest;
 import ar.um.edu.microblogging.dto.responses.BaseResponse;
 import ar.um.edu.microblogging.services.UsuarioService;
-import com.fasterxml.jackson.annotation.JsonView;
 import java.util.List;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -63,24 +62,23 @@ public class UsuarioController implements BaseController<Usuario, UsuarioDto> {
     return new BaseResponse<>("Usuario", deleted ? "Deleted" : "Error deleting");
   }
 
-
-@PostMapping("/login")
-public BaseResponse<Usuario> login(@RequestBody LoginRequest loginRequest) {
+  @PostMapping("/login")
+  public BaseResponse<Usuario> login(@RequestBody LoginRequest loginRequest) {
     Usuario usuario = usuarioService.login(loginRequest.getEmail(), loginRequest.getClave());
     return new BaseResponse<>("Usuario", usuario);
-}
-  
+  }
+
   @PostMapping("/follow")
   public BaseResponse<Usuario> follow(@RequestBody FollowUserDto followUserDto) throws Exception {
     Usuario user = usuarioService.follow(followUserDto);
     return new BaseResponse<>("Usuario", user);
   }
-  
+
   @GetMapping("/buscar/{nombreUsuario}")
-  public BaseResponse<List<Usuario>> buscar(@PathVariable String nombreUsuario, @RequestParam Long idUsuario){
-    
+  public BaseResponse<List<Usuario>> buscar(
+      @PathVariable String nombreUsuario, @RequestParam Long idUsuario) {
+
     List<Usuario> users = usuarioService.getUsuariosByNombre(idUsuario, nombreUsuario);
     return new BaseResponse<>("Usuarios", users);
   }
-    
 }

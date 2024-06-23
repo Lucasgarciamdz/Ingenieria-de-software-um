@@ -1,7 +1,6 @@
 package ar.um.edu.microblogging.dto.requests;
 
 import ar.um.edu.microblogging.dto.entities.Mensaje;
-
 import java.util.Set;
 import lombok.Data;
 

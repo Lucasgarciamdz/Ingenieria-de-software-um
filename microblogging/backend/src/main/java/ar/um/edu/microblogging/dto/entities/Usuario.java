@@ -1,10 +1,8 @@
 package ar.um.edu.microblogging.dto.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import java.util.HashSet;
@@ -28,19 +26,17 @@ public class Usuario extends BaseEntity {
 
   @Column(nullable = false, unique = true)
   private String email;
-  
+
   @Lob private byte[] foto;
 
-  @JsonIgnore
-  private String clave;
+  @JsonIgnore private String clave;
 
   private String nombreCompleto;
 
   private String descripcion;
 
-  @Transient
-  private Boolean seguido;
-  
+  @Transient private Boolean seguido;
+
   @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL, orphanRemoval = true)
   @JsonBackReference(value = "usuario-mensajes1")
   private Set<Mensaje> mensajes;
@@ -49,11 +45,12 @@ public class Usuario extends BaseEntity {
   @JoinTable(
       name = "usuario_seguidores_seguidos",
       joinColumns = @JoinColumn(name = "seguido_id"),
-      inverseJoinColumns = @JoinColumn(name = "seguidor_id")
-  )
+      inverseJoinColumns = @JoinColumn(name = "seguidor_id"))
   private Set<Usuario> seguidores = new HashSet<>();
 
-  @ManyToMany(mappedBy = "seguidores", cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+  @ManyToMany(
+      mappedBy = "seguidores",
+      cascade = {CascadeType.PERSIST, CascadeType.MERGE})
   private Set<Usuario> seguidos = new HashSet<>();
 
   @OneToMany(mappedBy = "usuarioDestinatario", cascade = CascadeType.ALL, orphanRemoval = true)
