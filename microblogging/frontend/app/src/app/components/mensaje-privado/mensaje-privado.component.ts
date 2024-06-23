@@ -1,5 +1,5 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {MatDialogActions, MatDialogClose, MatDialogContent} from "@angular/material/dialog";
+import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
 import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
@@ -32,7 +32,8 @@ export class MensajePrivadoComponent {
 
   constructor(
     private usuarioSvc: UsuarioService,
-    private changeDetector: ChangeDetectorRef
+    private changeDetector: ChangeDetectorRef,
+    private dialogRef: MatDialogRef<MensajePrivadoComponent>
   ) {
   }
 
@@ -41,7 +42,7 @@ export class MensajePrivadoComponent {
     console.log(" --- Buscando usuarios por nombre de usuario : " + nombreUsuario);
     await this.usuarioSvc.obtenerUsuariosPorNombre(nombreUsuario).then(
       res => {
-        this.usuarios = res.slice();
+        this.usuarios = res.response.slice();
         console.log(" ------ USUARIOS encontrados: " + this.usuarios.length)
         console.log(" ------ USUARIOS encontrados: " + this.usuarios)
         this.changeDetector.detectChanges();
@@ -53,7 +54,7 @@ export class MensajePrivadoComponent {
 
   agregarUsuariosPrivados(usuario: Usuario) {
     console.log(" --- Agregando usuario de  ID: ", usuario.id)
-    const usuariosActuales = this.usuarioSvc.usuarioMensajePrivado.getValue();
-    this.usuarioSvc.usuarioMensajePrivado.next([...usuariosActuales, usuario]);
+    this.usuarioSvc.usuarioMensajePrivado.next([usuario]);
+    this.dialogRef.close();
   }
 }

@@ -47,7 +47,7 @@ export class TemasDelMomentoComponent {
         await this.usuarioSvc.obtenerTemasDelMomento().then(
             res => {
                 console.log(" --- Respuesta:", res)
-                this.temas = res;
+                this.temas = res.response;
                 console.log(" --- Temas encontrados: ", this.temas, this.temas.length)
                 this.changeDetector.detectChanges();
 

@@ -1,15 +1,15 @@
 export class NuevoMensaje{
 
-  idUsuario : number;
+  autorId : number;
   texto : string;
-  idDestinatarios: (string | number)[];
+  destinatiarioId: number;
   etiquetas : string[];
   menciones : (string | number)[];
 
-  constructor(idUsuario: number, texto: string, idDestinatarios: (string | number)[], etiquetas: string[], menciones: (string | number)[]) {
-    this.idUsuario = idUsuario;
+  constructor(autorId: number, texto: string, destinatiarioId:  number, etiquetas: string[], menciones: (string | number)[]) {
+    this.autorId = autorId;
     this.texto = texto;
-    this.idDestinatarios = idDestinatarios;
+    this.destinatiarioId = destinatiarioId;
     this.etiquetas = etiquetas;
     this.menciones = menciones;
   }

@@ -17,7 +17,7 @@
         <h4 class="card-title mb-0">{{ usuario.nombreUsuario }}</h4>
         <h5 class="card-title mb-0">{{ usuario.nombreCompleto }}</h5>
       </div>
-      <button class="btn btn-primary" *ngIf="usuario.siguiendo == false" (click)="seguirUsuario(usuario.id)">Seguir
+      <button class="btn btn-primary" *ngIf="usuario.seguido == false" (click)="seguirUsuario(usuario.id)">Seguir
       </button>
     </div>
   </div>

@@ -170,21 +170,26 @@ export class PublicacionMensajeComponent {
         let mencionUsuarioId: (string | number)[] = this.usuariosMencionados.map((
             usuario => usuario.id
         ))
-        let destinatariosId: (string | number)[] = this.usuarioMensajePrivado.map(
-            usuario => usuario.id
-        )
         console.log("etiquetas", etiquetas)
         console.log("menciones usuarios id", mencionUsuarioId)
-        console.log("destinatarios id", destinatariosId)
         console.log("texto", this.form.get('textoFormControl')?.value)
         let nuevoMensaje = new NuevoMensaje(
             Number(localStorage.getItem('idUsuario')),
             this.form.get('textoFormControl')?.value,
-            destinatariosId,
+            Number(this.usuarioMensajePrivado[0].id),
             etiquetas,
             mencionUsuarioId
         );
-        this.usuarioSvc.publicarMensaje(nuevoMensaje);
+        this.usuarioSvc.publicarMensaje(nuevoMensaje).then(
+          res => {
+            if (res.response == null){
+              console.log("Mensaje no creado")
+              return;
+            }
+            alert("Mensaje Publicado")
+            location.reload();
+          }
+        )
     }
 }
 

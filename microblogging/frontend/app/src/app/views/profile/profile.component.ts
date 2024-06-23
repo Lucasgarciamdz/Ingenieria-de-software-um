@@ -42,8 +42,8 @@ export class ProfileComponent {
         await this.usuarioSvc.obtenerInformacionDeUsuarioPorId(Number(localStorage.getItem('idUsuario'))).then(
             res => {
                 console.log(" --- Usuario encontrado:", res)
-                this.usuario = res;
-                alert("Credenciales incorrectas.")
+                this.usuario = res.response;
+                console.log("USUARIO CARGADO0", this.usuario)
             }
         ).catch(error =>{
             console.log(error)

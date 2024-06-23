@@ -7,7 +7,9 @@
   </div>
   <div class="publications">
     <app-publicacion-mensaje></app-publicacion-mensaje>
-    <app-mensaje></app-mensaje>
+    <div  *ngFor="let mensaje of mensajes;">
+      <app-mensaje [mensaje]="mensaje"></app-mensaje>
+    </div>
   </div>
 </div>
 

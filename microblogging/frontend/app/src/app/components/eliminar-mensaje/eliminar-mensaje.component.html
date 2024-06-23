@@ -1,0 +1,12 @@
+<mat-dialog-content class="mat-typography">
+  <h2 mat-dialog-title>Eliminar mensaje</h2>
+  <mat-card class="mat-elevation-z8">
+    <mat-card-content>
+      <p>¿Quieres eliminar el mensaje? Esta acción <b style="color:#c1121f">no puede ser deshecha</b></p>
+    </mat-card-content>
+  </mat-card>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+<button type="button" class="btn btn-outline-dark" mat-dialog-close style="margin-right: 10px;">Cerrar</button>
+<button type="button" class="btn btn-outline-danger" (click)="eliminarMensaje()">Eliminar</button>
+</mat-dialog-actions>
