@@ -19,7 +19,7 @@ public class UsuarioSerializer extends StdSerializer<Usuario> {
   public void serialize(Usuario usuario, JsonGenerator gen, SerializerProvider provider)
       throws IOException {
     gen.writeStartObject();
-    gen.writeStringField("identity", usuario.getId() + "_" + usuario.getNombreUsuario());
+    gen.writeStringField("id", String.valueOf(usuario.getId()));
     gen.writeStringField("nombreUsuario", usuario.getNombreUsuario());
     gen.writeStringField("email", usuario.getEmail());
     // Optionally serialize foto as a base64 encoded string
