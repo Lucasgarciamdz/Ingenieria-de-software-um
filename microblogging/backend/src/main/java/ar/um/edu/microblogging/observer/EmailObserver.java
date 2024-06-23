@@ -1,7 +1,9 @@
 package ar.um.edu.microblogging.observer;
 
 import ar.um.edu.microblogging.dto.entities.Etiqueta;
+import jakarta.mail.MessagingException;
 import jakarta.mail.internet.MimeMessage;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -17,13 +19,13 @@ public class EmailObserver implements Observer<Etiqueta> {
   }
 
   @Override
-  public void update(Set<Etiqueta> topics) {
+  public void update(List<Etiqueta> topics) throws MessagingException {
     sendEmail(topics);
   }
 
-  private void sendEmail(Set<Etiqueta> topics) {
+  private void sendEmail(List<Etiqueta> topics) throws MessagingException {
     MimeMessage mimeMessage = mailSender.createMimeMessage();
-    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
+    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
 
     String topicsString = topics.stream().map(Etiqueta::toString).collect(Collectors.joining(", "));
 

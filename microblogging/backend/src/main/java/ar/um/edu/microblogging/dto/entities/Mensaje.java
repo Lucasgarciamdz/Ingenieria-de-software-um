@@ -33,6 +33,13 @@ public class Mensaje extends BaseEntity {
       inverseJoinColumns = @JoinColumn(name = "usuario_id"))
   private Set<Usuario> reposts = new HashSet<>();
 
+  @ManyToMany
+  @JoinTable(
+      name = "mensaje_menciones",
+      joinColumns = @JoinColumn(name = "mensaje_id"),
+      inverseJoinColumns = @JoinColumn(name = "usuario_id"))
+  private Set<Usuario> menciones = new HashSet<>();
+
   @Column(length = 140, nullable = false)
   private String texto;
 

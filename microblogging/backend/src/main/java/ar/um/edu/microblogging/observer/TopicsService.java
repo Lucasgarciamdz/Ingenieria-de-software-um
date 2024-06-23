@@ -2,6 +2,8 @@ package ar.um.edu.microblogging.observer;
 
 import ar.um.edu.microblogging.dto.entities.Etiqueta;
 import ar.um.edu.microblogging.repositories.EtiquetaRepository;
+import ar.um.edu.microblogging.services.EtiquetaService;
+import jakarta.mail.MessagingException;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -15,11 +17,13 @@ public class TopicsService {
   private final Subject<Etiqueta> subject;
   private final JavaMailSender mailSender;
   private final EtiquetaRepository etiquetaRepository;
+  private final EtiquetaService etiquetaService;
 
   @Autowired
-  public TopicsService(JavaMailSender mailSender, EtiquetaRepository etiquetaRepository) {
+  public TopicsService(JavaMailSender mailSender, EtiquetaRepository etiquetaRepository, EtiquetaService etiquetaService) {
     this.mailSender = mailSender;
     this.etiquetaRepository = etiquetaRepository;
+    this.etiquetaService = etiquetaService;
     this.subject = new Subject<>();
   }
 
@@ -27,19 +31,14 @@ public class TopicsService {
     subject.registerObserver(new EmailObserver(mailSender, email));
   }
 
-  @Scheduled(cron = "0 0 0 * * MON")
-  public void updateTopics() {
-    Set<Etiqueta> topics = fetchTrendingTopics();
+  @Scheduled(fixedRate = 10000)
+  public void updateTopics() throws MessagingException {
+    List<Etiqueta> topics = fetchTrendingTopics();
     subject.setTopics(topics);
   }
 
-  private Set<Etiqueta> fetchTrendingTopics() {
-    List<Object[]> topEtiquetas = etiquetaRepository.findTop5Etiquetas("1 WEEK");
-    Set<Etiqueta> etiquetas = new HashSet<>();
-    for (Object[] result : topEtiquetas) {
-      Etiqueta etiqueta = (Etiqueta) result[0];
-      etiquetas.add(etiqueta);
-    }
-    return etiquetas;
+  private List<Etiqueta> fetchTrendingTopics() {
+    List<Etiqueta> topEtiquetas = etiquetaService.getTemasMomento(5);
+    return topEtiquetas;
   }
 }

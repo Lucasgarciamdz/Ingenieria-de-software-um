@@ -19,4 +19,5 @@ public class MensajeDto {
   private Date fechaPublicacion;
   private Long destinatarioId;
   private Set<String> etiquetas;
+  private Set<Long> menciones;
 }

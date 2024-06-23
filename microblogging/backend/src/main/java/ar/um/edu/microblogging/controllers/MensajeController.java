@@ -77,7 +77,7 @@ public class MensajeController implements BaseController<Mensaje, MensajeDto> {
     List<Mensaje> mensajes = mensajeService.getMensajesDeFollowers(id);
     return new BaseResponse<>("Mensaje de followers", mensajes);
   }
-  
+
   @GetMapping("/privados/{id}")
   public BaseResponse<List<Mensaje>> getMensajesPrivados(@PathVariable Long id) {
     List<Mensaje> mensajes = mensajeService.getMensajesPrivados(id);

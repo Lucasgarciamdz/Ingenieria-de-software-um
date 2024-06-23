@@ -11,8 +11,8 @@ public interface MensajeRepository extends BaseRepository<Mensaje, Long> {
   List<Mensaje> findByAutorId(Long autorId);
 
   List<Mensaje> findByEtiquetasNombre(String etiqueta);
-  
+
   List<Mensaje> findByUsuarioDestinatario(Usuario user);
-  
+
   List<Mensaje> findByAutorAndUsuarioDestinatarioIsNotNull(Usuario user);
 }
