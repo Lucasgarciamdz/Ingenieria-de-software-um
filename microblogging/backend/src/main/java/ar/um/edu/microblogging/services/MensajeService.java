@@ -77,7 +77,6 @@ public class MensajeService extends DtoMapper implements BaseService<Mensaje, Me
             : null;
 
     Set<Etiqueta> etiquetas = new HashSet<>();
-
     for (String hashtag : request.getEtiquetas()) {
       Etiqueta etiqueta = etiquetaService.getEtiquetaByNombre(hashtag);
       if (etiqueta == null) {
@@ -89,12 +88,22 @@ public class MensajeService extends DtoMapper implements BaseService<Mensaje, Me
       etiquetas.add(etiqueta);
     }
 
+    Set<Usuario> menciones = new HashSet<>();
+    Set<Long> mentionedUsernames = request.getMenciones();
+    for (Long username : mentionedUsernames) {
+      Usuario mentionedUser = usuarioService.getById(username);
+      if (mentionedUser != null) {
+        menciones.add(mentionedUser);
+      }
+    }
+
     Mensaje mensaje = new Mensaje();
     mensaje.setAutor(autor);
     mensaje.setTexto(request.getTexto());
     mensaje.setFechaPublicacion(new Date());
     mensaje.setUsuarioDestinatario(destinatario);
     mensaje.setEtiquetas(etiquetas);
+    mensaje.setMenciones(menciones);
 
     return mensajeRepository.save(mensaje);
   }
@@ -146,15 +155,15 @@ public class MensajeService extends DtoMapper implements BaseService<Mensaje, Me
     }
     return mensajes;
   }
-  
-  
+
   public List<Mensaje> getMensajesPrivados(Long id) {
     Usuario user = usuarioService.getById(id);
-    List<Mensaje> mensajesEnviados = mensajeRepository.findByAutorAndUsuarioDestinatarioIsNotNull(user);
+    List<Mensaje> mensajesEnviados =
+        mensajeRepository.findByAutorAndUsuarioDestinatarioIsNotNull(user);
     List<Mensaje> mensajesRecibidos = mensajeRepository.findByUsuarioDestinatario(user);
     List<Mensaje> todosMensajesPrivados = new ArrayList<>();
     todosMensajesPrivados.addAll(mensajesEnviados);
     todosMensajesPrivados.addAll(mensajesRecibidos);
     return todosMensajesPrivados;
-}
+  }
 }

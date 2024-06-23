@@ -10,5 +10,4 @@ public interface UsuarioRepository extends BaseRepository<Usuario, Long> {
   Usuario findByEmail(String email);
 
   List<Usuario> findByNombreUsuarioContaining(String nombreUsuario);
-  
 }
