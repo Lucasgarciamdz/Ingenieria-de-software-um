@@ -1,4 +1,4 @@
-import {Component, ChangeDetectionStrategy, inject} from '@angular/core';
+import {Component, ChangeDetectionStrategy, inject, ChangeDetectorRef, AfterViewInit} from '@angular/core';
 import {NavBarComponent} from "../../components/nav-bar/nav-bar.component";
 import {PublicationSummaryComponent} from "../../components/publication-summary/publication-summary.component";
 import {NgFor, NgIf} from "@angular/common";
@@ -13,6 +13,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {BarraDeBusquedaComponent} from "../../components/barra-de-busqueda/barra-de-busqueda.component";
 import {MatDialog, MatDialogConfig, MatDialogModule} from "@angular/material/dialog";
 import {TemasDelMomentoComponent} from "../../components/temas-del-momento/temas-del-momento.component";
+import {Usuario} from "../../models/usuario.model";
 
 @Component({
     selector: 'app-home',
@@ -36,10 +37,14 @@ import {TemasDelMomentoComponent} from "../../components/temas-del-momento/temas
 })
 
 
-export class HomeComponent {
+export class HomeComponent{
 
     readonly dialogBusqueda = inject(MatDialog);
     readonly dialogTemasMomento = inject(MatDialog);
+    usuariosMencionados: Usuario[] = [];
+
+    constructor() {
+    }
 
     abrirBarraDeBusqueda() {
         const dialogConfig = new MatDialogConfig();

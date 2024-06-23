@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../environment/environment.dev";
-import {BasicResponse} from "../models/basic-response.model";
 import {AuthService} from "./auth.service";
 import {Usuario} from "../models/usuario.model";
 import {Etiqueta} from "../models/etiqueta.model";
+import {BehaviorSubject} from "rxjs";
+import {NuevoMensaje} from "../models/nuevo-mensaje.model";
 
 
 @Injectable({
@@ -12,6 +13,9 @@ import {Etiqueta} from "../models/etiqueta.model";
 })
 
 export class UsuarioService {
+
+    public usuariosMencionados: BehaviorSubject<Usuario[]> = new BehaviorSubject<Usuario[]>([]);
+    public usuarioMensajePrivado: BehaviorSubject<Usuario[]> = new BehaviorSubject<Usuario[]>([]);
 
     constructor(
         private http: HttpClient,
@@ -61,7 +65,7 @@ export class UsuarioService {
     }
 
     async obtenerTemasDelMomento() {
-       console.log(" --- Obteniendo etiquetas del momento")
+        console.log(" --- Obteniendo etiquetas del momento")
         // const url = `${environment.url}/etiqueta/temas-del-momento`;
         const url = `${environment.url}/etiqueta`;
         console.log("URL", url)
@@ -82,7 +86,7 @@ export class UsuarioService {
 
     async obtenerInformacionDeUsuarioPorId(idUsuario: number) {
         console.log(" --- Obteniendo etiquetas del momento")
-        const url = `${environment.url}/usuario?id=`+idUsuario;
+        const url = `${environment.url}/usuario?id=` + idUsuario;
         console.log("URL", url)
         return new Promise<any | void>((resolve, reject) => {
             // this.http.post<BasicResponse>(url, this.authSvc.headers_http).subscribe(
@@ -97,5 +101,19 @@ export class UsuarioService {
                     }
                 });
         });
+    }
+
+    publicarMensaje(nuevoMensaje :NuevoMensaje){
+      console.log(" --- Publicando nuevo mensaje")
+      const url = `${environment.url}/mensajes`;
+      console.log("URL", url)
+      this.http.post<Usuario[]>(url, nuevoMensaje, this.authSvc.headers_http).subscribe(
+        res => {
+          console.log("---- Se hizo la petición : ", res)
+        },
+        error => {
+          console.log(error)
+        }
+      );
     }
 }

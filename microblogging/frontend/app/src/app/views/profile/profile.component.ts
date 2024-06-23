@@ -37,15 +37,9 @@ export class ProfileComponent {
     ) {
     }
 
-    ngOnInit() {
-        // Consumirlo de redux
-        console.log(" --- askhdlsak")
-        this.buscarInformacionDeUsuarioPorId(1)
-    }
-
-    private async buscarInformacionDeUsuarioPorId(idUsuario: number) {
+    async ngOnInit() {
         console.log(" --- Buscando información de usuario por ID: ");
-        await this.usuarioSvc.obtenerInformacionDeUsuarioPorId(idUsuario).then(
+        await this.usuarioSvc.obtenerInformacionDeUsuarioPorId(Number(localStorage.getItem('idUsuario'))).then(
             res => {
                 console.log(" --- Usuario encontrado:", res)
                 this.usuario = res;
@@ -53,6 +47,7 @@ export class ProfileComponent {
         ).catch(error =>{
             console.log(error)
         })
-        }
+    }
+
 
 }

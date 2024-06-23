@@ -1,38 +1,33 @@
 import {ChangeDetectorRef, Component} from '@angular/core';
-import {MatFormField, MatLabel, MatPrefix, MatSuffix} from "@angular/material/form-field";
+import {MatDialogActions, MatDialogClose, MatDialogContent} from "@angular/material/dialog";
+import {MatFormField, MatLabel, MatSuffix} from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton} from "@angular/material/button";
 import {MatInput} from "@angular/material/input";
+import {NgForOf, NgIf} from "@angular/common";
 import {Usuario} from "../../models/usuario.model";
 import {UsuarioService} from "../../services/usuario.service";
-import {NgFor, NgIf} from "@angular/common";
-import {MatDialogActions, MatDialogClose, MatDialogContent} from "@angular/material/dialog";
 
 @Component({
-    selector: 'app-barra-de-busqueda',
+    selector: 'app-busqueda-menciones',
     standalone: true,
     imports: [
+        MatDialogActions,
+        MatDialogContent,
         MatFormField,
         MatIcon,
         MatIconButton,
         MatInput,
         MatLabel,
-        MatPrefix,
         MatSuffix,
-        NgFor,
+        NgForOf,
         NgIf,
-        MatDialogActions,
-        MatDialogClose,
-        MatDialogContent
+        MatDialogClose
     ],
-    templateUrl: './barra-de-busqueda.component.html',
-    styleUrl: './barra-de-busqueda.component.css'
-
-
+    templateUrl: './busqueda-menciones.component.html',
+    styleUrl: './busqueda-menciones.component.css'
 })
-export class BarraDeBusquedaComponent {
-
-
+export class BusquedaMencionesComponent {
     usuarios: Usuario[] = [];
 
     constructor(
@@ -56,8 +51,9 @@ export class BarraDeBusquedaComponent {
         })
     }
 
-    seguirUsuario(idUsuarioASeguir: number | string) {
-        console.log(" --- Siguiendo usuario de ID: ", idUsuarioASeguir)
-        this.usuarioSvc.seguirUsuarioPorId(idUsuarioASeguir);
+    agregarMenciones(usuario: Usuario) {
+        console.log(" --- Agregando usuario de  ID: ", usuario.id)
+        const usuariosActuales = this.usuarioSvc.usuariosMencionados.getValue();
+        this.usuarioSvc.usuariosMencionados.next([...usuariosActuales, usuario]);
     }
 }
