@@ -30,6 +30,12 @@ public class TopicsService {
   public void registerEmail(String email) {
     subject.registerObserver(new EmailObserver(mailSender, email));
   }
+  
+//  public void unregisterEmail(String email){
+//    subject.unregisterObserver
+//  }
+  
+  
 
   @Scheduled(fixedRate = 10000)
   public void updateTopics() throws MessagingException {
