@@ -1,11 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {AppState} from "../store/app.reducers";
-import { Store } from '@ngrx/store';
 import {Observable, of, switchMap} from "rxjs";
 import {environment} from "../environment/environment.dev";
-import {UsuarioActual} from "../models/usuario.model";
-import * as actions from "../store/actions";
+import {BasicResponse} from "../models/basic-response.model";
+import {Router} from "@angular/router";
 
 @Injectable({
     providedIn: 'root'
@@ -13,53 +11,35 @@ import * as actions from "../store/actions";
 export class AuthService {
     constructor(
         private _httpClient: HttpClient,
-        //private store:Store<AppState>
-    ) {
-    }
-
-    get usuarioActual(){
-        let usuarioActual=''
-/*        this.store.select('auth').subscribe(auth=>{
-            usuarioActual=auth.usuarioActual;
-        });*/
-        return usuarioActual;
-
-    }
-    get accessToken(): string {
-        let accessToken = ''
-/*        this.store.select('auth').subscribe(auth => {
-            accessToken = auth.usuarioActual?.token;
-        });*/
-        return accessToken;
-    }
+        private router: Router
+    ) {}
 
     get headers_http() {
         let header = {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${this.accessToken}`
         }
         return {headers: header};
     }
 
 
-    logIn(username: string, password: string): Observable<any>
-    {
-
+    logIn(username: string, password: string): Observable<any> {
+        console.log("Creando petición de log in")
         const url = `${environment.url}/login`;
-        const body = { email: username, password: password };
-        return this._httpClient.post<UsuarioActual>(url, body)
-            .pipe(switchMap((response: any) =>
-            {
-                // this.store.dispatch(new actions.SetUserAction(response))
+        const body = {email: username, password: password};
+        return this._httpClient.post<BasicResponse>(url, body)
+            .pipe(switchMap((response: any) => {
+                if (response.response == null) {
+                    throw new Error('Las credenciales son inválidas');
+                }
+                localStorage.setItem('idUsuario', response.response.id.toString());
+                localStorage.setItem('nombreUsuario', response.response.nombre);
+                localStorage.setItem('emailUsuario', response.response.email);
                 console.log('response', response);
+                this.router.navigate(['/home']);
                 return of(response);
             }),);
     }
 
-    logOut(){
-        // this.store.dispatch(new actions.UnsetUserAction())
-        return of(true);
-    }
 
 
 }
