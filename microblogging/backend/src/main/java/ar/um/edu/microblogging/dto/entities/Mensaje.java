@@ -26,14 +26,14 @@ public class Mensaje extends BaseEntity {
   @JsonManagedReference(value = "usuario-mensajes3")
   private Usuario autor;
 
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
       name = "repost_mensaje",
       joinColumns = @JoinColumn(name = "mensaje_id"),
       inverseJoinColumns = @JoinColumn(name = "usuario_id"))
   private Set<Usuario> reposts = new HashSet<>();
 
-  @ManyToMany
+  @ManyToMany(cascade = CascadeType.ALL)
   @JoinTable(
       name = "mensaje_menciones",
       joinColumns = @JoinColumn(name = "mensaje_id"),

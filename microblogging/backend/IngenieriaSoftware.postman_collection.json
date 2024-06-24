@@ -69,7 +69,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"nombreUsuario\": \"AK2\",\n    \"email\": \"a2.kark@alumno.um.edu.ar\",\n    \"clave\": \"1234\",\n    \"nombreCompleto\": \"Augusto Kark\",\n    \"descripcion\": \"Soy el mejor programador fullstack, mejor que el impostor de augusto\"\n}",
+							"raw": "{\n    \"nombreUsuario\": \"LG\",\n    \"email\": \"lu.garcia@alumno.um.edu.ar\",\n    \"clave\": \"1234\",\n    \"nombreCompleto\": \"Lucas Garcia\",\n    \"descripcion\": \"Soy el mejor programador fullstack.\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -77,7 +77,7 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/microblogging/usuarios/v2",
+							"raw": "http://localhost:8080/microblogging/usuarios",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -85,8 +85,7 @@
 							"port": "8080",
 							"path": [
 								"microblogging",
-								"usuarios",
-								"v2"
+								"usuarios"
 							]
 						}
 					},
@@ -119,7 +118,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/microblogging/usuarios/52",
+							"raw": "http://localhost:8080/microblogging/usuarios/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -128,7 +127,7 @@
 							"path": [
 								"microblogging",
 								"usuarios",
-								"52"
+								"2"
 							]
 						}
 					},
@@ -141,7 +140,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"idUsuario\": 1,\n    \"idSeguir\": 152\n}",
+							"raw": "{\n    \"idUsuario\": 2,\n    \"idSeguir\": 1\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -221,6 +220,32 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "send mail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/register?email=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"register"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		},
@@ -294,7 +319,7 @@
 						"header": [],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"autorId\": 1,\n    \"texto\": \"Este es un nuevo mensaje, ojala funcione\",\n    \"etiquetas\": [\"#hola\"],\n    \"destinatarioId\": 152\n}",
+							"raw": "{\n    \"autorId\": 2,\n    \"texto\": \"mensajito privado para kark\",\n  \"etiquetas\": [\n    \"#java\",\n    \"#python\",\n    \"#javascript\",\n    \"#reactjs\",\n    \"#nodejs\",\n    \"#angular\",\n    \"#vuejs\",\n    \"#css\",\n    \"#html\",\n    \"#webdevelopment\",\n    \"#golang\",\n    \"#ruby\",\n    \"#php\",\n    \"#csharp\",\n    \"#dotnet\",\n    \"#flutter\",\n    \"#android\",\n    \"#ios\",\n    \"#swift\",\n    \"#kotlin\",\n    \"#docker\",\n    \"#kubernetes\",\n    \"#devops\",\n    \"#machinelearning\",\n    \"#datascience\",\n    \"#ai\",\n    \"#artificialintelligence\",\n    \"#bigdata\",\n    \"#cloudcomputing\",\n    \"#aws\",\n    \"#azure\",\n    \"#googlecloud\",\n    \"#blockchain\",\n    \"#cybersecurity\",\n    \"#iot\",\n    \"#internetofthings\",\n    \"#sql\",\n    \"#database\",\n    \"#mongodb\",\n    \"#nosql\",\n    \"#graphql\",\n    \"#typescript\",\n    \"#rust\",\n    \"#scala\",\n    \"#bash\",\n    \"#linux\",\n    \"#git\",\n    \"#github\",\n    \"#gitlab\",\n    \"#bitbucket\",\n        \"#quantumcomputing\",\n    \"#virtualreality\",\n    \"#augmentedreality\",\n    \"#3dprinting\",\n    \"#robotics\",\n    \"#drones\",\n    \"#wearabletech\",\n    \"#smartcities\",\n    \"#ethicalhacking\",\n    \"#penetrationtesting\",\n    \"#dataanalytics\",\n    \"#nlp\",\n    \"#naturallanguageprocessing\",\n    \"#computerVision\",\n    \"#edgecomputing\",\n    \"#fintech\",\n    \"#cryptocurrency\",\n    \"#smartcontracts\",\n    \"#deepLearning\",\n    \"#reinforcementLearning\",\n    \"#genomics\",\n    \"#bioinformatics\",\n    \"#digitalmarketing\",\n    \"#seo\",\n    \"#socialmediamarketing\",\n    \"#contentmarketing\",\n    \"#ppc\",\n    \"#adtech\",\n    \"#e-commerce\",\n    \"#ux/ui\",\n    \"#productmanagement\",\n    \"#agile\",\n    \"#scrum\",\n    \"#kanban\",\n    \"#leanstartup\",\n    \"#saas\",\n    \"#enterpriseSoftware\",\n    \"#openSource\",\n    \"#mobileDevelopment\",\n    \"#gameDevelopment\",\n    \"#virtualMachines\",\n    \"#serverless\",\n    \"#iotSecurity\",\n    \"#cloudSecurity\",\n    \"#dataPrivacy\",\n    \"#blockchainDevelopment\",\n    \"#quantumCryptography\",\n    \"#5g\",\n    \"#networkSecurity\",\n    \"#digitalTransformation\"\n  ],\n    \"menciones\": [1]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -343,7 +368,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/microblogging/mensajes/202",
+							"raw": "http://localhost:8080/microblogging/mensajes/152",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -352,7 +377,7 @@
 							"path": [
 								"microblogging",
 								"mensajes",
-								"202"
+								"152"
 							]
 						}
 					},
@@ -364,7 +389,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/microblogging/mensajes/usuario/1",
+							"raw": "http://localhost:8080/microblogging/mensajes/usuario/2",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -374,7 +399,7 @@
 								"microblogging",
 								"mensajes",
 								"usuario",
-								"1"
+								"2"
 							]
 						}
 					},
@@ -427,6 +452,50 @@
 								"mensajes",
 								"etiqueta",
 								"etiqueta desce mensaje"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mensajeSeguidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes/followers/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes",
+								"followers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "privados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes/privados/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes",
+								"privados",
+								"2"
 							]
 						}
 					},
@@ -554,6 +623,27 @@
 								"microblogging",
 								"etiquetas",
 								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delMomento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/etiquetas/temasMomento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"etiquetas",
+								"temasMomento"
 							]
 						}
 					},

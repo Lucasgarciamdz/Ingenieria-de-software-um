@@ -14,4 +14,9 @@ public class TopicsController {
   public void register(@RequestParam String email) {
     topicsService.registerEmail(email);
   }
+
+//  @PostMapping("/unregister")
+//  public void unregister(@RequestParam String email) {
+//    topicsService.unregisterEmail(email);
+//  }
 }
