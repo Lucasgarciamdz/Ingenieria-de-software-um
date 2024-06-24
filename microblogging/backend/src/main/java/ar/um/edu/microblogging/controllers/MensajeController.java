@@ -69,7 +69,7 @@ public class MensajeController implements BaseController<Mensaje, MensajeDto> {
 
   @GetMapping("/etiqueta/{nombre}")
   public BaseResponse<List<Mensaje>> getMensajesByEtiqueta(@PathVariable String nombre) {
-    List<Mensaje> mensajes = mensajeService.getMensajesByEtiqueta(nombre);
+    List<Mensaje> mensajes = mensajeService.getMensajesByEtiqueta("#"+nombre);
     return new BaseResponse<>("Se encontraron los siguientes mensajes", mensajes);
   }
 
