@@ -1,0 +1,16 @@
+<app-nav-bar></app-nav-bar>
+
+<div class="container d-flex flex-column justify-content-center">
+  <div class="d-flex justify-content-center align-items-center">
+    <button mat-flat-button (click)="abrirBarraDeBusqueda()" class="btn btn-primary rounded shadow">Buscar usuarios</button>
+    <button mat-flat-button (click)="abrirTemasDelMomento()" class="btn btn-outline-primary">Ver temas del momento</button>
+    <button mat-flat-button (click)="abrirMensajesPorEtiqueta()" class="btn btn-outline-primary">Buscar mensajes por etiqueta</button>
+  </div>
+  <div class="publications">
+    <app-publicacion-mensaje></app-publicacion-mensaje>
+    <div  *ngFor="let mensaje of mensajes;">
+      <app-mensaje [mensaje]="mensaje"></app-mensaje>
+    </div>
+  </div>
+</div>
+

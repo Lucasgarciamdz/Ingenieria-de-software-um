@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="form-container">
+    <h2>Registrar usuario</h2>
+    <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
+      <input type="text" placeholder="Nombre de usuario" required name="nombreUsuario" ngModel>
+      <input type="text" placeholder="Nombre completo" required name="nombreCompleto" ngModel>
+      <input type="text" placeholder="Descripcion" required name="descripcion" ngModel>
+      <input type="email" placeholder="Email" required name="email" ngModel>
+      <input type="password" placeholder="Clave" required name="clave" ngModel>
+      <label>
+        <input type="checkbox" name="recibirTemas" ngModel>
+        Quiero recibir los temas del momento por email
+      </label>
+      <button type="submit">Registrar</button>
+    </form>
+    <div class="login-text">¿Ya tenes cuenta? <a href="/login">Inicia sesión</a></div>
+  </div>
+</div>
+

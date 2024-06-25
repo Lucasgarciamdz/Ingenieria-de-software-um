@@ -1,0 +1,13 @@
+{
+    "/api": {
+    "target": "jdbc:postgresql://dpg-cpjr5racn0vc73ar5pk0-a.oregon-postgres.render.com/blogging_db_ohsh",
+    "secure": false,
+    "changeOrigin": true,
+    "logLevel": "debug",
+    "user": "blogging_db_ohsh_user",
+    "password": "8ns4YJyx0SPehi0cFRul4i0Y3lwxbrzH",
+    "pathRewrite": {
+        "^/api": ""
+        }
+    }
+}

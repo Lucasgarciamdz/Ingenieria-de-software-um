@@ -1,0 +1,122 @@
+/*.search-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    width: 50%; !* Ajusta este valor para cambiar el tamaño del cuadro de búsqueda *!
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+.search-box input[type="text"],*/
+.apply-filter-button {
+    border: 2px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+
+
+.apply-filter-button {
+    background-color: #007bff;
+    color: #fff;
+    cursor: pointer;
+    width: 100px;
+}
+
+.apply-filter-button:hover {
+    background-color: #0056b3;
+}
+
+.clear-filter-button {
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: red;
+  color: white;
+  padding: 5px 10px;
+  cursor: pointer;
+  width: 200px;
+  height: 47px;
+  margin-left: 10px;
+}
+
+.clear-filter-button:hover {
+  background-color: darkred;
+}
+
+.publication-summary-box {
+    width: 50%;
+    margin: 30px auto 0;
+    padding: 20px;
+    border: 2px solid #000;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+button {
+    display: inline-block;
+    border: 2px solid gray;
+    border-radius: 5px; /* Ajusta este valor para cambiar cuánto se redondean los bordes */
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: transparent;
+    transition: background-color 0.3s ease;
+    margin: 3px;
+}
+
+button:hover {
+    background-color: gray;
+    color: #fff;
+}
+
+.publications {
+    background-color: #f0f0f0; /* Fondo gris */
+    padding: 20px; /* Espacio alrededor del contenido */
+    margin: 20px auto; /* Espacio alrededor del recuadro y centrado horizontal */
+    border: 1px solid #ccc; /* Borde alrededor del recuadro */
+    width: 90%; /* Ajusta este valor para cambiar el ancho del bloque */
+}
+
+.publications div {
+    margin-bottom: 20px; /* Espacio entre cada publicación */
+    padding: 10px; /* Espacio alrededor del contenido de cada publicación */
+    border-bottom: 2px solid #ccc; /* Línea entre cada publicación */
+}
+
+.publications p {
+    margin: 0 0 10px; /* Espacio entre cada línea de texto */
+}
+
+.etiquetas-del-momento {
+    position: fixed; /* Hace que el div se mantenga en la misma posición al desplazarse */
+    left: 0; /* Alinea el div a la izquierda */
+    top: 70px; /* Alinea el div a la parte superior */
+    width: 200px; /* Ancho del div */
+    height: 100%; /* Altura del div */
+    background-color: #f0f0f0; /* Fondo gris */
+    padding: 20px; /* Espacio alrededor del contenido */
+    border-right: 1px solid #ccc; /* Borde a la derecha del div */
+}
+
+.etiquetas-del-momento ul {
+    list-style-type: none; /* Elimina los puntos de la lista */
+    padding: 0; /* Elimina el padding de la lista */
+}
+
+.etiquetas-del-momento li {
+    margin-bottom: 10px; /* Espacio entre cada etiqueta */
+}
+.example-form-field {
+  width: 100%;
+  max-width: 300px;
+  border-radius: 5px;
+  background-color: #f0f0f0;
+}
+
+.example-form-field button {
+  border: none;
+  background-color: transparent;
+  color: gray;
+}
+

@@ -1,0 +1,35 @@
+version: "3.9"
+
+services:
+
+#  microbblogin:
+#    build: .
+#    image: microbblogin:0.1
+#    container_name: microbblogin
+#    ports:
+#      - "8080:8080"
+#    environment:
+#      DB_URL: jdbc:postgresql://database:5432/blogging_db_ohsh
+#      DB_USERNAME: blogging_db_ohsh_user
+#      DB_PASSWORD: 8ns4YJyx0SPehi0cFRul4i0Y3lwxbrzH
+#      EMAIL_HOST: smtp.example.com
+#      EMAIL_PORT: 587
+#      EMAIL_USERNAME: grupodmkn@gmail.com
+#      EMAIL_PASSWORD: oqfhpdjhbfcecdfg
+#    networks:
+#      - microbblogin_network
+
+  database:
+    image: postgres
+    container_name: microbblogin_db
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_DB: blogging_db_ohsh
+      POSTGRES_USER: blogging_db_ohsh_user
+      POSTGRES_PASSWORD: 8ns4YJyx0SPehi0cFRul4i0Y3lwxbrzH
+    networks:
+      - microbblogin_network
+
+networks:
+  microbblogin_network:

@@ -1,0 +1,41 @@
+<div class="d-flex justify-content-center align-items-center vh-100">
+  <div class="card w-50 vh-50">
+    <div class="card-body">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <h2>Login</h2>
+            <form class="example-form d-flex flex-column">
+              <mat-form-field class="mb-3">
+                <mat-label>Email</mat-label>
+                <input type="email" matInput [formControl]="emailFormControl" [errorStateMatcher]="matcher"
+                       placeholder="Ex. pat@example.com">
+                <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+                  Porfavor ingresar un email válido
+                </mat-error>
+                <mat-error *ngIf="emailFormControl.hasError('required')">
+                  El email es <strong>requerido</strong>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="mb-3">
+                <mat-label>Contraseña</mat-label>
+                <input type="password" matInput [formControl]="contrasenaFormControl" [errorStateMatcher]="matcher"
+                       placeholder="Sup3rSecret0">
+                <mat-error *ngIf="contrasenaFormControl.hasError('required')">
+                  La contraseña es <strong>requerida</strong>
+                </mat-error>
+              </mat-form-field>
+
+            </form>
+            <button type="button" class="btn btn-outline-primary" (click)="autenticarUsuario()">Iniciar sesión</button>
+          </div>
+          <div class="col-md-6 d-flex justify-content-center align-items-center">
+            <img class="img-fluid" src="assets/logo.png" alt="Logo de la App">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+

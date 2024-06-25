@@ -1,0 +1,655 @@
+{
+	"info": {
+		"_postman_id": "12da2093-47cb-4011-9480-20dc1047594d",
+		"name": "IngenieriaSoftware",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26654719"
+	},
+	"item": [
+		{
+			"name": "Usuario",
+			"item": [
+				{
+					"name": "getUsuarios",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putUsuarios",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\n \"nombreUsuario\": \"AK3\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postUsuarios",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombreUsuario\": \"LG\",\n    \"email\": \"lu.garcia@alumno.um.edu.ar\",\n    \"clave\": \"1234\",\n    \"nombreCompleto\": \"Lucas Garcia\",\n    \"descripcion\": \"Soy el mejor programador fullstack.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteUsuarios",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneUsuarios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "SeguirUsuario",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idUsuario\": 2,\n    \"idSeguir\": 1\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios/follow",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios",
+								"follow"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\":\"a.kark@alumno.um.edu.ar\",\n    \"clave\":\"1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "buscar usuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/usuarios/buscar/usuario?idUsuario=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"usuarios",
+								"buscar",
+								"usuario"
+							],
+							"query": [
+								{
+									"key": "idUsuario",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "send mail",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/register?email=",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"register"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": ""
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Mensaje",
+			"item": [
+				{
+					"name": "getMensajes",
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [
+							{
+								"key": "id",
+								"value": "1",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putMensajes",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\"texto\": \"Si funciono\"\n\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes/153",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes",
+								"153"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postMensajes",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"autorId\": 2,\n    \"texto\": \"mensajito privado para kark\",\n  \"etiquetas\": [\n    \"#java\",\n    \"#python\",\n    \"#javascript\",\n    \"#reactjs\",\n    \"#nodejs\",\n    \"#angular\",\n    \"#vuejs\",\n    \"#css\",\n    \"#html\",\n    \"#webdevelopment\",\n    \"#golang\",\n    \"#ruby\",\n    \"#php\",\n    \"#csharp\",\n    \"#dotnet\",\n    \"#flutter\",\n    \"#android\",\n    \"#ios\",\n    \"#swift\",\n    \"#kotlin\",\n    \"#docker\",\n    \"#kubernetes\",\n    \"#devops\",\n    \"#machinelearning\",\n    \"#datascience\",\n    \"#ai\",\n    \"#artificialintelligence\",\n    \"#bigdata\",\n    \"#cloudcomputing\",\n    \"#aws\",\n    \"#azure\",\n    \"#googlecloud\",\n    \"#blockchain\",\n    \"#cybersecurity\",\n    \"#iot\",\n    \"#internetofthings\",\n    \"#sql\",\n    \"#database\",\n    \"#mongodb\",\n    \"#nosql\",\n    \"#graphql\",\n    \"#typescript\",\n    \"#rust\",\n    \"#scala\",\n    \"#bash\",\n    \"#linux\",\n    \"#git\",\n    \"#github\",\n    \"#gitlab\",\n    \"#bitbucket\",\n        \"#quantumcomputing\",\n    \"#virtualreality\",\n    \"#augmentedreality\",\n    \"#3dprinting\",\n    \"#robotics\",\n    \"#drones\",\n    \"#wearabletech\",\n    \"#smartcities\",\n    \"#ethicalhacking\",\n    \"#penetrationtesting\",\n    \"#dataanalytics\",\n    \"#nlp\",\n    \"#naturallanguageprocessing\",\n    \"#computerVision\",\n    \"#edgecomputing\",\n    \"#fintech\",\n    \"#cryptocurrency\",\n    \"#smartcontracts\",\n    \"#deepLearning\",\n    \"#reinforcementLearning\",\n    \"#genomics\",\n    \"#bioinformatics\",\n    \"#digitalmarketing\",\n    \"#seo\",\n    \"#socialmediamarketing\",\n    \"#contentmarketing\",\n    \"#ppc\",\n    \"#adtech\",\n    \"#e-commerce\",\n    \"#ux/ui\",\n    \"#productmanagement\",\n    \"#agile\",\n    \"#scrum\",\n    \"#kanban\",\n    \"#leanstartup\",\n    \"#saas\",\n    \"#enterpriseSoftware\",\n    \"#openSource\",\n    \"#mobileDevelopment\",\n    \"#gameDevelopment\",\n    \"#virtualMachines\",\n    \"#serverless\",\n    \"#iotSecurity\",\n    \"#cloudSecurity\",\n    \"#dataPrivacy\",\n    \"#blockchainDevelopment\",\n    \"#quantumCryptography\",\n    \"#5g\",\n    \"#networkSecurity\",\n    \"#digitalTransformation\"\n  ],\n    \"menciones\": [1]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteMensajes",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes/152",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes",
+								"152"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneMensajes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes/152",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes",
+								"152"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mensajesUsuario",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes/usuario/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes",
+								"usuario",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "repost",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"idMensaje\": 1,\n    \"idUsuario\": 252\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes/repost",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes",
+								"repost"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mensajeEtiqueta",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes/etiqueta/etiqueta desce mensaje",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes",
+								"etiqueta",
+								"etiqueta desce mensaje"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "mensajeSeguidos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes/followers/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes",
+								"followers",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "privados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/mensajes/privados/2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"mensajes",
+								"privados",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Etiqueta",
+			"item": [
+				{
+					"name": "getEtiquetas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/etiquetas/103",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"etiquetas",
+								"103"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "putEtiquetas",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nomrbe\": \"me identifico como etiqueta\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/microblogging/etiquetas/103",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"etiquetas",
+								"103"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "postEtiquetas",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"nombre\": \"pitulín\",\n    \"delMomento\": false\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/microblogging/etiquetas",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"etiquetas"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteEtiquetas",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/etiquetas/102",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"etiquetas",
+								"102"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "getOneEtiquetas",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/etiquetas/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"etiquetas",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delMomento",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/microblogging/etiquetas/temasMomento",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"microblogging",
+								"etiquetas",
+								"temasMomento"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

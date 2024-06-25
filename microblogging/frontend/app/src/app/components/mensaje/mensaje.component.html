@@ -1,0 +1,47 @@
+<div class="card">
+  <div class="card-header">
+      <div class="d-flex align-items-center justify-content-between">
+        <div class="d-flex align-items-center">
+          <i class="fas fa-user-circle fa-2x mr-10 me-1"></i>
+          <h5 class="mb-0">{{mensaje?.autor.nombreUsuario}}</h5>
+        </div>
+<!--
+        <div *ngIf="mensaje?.autor.id == localStorage.getItem('idUsuario')">
+-->
+        <div>
+          <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+          <mat-menu #menu="matMenu" >
+            <button mat-menu-item (click)="abrirEdicionMensaje(mensaje)">
+              <mat-icon>edit</mat-icon>
+              <span>Editar</span>
+            </button>
+            <button mat-menu-item (click)="abrirEliminarMensaje(mensaje.id)">
+              <mat-icon>delete</mat-icon>
+              <span>Eliminar</span>
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+  </div>
+  <div class="card-body">
+<p class="card-text">
+  {{texto}}
+  <span *ngFor="let mencion of listadosMenciones;" class="badge badge-pill bg-primary mr-2 me-1">{{"@" + mencion.nombreUsuario}}</span>
+</p>
+
+  </div>
+  <div class="card-footer text-muted d-flex justify-content-between align-items-center">
+    <div class="d-flex flex-wrap">
+      <mat-chip-set *ngFor="let etiqueta of listadosEtiquetas">
+        <mat-chip class="me-1">{{etiqueta.nombre}}</mat-chip>
+      </mat-chip-set>
+    </div>
+    <div>
+      <button type="button" class="btn btn-outline-secondary btn-sm" (click)="repostearMensaje(mensaje.id)">
+        <mat-icon>cached</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>
