@@ -1,12 +1,12 @@
 <app-nav-bar></app-nav-bar>
 <mat-tab-group>
-  <mat-tab label="Mis post">
-    <div class="publications d-flex justify-content-center align-items-center mt-2">
-      <div class="w-50">
-        <app-mensaje></app-mensaje>
-      </div>
+<mat-tab label="Mis post ({{usuario?.mensajes.length}})">
+  <div class="d-flex justify-content-center align-items-center vh-50 mt-10 flex-column justify-content-center align-items-center mt-10">
+    <div class="w-50" *ngFor="let mensaje of usuario?.mensajes">
+      <app-mensaje [mensaje]="mensaje"></app-mensaje>
     </div>
-  </mat-tab>
+  </div>
+</mat-tab>
   <mat-tab label="Biografía">
     <div class="d-flex justify-content-center align-items-center vh-50 mt-10">
       <div class="card w-50">
@@ -25,7 +25,7 @@
               <div class="d-flex justify-content-start rounded-3 p-2 mb-2 bg-light">
                 <div>
                   <p class="small text-muted mb-1">Mensajes</p>
-                  <p class="mb-0">{{usuario?.mensajePrivado.length}}</p>
+                  <p class="mb-0">{{usuario?.mensajes.length}}</p>
                 </div>
                 <div class="px-3">
                   <p class="small text-muted mb-1">Seguidores</p>
@@ -47,8 +47,7 @@
       <mat-list-item>
         <div class="d-flex align-items-center">
           <i class="fas fa-user-circle fa-2x mr-10 me-1"></i>
-          <h3>{{ user.nombreUsuario }}</h3>
-          <p>{{ user.email }}</p>
+          <h3>{{ user.nombreUsuario }} | {{ user.email }}</h3>
         </div>
       </mat-list-item>
     </mat-list>
@@ -58,8 +57,7 @@
       <mat-list-item>
         <div class="d-flex align-items-center">
           <i class="fas fa-user-circle fa-2x mr-10 me-1"></i>
-          <h3>{{ user?.nombreUsuario }}</h3>
-          <p>{{ user?.email }}</p>
+          <h3>{{ user.nombreUsuario }} | {{ user.email }}</h3>
         </div>
       </mat-list-item>
     </mat-list>

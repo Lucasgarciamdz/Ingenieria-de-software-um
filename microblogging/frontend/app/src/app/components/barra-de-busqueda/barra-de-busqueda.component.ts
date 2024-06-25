@@ -6,7 +6,8 @@ import {MatInput} from "@angular/material/input";
 import {Usuario} from "../../models/usuario.model";
 import {UsuarioService} from "../../services/usuario.service";
 import {NgFor, NgIf} from "@angular/common";
-import {MatDialogActions, MatDialogClose, MatDialogContent} from "@angular/material/dialog";
+import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef} from "@angular/material/dialog";
+import {response} from "express";
 
 @Component({
     selector: 'app-barra-de-busqueda',
@@ -37,7 +38,9 @@ export class BarraDeBusquedaComponent {
 
     constructor(
         private usuarioSvc: UsuarioService,
-        private changeDetector: ChangeDetectorRef
+        private changeDetector: ChangeDetectorRef,
+        private dialogRef: MatDialogRef<BarraDeBusquedaComponent>
+
     ) {
     }
 
@@ -58,6 +61,13 @@ export class BarraDeBusquedaComponent {
 
     seguirUsuario(idUsuarioASeguir: number | string) {
         console.log(" --- Siguiendo usuario de ID: ", idUsuarioASeguir)
-        this.usuarioSvc.seguirUsuarioPorId(idUsuarioASeguir);
+        this.usuarioSvc.seguirUsuarioPorId(idUsuarioASeguir).then(
+          res=>{
+            if (res.response != null){
+              alert("Usuario seguido.")
+              this.dialogRef.close();
+            }
+          }
+        );
     }
 }

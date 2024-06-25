@@ -41,7 +41,7 @@ export class BusquedaMencionesComponent {
         console.log(" --- Buscando usuarios por nombre de usuario : " + nombreUsuario);
         await this.usuarioSvc.obtenerUsuariosPorNombre(nombreUsuario).then(
             res => {
-                this.usuarios = res.slice();
+                this.usuarios = res.response.slice();
                 console.log(" ------ USUARIOS encontrados: " + this.usuarios.length)
                 console.log(" ------ USUARIOS encontrados: " + this.usuarios)
                 this.changeDetector.detectChanges();

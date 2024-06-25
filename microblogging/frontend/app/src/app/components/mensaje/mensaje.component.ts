@@ -11,7 +11,6 @@ import {Mensaje} from "../../models/mensaje.model";
 import {Etiqueta} from "../../models/etiqueta.model";
 import {UsuarioService} from "../../services/usuario.service";
 import {MatDialog, MatDialogConfig} from "@angular/material/dialog";
-import {BarraDeBusquedaComponent} from "../barra-de-busqueda/barra-de-busqueda.component";
 import {EditarMensajeComponent} from "../editar-mensaje/editar-mensaje.component";
 import {EliminarMensajeComponent} from "../eliminar-mensaje/eliminar-mensaje.component";
 
@@ -20,7 +19,8 @@ import {EliminarMensajeComponent} from "../eliminar-mensaje/eliminar-mensaje.com
   selector: 'app-mensaje',
   standalone: true,
   imports: [MatCardModule, MatChipsModule, MatProgressBarModule, NgFor, MatButtonModule, MatMenuModule, MatIconModule, NgIf],
-  changeDetection: ChangeDetectionStrategy.OnPush, templateUrl: './mensaje.component.html',
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  templateUrl: './mensaje.component.html',
   styleUrl: './mensaje.component.css'
 })
 export class MensajeComponent {
@@ -40,7 +40,7 @@ export class MensajeComponent {
 
   ngOnInit() {
     this.listadosEtiquetas = this.mensaje?.etiquetas;
-    this.listadosMenciones = this.mensaje?.usuarioDestinatario;
+    this.listadosMenciones = this.mensaje?.menciones;
     this.nombreUsuario = this.mensaje?.autor.nombreUsuario;
     this.texto = this.mensaje?.texto;
   }
@@ -57,13 +57,15 @@ export class MensajeComponent {
           return;
         }
         alert("Mensaje republicado")
+        location.reload()
       }
     )
   }
 
-  abrirEdicionMensaje() {
+  abrirEdicionMensaje(mensaje : Mensaje) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.width = '40%';
+    dialogConfig.width = '60%';
+    dialogConfig.data = mensaje;
     const dialogRef = this.dialogEditarMensaje.open(EditarMensajeComponent, dialogConfig);
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

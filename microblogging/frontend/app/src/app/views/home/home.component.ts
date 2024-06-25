@@ -15,6 +15,9 @@ import {TemasDelMomentoComponent} from "../../components/temas-del-momento/temas
 import {Usuario} from "../../models/usuario.model";
 import {Mensaje} from "../../models/mensaje.model";
 import {UsuarioService} from "../../services/usuario.service";
+import {
+  MensajesClasificadosEtiquetaComponent
+} from "../../components/mensajes-clasificados-etiqueta/mensajes-clasificados-etiqueta.component";
 
 @Component({
   selector: 'app-home',
@@ -41,6 +44,7 @@ export class HomeComponent {
 
   readonly dialogBusqueda = inject(MatDialog);
   readonly dialogTemasMomento = inject(MatDialog);
+  readonly dialogMensajesEtiqueta = inject(MatDialog);
   usuariosMencionados: Usuario[] = [];
   mensajes: (Mensaje | any)[] = [];
 
@@ -77,7 +81,14 @@ export class HomeComponent {
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
     });
+  }
 
-
+  abrirMensajesPorEtiqueta() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.width = '60%';
+    const dialogRef = this.dialogMensajesEtiqueta.open(MensajesClasificadosEtiquetaComponent, dialogConfig);
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);
+    });
   }
 }

@@ -5,50 +5,51 @@ import {MatCard, MatCardActions, MatCardContent, MatCardHeader} from "@angular/m
 import {Usuario} from "../../models/usuario.model";
 import {UsuarioService} from "../../services/usuario.service";
 import {MatList, MatListItem} from "@angular/material/list";
-import {NgForOf} from "@angular/common";
+import {NgFor, NgForOf} from "@angular/common";
 import {MensajeComponent} from "../../components/mensaje/mensaje.component";
 import {PublicacionMensajeComponent} from "../../components/publicacion-mensaje/publicacion-mensaje.component";
 
 @Component({
-    selector: 'app-profile',
-    standalone: true,
-    imports: [
-        NavBarComponent,
-        MatTabsModule,
-        MatCard,
-        MatCardHeader,
-        MatCardContent,
-        MatCardActions,
-        MatList,
-        NgForOf,
-        MatListItem,
-        MensajeComponent,
-        PublicacionMensajeComponent
-    ],
-    templateUrl: './profile.component.html',
-    styleUrl: './profile.component.css'
+  selector: 'app-profile',
+  standalone: true,
+  imports: [
+    NavBarComponent,
+    MatTabsModule,
+    MatCard,
+    MatCardHeader,
+    MatCardContent,
+    MatCardActions,
+    MatList,
+    NgForOf,
+    NgFor,
+    MatListItem,
+    MensajeComponent,
+    PublicacionMensajeComponent
+  ],
+  templateUrl: './profile.component.html',
+  styleUrl: './profile.component.css'
 })
 export class ProfileComponent {
 
-    usuario: Usuario | any;
+  usuario: Usuario | any;
 
-    constructor(
-        private usuarioSvc: UsuarioService
-    ) {
-    }
+  constructor(
+    private usuarioSvc: UsuarioService
+  ) {
+  }
 
-    async ngOnInit() {
-        console.log(" --- Buscando información de usuario por ID: ");
-        await this.usuarioSvc.obtenerInformacionDeUsuarioPorId(Number(localStorage.getItem('idUsuario'))).then(
-            res => {
-                console.log(" --- Usuario encontrado:", res)
-                this.usuario = res.response;
-                console.log("USUARIO CARGADO0", this.usuario)
-            }
-        ).catch(error =>{
-            console.log(error)
-        })
-    }
+  async ngOnInit() {
+    console.log(" --- Buscando información de usuario por ID: ");
+    await this.usuarioSvc.obtenerInformacionDeUsuarioPorId(Number(localStorage.getItem('idUsuario'))).then(
+      res => {
+        console.log(" --- Usuario encontrado:", res)
+        this.usuario = res.response;
+        console.log("USUARIO CARGADO0", this.usuario)
+      }
+    ).catch(error => {
+      console.log(error)
+    })
+  }
 
 
 }

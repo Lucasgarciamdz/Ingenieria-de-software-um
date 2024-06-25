@@ -37,6 +37,7 @@ export class EliminarMensajeComponent {
           return;
         }
         alert("Mensaje eliminado con éxito")
+        location.reload()
       }
     )
     this.dialogRef.close()

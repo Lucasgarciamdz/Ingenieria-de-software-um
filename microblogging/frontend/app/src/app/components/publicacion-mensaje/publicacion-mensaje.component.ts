@@ -160,6 +160,7 @@ export class PublicacionMensajeComponent {
     }
 
     publicarMensaje() {
+      debugger
         console.log("Publicando mensaje")
 
         if (!this.form.valid) {
@@ -173,6 +174,7 @@ export class PublicacionMensajeComponent {
         console.log("etiquetas", etiquetas)
         console.log("menciones usuarios id", mencionUsuarioId)
         console.log("texto", this.form.get('textoFormControl')?.value)
+        console.log("ID usuario privado", this.usuarioMensajePrivado) // Esta vacio este array ver que onda
         let nuevoMensaje = new NuevoMensaje(
             Number(localStorage.getItem('idUsuario')),
             this.form.get('textoFormControl')?.value,
