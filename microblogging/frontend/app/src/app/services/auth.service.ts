@@ -26,10 +26,10 @@ export class AuthService {
   }
 
 
-  logIn(username: string, password: string): Promise<any> {
+  logIn(email: string, password: string): Promise<any> {
     console.log("Creando petición de log in")
     const url = `${environment.url}/usuarios/login`;
-    const body = {email: username, clave: password};
+    const body = {email: email, clave: password};
     return new Promise<any | void>((resolve, reject) => {
       this._httpClient.post<Usuario[]>(url, body, this.headers_http).subscribe(
         {

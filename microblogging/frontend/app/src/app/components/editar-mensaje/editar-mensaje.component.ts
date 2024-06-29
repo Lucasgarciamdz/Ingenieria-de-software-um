@@ -183,7 +183,7 @@ export class EditarMensajeComponent {
         this.usuarioSvc.editarMensaje(body, this.mensaje.id).then(
             res => {
                 if (res.response == null) {
-                    console.log("Mensaje no creado")
+                    console.log("Mensaje no editado")
                     return;
                 }
                 alert("Mensaje Editado")
